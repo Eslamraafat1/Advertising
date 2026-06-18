@@ -12,7 +12,7 @@ const plans = {
       period: "/ شهر",
       currency: "ر.س",
       desc: "مثالي للشركات الناشئة والمشاريع الصغيرة",
-      color: "#6366f1",
+      color: "#e9292c",
       features: [
         "إدارة 2 منصة سوشيال ميديا",
         "تصميم 8 منشورات شهرياً",
@@ -56,7 +56,7 @@ const plans = {
       period: "/ شهر",
       currency: "ر.س",
       desc: "حلول متكاملة للمؤسسات والشركات الكبرى",
-      color: "#6366f1",
+      color: "#e9292c",
       features: [
         "إدارة جميع المنصات",
         "محتوى غير محدود",
@@ -80,7 +80,7 @@ const plans = {
       period: "/ month",
       currency: "$",
       desc: "Perfect for startups and small businesses",
-      color: "#6366f1",
+      color: "#e9292c",
       features: [
         "2 Social Media Platforms",
         "8 Monthly Post Designs",
@@ -120,7 +120,7 @@ const plans = {
       period: "/ month",
       currency: "$",
       desc: "Full-scale solutions for large organizations",
-      color: "#6366f1",
+      color: "#e9292c",
       features: [
         "All Platforms",
         "Unlimited Content",

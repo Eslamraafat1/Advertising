@@ -324,7 +324,7 @@ export default function Home() {
       </section>
 
       {/* ── Animated Stats ────────────────────── */}
-      <AnimatedStats locale={locale} />
+      <AnimatedStats />
 
       {/* ── Services ─────────────────────────── */}
       <section style={{ padding: "100px 24px", background: "var(--bg-muted)" }}>

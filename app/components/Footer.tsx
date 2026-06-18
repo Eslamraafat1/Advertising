@@ -23,18 +23,19 @@ export default function Footer() {
         }}>
           {/* Brand */}
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{
-                width: 38, height: 38,
-                background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
-                borderRadius: 10,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: "#fff", fontWeight: 800, fontSize: 18,
-              }}>A</div>
-              <span style={{ fontWeight: 800, fontSize: 20, letterSpacing: "-0.5px" }}>
-                Ad<span style={{ color: "#818cf8" }}>Vision</span>
-              </span>
-            </div>
+            <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+  
+        {/* استبدلنا الـ div بهذا الوسم */}
+        <img 
+          src="/white.png" 
+          alt="Logo" 
+          style={{ width: 70, height: 50, objectFit: "unset" }} 
+        />
+
+        {/* <span style={{ fontWeight: 800, fontSize: 22, color: "var(--text)", letterSpacing: "-0.5px" }}>
+          Ad<span style={{ color: "var(--primary)" }}>Vision</span>
+        </span> */}
+      </Link>
             <p style={{
               color: "#94a3b8",
               fontSize: 14.5,
@@ -116,7 +117,7 @@ export default function Footer() {
           gap: 16,
         }}>
           <p style={{ color: "#64748b", fontSize: 13.5 }}>
-            © {new Date().getFullYear()} AdVision Agency. {t.footer.allRights}
+            © {new Date().getFullYear()} Untold Agency. {t.footer.allRights}
           </p>
           {/* <Link href="/dashboard" style={{
             color: "#818cf8",

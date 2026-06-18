@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { Trophy, Users, TrendingUp, Star } from "lucide-react";
+import { useLanguage } from "./LanguageContext";
 
 interface CounterProps {
   end: number;
@@ -46,16 +48,16 @@ function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2000 }: Cou
 const statsData = {
   ar: [
     {
-      icon: "🏆",
+      iconName: "Trophy",
       value: 500,
       suffix: "+",
       label: "مشروع ناجح",
       sublabel: "منذ التأسيس",
-      color: "#6366f1",
-      bg: "linear-gradient(135deg, #eef2ff, #e0e7ff)",
+      color: "#e9292c",
+      bg: "linear-gradient(135deg, #fee3e5, #fcc4c6)",
     },
     {
-      icon: "👥",
+      iconName: "Users",
       value: 120,
       suffix: "+",
       label: "عميل راضٍ",
@@ -64,7 +66,7 @@ const statsData = {
       bg: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
     },
     {
-      icon: "📈",
+      iconName: "TrendingUp",
       value: 340,
       suffix: "%",
       label: "متوسط نمو العملاء",
@@ -73,7 +75,7 @@ const statsData = {
       bg: "linear-gradient(135deg, #fffbeb, #fef3c7)",
     },
     {
-      icon: "⭐",
+      iconName: "Star",
       value: 99,
       suffix: "%",
       label: "معدل الرضا",
@@ -84,16 +86,16 @@ const statsData = {
   ],
   en: [
     {
-      icon: "🏆",
+      iconName: "Trophy",
       value: 500,
       suffix: "+",
       label: "Successful Projects",
       sublabel: "Since launch",
-      color: "#6366f1",
-      bg: "linear-gradient(135deg, #eef2ff, #e0e7ff)",
+      color: "#e9292c",
+      bg: "linear-gradient(135deg, #fee3e5, #fcc4c6)",
     },
     {
-      icon: "👥",
+      iconName: "Users",
       value: 120,
       suffix: "+",
       label: "Happy Clients",
@@ -102,7 +104,7 @@ const statsData = {
       bg: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
     },
     {
-      icon: "📈",
+      iconName: "TrendingUp",
       value: 340,
       suffix: "%",
       label: "Average Client Growth",
@@ -111,7 +113,7 @@ const statsData = {
       bg: "linear-gradient(135deg, #fffbeb, #fef3c7)",
     },
     {
-      icon: "⭐",
+      iconName: "Star",
       value: 99,
       suffix: "%",
       label: "Satisfaction Rate",
@@ -122,7 +124,15 @@ const statsData = {
   ],
 };
 
-export default function AnimatedStats({ locale = "ar" }: { locale?: string }) {
+const iconMap: { [key: string]: React.ComponentType<any> } = {
+  Trophy,
+  Users,
+  TrendingUp,
+  Star,
+};
+
+export default function AnimatedStats() {
+  const { locale } = useLanguage();
   const currentStats = statsData[locale === "ar" ? "ar" : "en"];
 
   return (
@@ -137,7 +147,7 @@ export default function AnimatedStats({ locale = "ar" }: { locale?: string }) {
         position: "absolute", top: "50%", left: "50%",
         transform: "translate(-50%, -50%)",
         width: 600, height: 600,
-        background: "radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 70%)",
+        background: "radial-gradient(circle, rgba(233,41,44,0.05) 0%, transparent 70%)",
         borderRadius: "50%",
         pointerEvents: "none",
       }} />
@@ -146,14 +156,14 @@ export default function AnimatedStats({ locale = "ar" }: { locale?: string }) {
         <div style={{ textAlign: "center", marginBottom: 72 }}>
           <span style={{
             display: "inline-block",
-            background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+            background: "linear-gradient(135deg, #e9292c, #c41e21)",
             color: "#fff",
             fontWeight: 700,
             fontSize: 13,
             padding: "6px 20px",
             borderRadius: 100,
             marginBottom: 20,
-            boxShadow: "0 4px 16px rgba(99,102,241,0.3)",
+            boxShadow: "0 4px 16px rgba(233,41,44,0.3)",
           }}>
             {locale === "ar" ? "🔥 أرقام تتحدث عن نفسها" : "🔥 Numbers That Speak"}
           </span>
@@ -177,75 +187,89 @@ export default function AnimatedStats({ locale = "ar" }: { locale?: string }) {
           gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
           gap: 28,
         }}>
-          {currentStats.map((stat, i) => (
-            <div key={i} className="stat-card" style={{
-              background: stat.bg,
-              borderRadius: 24,
-              padding: "44px 32px",
-              textAlign: "center",
-              border: `1.5px solid ${stat.color}22`,
-              position: "relative",
-              overflow: "hidden",
-              transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-              cursor: "default",
-            }}>
-              {/* Glow orb */}
-              <div style={{
-                position: "absolute",
-                bottom: -30, right: -30,
-                width: 100, height: 100,
-                background: `radial-gradient(circle, ${stat.color}25, transparent)`,
-                borderRadius: "50%",
-              }} />
-
-              <div style={{
-                fontSize: 52,
-                marginBottom: 16,
-                display: "inline-block",
-                animation: `bounce-icon 2s ease-in-out infinite`,
-                animationDelay: `${i * 0.3}s`,
+          {currentStats.map((stat, i) => {
+            const IconComponent = iconMap[stat.iconName];
+            return (
+              <div key={i} className="stat-card" style={{
+                background: stat.bg,
+                borderRadius: 24,
+                padding: "44px 32px",
+                textAlign: "center",
+                border: `1.5px solid ${stat.color}22`,
+                position: "relative",
+                overflow: "hidden",
+                transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                cursor: "default",
               }}>
-                {stat.icon}
-              </div>
+                {/* Glow orb */}
+                <div style={{
+                  position: "absolute",
+                  bottom: -30, right: -30,
+                  width: 100, height: 100,
+                  background: `radial-gradient(circle, ${stat.color}25, transparent)`,
+                  borderRadius: "50%",
+                }} />
 
-              <div style={{
-                fontSize: "clamp(2.2rem, 4vw, 3rem)",
-                fontWeight: 900,
-                color: stat.color,
-                lineHeight: 1,
-                marginBottom: 10,
-              }}>
-                <AnimatedCounter end={stat.value} suffix={stat.suffix} duration={2000 + i * 200} />
-              </div>
+                {/* Icon */}
+                <div style={{
+                  display: "inline-block",
+                  padding: 12,
+                  background: "#fff",
+                  borderRadius: 12,
+                  marginBottom: 20,
+                  boxShadow: `0 4px 12px ${stat.color}15`,
+                }}>
+                  {IconComponent && (
+                    <IconComponent size={36} style={{ color: stat.color }} strokeWidth={1.5} />
+                  )}
+                </div>
 
-              <div style={{
-                fontSize: 17,
-                fontWeight: 800,
-                color: "var(--text)",
-                marginBottom: 6,
-              }}>
-                {stat.label}
-              </div>
+                {/* Value */}
+                <div style={{ marginBottom: 14, position: "relative", zIndex: 1 }}>
+                  <div style={{
+                    fontSize: "2.75rem",
+                    fontWeight: 800,
+                    color: stat.color,
+                    lineHeight: 1,
+                  }}>
+                    <AnimatedCounter
+                      end={stat.value}
+                      suffix={stat.suffix}
+                      duration={2000}
+                    />
+                  </div>
+                </div>
 
-              <div style={{
-                fontSize: 13,
-                color: "var(--text-muted)",
-                fontWeight: 600,
-              }}>
-                {stat.sublabel}
+                {/* Label */}
+                <p style={{
+                  fontSize: "1.125rem",
+                  fontWeight: 700,
+                  color: "var(--text)",
+                  margin: "8px 0",
+                  position: "relative",
+                  zIndex: 1,
+                }}>
+                  {stat.label}
+                </p>
+
+                {/* Sublabel */}
+                <p style={{
+                  fontSize: "0.875rem",
+                  color: "var(--text-muted)",
+                  position: "relative",
+                  zIndex: 1,
+                }}>
+                  {stat.sublabel}
+                </p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
       <style>{`
-        @keyframes bounce-icon {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
         .stat-card:hover {
-          transform: translateY(-10px) scale(1.02);
+          transform: translateY(-8px);
           box-shadow: 0 20px 50px rgba(0,0,0,0.12);
         }
       `}</style>

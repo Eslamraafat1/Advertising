@@ -5,10 +5,10 @@
 export const translations = {
   ar: {
     siteConfig: {
-      name: "AdVision",
+      name: "Untold",
       tagline: "وكالة الإبداع والتأثير",
       description: "نبتكر حلولاً إعلانية مدروسة تربط علامتك التجارية بجمهورك المستهدف وتحقق نتائج قابلة للقياس.",
-      email: "hello@advision.agency",
+      email: "hello@Untold.agency",
       phone: "+966 50 000 0000",
       address: "الرياض، المملكة العربية السعودية",
       workingHours: "الأحد – الخميس، ٩ص – ٦م",
@@ -40,7 +40,7 @@ export const translations = {
       sendAnother: "إرسال رسالة أخرى",
       loading: "⏳ جارٍ الإرسال...",
       submitBtn: "إرسال الرسالة",
-      whyUs: "لماذا AdVision؟",
+      whyUs: "لماذا Untold?",
     },
     heroData: {
       badge: "✦ وكالة الإبداع والتأثير",
@@ -60,15 +60,15 @@ export const translations = {
       ctaBannerText: "تواصل معنا اليوم واحصل على استشارة مجانية لتطوير استراتيجيتك التسويقية",
     },
     statsData: [
-      { value: "٢٥٠+", label: "عميل راضٍ", icon: "🤝" },
-      { value: "١٢٠٠+", label: "حملة ناجحة", icon: "🎯" },
-      { value: "٩٨٪", label: "رضا العملاء", icon: "⭐" },
-      { value: "١٠+", label: "سنوات خبرة", icon: "🏆" },
+      { value: "250+", label: "عميل راضٍ", icon: "Users" },
+      { value: "1200+", label: "حملة ناجحة", icon: "CheckCircle" },
+      { value: "98%", label: "رضا العملاء", icon: "Star" },
+      { value: "10+", label: "سنوات خبرة", icon: "Trophy" },
     ],
     servicesData: [
       {
         id: "digital-ads",
-        icon: "🎯",
+        icon: "📊",
         title: "الإعلان الرقمي",
         shortDesc: "حملات إعلانية مستهدفة على جميع المنصات الرقمية بأعلى معدلات التحويل.",
         price: "يبدأ من ٢٠٠٠ ريال/شهر",
@@ -77,7 +77,7 @@ export const translations = {
       },
       {
         id: "identity",
-        icon: "🎨",
+        icon: "📊",
         title: "تصميم الهوية البصرية",
         shortDesc: "تصميم هوية تجارية متكاملة تعكس قيم علامتك التجارية وتميزك.",
         price: "يبدأ من ٥٠٠٠ ريال",
@@ -86,7 +86,7 @@ export const translations = {
       },
       {
         id: "social",
-        icon: "📱",
+        icon: "📊",
         title: "إدارة السوشيال ميديا",
         shortDesc: "إدارة احترافية لحساباتك مع محتوى يومي مبتكر وتفاعل حقيقي.",
         price: "يبدأ من ٣٠٠٠ ريال/شهر",
@@ -95,7 +95,7 @@ export const translations = {
       },
       {
         id: "video",
-        icon: "🎬",
+        icon: "📊",
         title: "إنتاج المحتوى المرئي",
         shortDesc: "فيديوهات إعلانية ورؤيوية احترافية تحكي قصة علامتك بأسلوب مؤثر.",
         price: "يبدأ من ٤٠٠٠ ريال",
@@ -104,7 +104,7 @@ export const translations = {
       },
       {
         id: "seo",
-        icon: "🔍",
+        icon: "📊",
         title: "تحسين محركات البحث SEO",
         shortDesc: "ارتقِ بترتيب موقعك في Google واجذب زوار مستهدفين.",
         price: "يبدأ من ٢٥٠٠ ريال/شهر",
@@ -138,21 +138,21 @@ export const translations = {
         {
           name: "أحمد الشمري",
           role: "مدير تسويق، شركة النخبة",
-          text: "AdVision غيّرت طريقة تفكيرنا في التسويق الرقمي. النتائج تجاوزت توقعاتنا بكثير.",
+          text: "Untold غيّرت طريقة تفكيرنا في التسويق الرقمي. النتائج تجاوزت توقعاتنا بكثير.",
           rating: 5,
           avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop",
         },
         {
           name: "سارة القحطاني",
           role: "رائدة أعمال",
-          text: "تعاملت مع وكالات كثيرة لكن AdVision الأكثر احترافية والأسرع في التنفيذ. أنصح بها بشدة.",
+          text: "تعاملت مع وكالات كثيرة لكن Untold الأكثر احترافية والأسرع في التنفيذ. أنصح بها بشدة.",
           rating: 5,
           avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop",
         },
         {
           name: "محمد العتيبي",
           role: "مؤسس، براند ماكس",
-          text: "زادت مبيعاتنا ٣٠٠٪ خلال ٦ أشهر من العمل مع AdVision. فريق رائع!",
+          text: "زادت مبيعاتنا ٣٠٠٪ خلال ٦ أشهر من العمل مع Untold. فريق رائع!",
           rating: 5,
           avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop",
         },
@@ -179,7 +179,7 @@ export const translations = {
     aboutData: {
       badge: "من نحن",
       title: "قصتنا تبدأ بشغف الإبداع",
-      subtext: "تأسست AdVision عام ٢٠١٤ بحلم بسيط: نساعد كل علامة تجارية أن تُرى، تُسمع، وتُحبّ.",
+      subtext: "تأسست Untold عام ٢٠١٤ بحلم بسيط: نساعد كل علامة تجارية أن تُرى، تُسمع، وتُحبّ.",
       storyBadge: "قصتنا",
       storyTitle: "نبنى النجاح مع عملائنا، واحداً تلو الآخر",
       storyDesc1: "منذ تأسيسنا، عملنا مع أكثر من ٢٥٠ عميل في قطاعات متنوعة — من الشركات الناشئة حتى المؤسسات الكبرى.",
@@ -193,10 +193,10 @@ export const translations = {
       valuesBadge: "قيمنا",
       valuesTitle: "ما الذي يجعلنا مختلفين",
       valuesList: [
-        { icon: "💡", title: "الإبداع", desc: "نؤمن أن أفضل الحلول تولد من خارج الصندوق." },
-        { icon: "🎯", title: "الدقة", desc: "كل قرار مبني على بيانات وتحليل دقيق." },
-        { icon: "🤝", title: "الشراكة", desc: "نجاحك هو نجاحنا — نعمل كفريق واحد." },
-        { icon: "⚡", title: "السرعة", desc: "نلتزم بالمواعيد ونسلّم بجودة لا تتنازل." },
+        { icon: "Lightbulb", title: "الإبداع", desc: "نؤمن أن أفضل الحلول تولد من خارج الصندوق." },
+        { icon: "Target", title: "الدقة", desc: "كل قرار مبني على بيانات وتحليل دقيق." },
+        { icon: "Handshake", title: "الشراكة", desc: "نجاحك هو نجاحنا — نعمل كفريق واحد." },
+        { icon: "Zap", title: "السرعة", desc: "نلتزم بالمواعيد ونسلّم بجودة لا تتنازل." },
       ],
       teamBadge: "فريقنا",
       teamTitle: "العقول المبدعة خلف النجاح",
@@ -212,12 +212,12 @@ export const translations = {
       badge: "خدماتنا",
       title: "حلول إعلانية لكل احتياج",
       subtext: "من التصميم إلى الحملات الرقمية، نقدم خدمات متكاملة ترتقي بعلامتك التجارية",
-      whyTitle: "لماذا AdVision؟",
+      whyTitle: "لماذا Untold?",
       whyList: [
-        { icon: "🎯", title: "نتائج مضمونة", desc: "نعمل على أساس الأهداف ونتحمل مسؤولية النتائج." },
-        { icon: "📊", title: "شفافية كاملة", desc: "تقارير تفصيلية ومفهومة لكل ريال تنفقه." },
-        { icon: "⚡", title: "تنفيذ سريع", desc: "لا تأخير، نلتزم بالمواعيد في كل مشروع." },
-        { icon: "🤝", title: "دعم مستمر", desc: "فريقنا متاح دائماً للإجابة على استفساراتك." },
+        { icon: "", title: "نتائج مضمونة", desc: "نعمل على أساس الأهداف ونتحمل مسؤولية النتائج." },
+        { icon: "", title: "شفافية كاملة", desc: "تقارير تفصيلية ومفهومة لكل ريال تنفقه." },
+        { icon: "", title: "تنفيذ سريع", desc: "لا تأخير، نلتزم بالمواعيد في كل مشروع." },
+        { icon: "", title: "دعم مستمر", desc: "فريقنا متاح دائماً للإجابة على استفساراتك." },
       ],
       ctaTitle: "مستعد تبدأ معنا؟",
       ctaSub: "استشارة مجانية في انتظارك",
@@ -229,7 +229,7 @@ export const translations = {
       subtext: "أرسل لنا رسالة وسيتواصل معك أحد خبرائنا في أقرب وقت ممكن",
       infoTitle: "معلومات الاتصال",
       infoList: [
-        { icon: "📧", label: "البريد الإلكتروني", value: "hello@advision.agency" },
+        { icon: "📫", label: "البريد الإلكتروني", value: "hello@Untold.agency" },
         { icon: "📞", label: "الهاتف", value: "+966 50 000 0000" },
         { icon: "📍", label: "العنوان", value: "الرياض، المملكة العربية السعودية" },
         { icon: "⏰", label: "ساعات العمل", value: "الأحد – الخميس، ٩ص – ٦م" },
@@ -290,10 +290,10 @@ export const translations = {
   },
   en: {
     siteConfig: {
-      name: "AdVision",
+      name: "Untold",
       tagline: "The Agency of Creativity & Impact",
       description: "We craft strategic advertising solutions that connect your brand with your target audience and deliver measurable results.",
-      email: "hello@advision.agency",
+      email: "hello@Untold.agency",
       phone: "+966 50 000 0000",
       address: "Riyadh, Saudi Arabia",
       workingHours: "Sunday – Thursday, 9AM – 6PM",
@@ -325,7 +325,7 @@ export const translations = {
       sendAnother: "Send Another Message",
       loading: "⏳ Sending...",
       submitBtn: "Send Message",
-      whyUs: "Why AdVision?",
+      whyUs: "Why Untold?",
     },
     heroData: {
       badge: "✦ Creativity & Impact Agency",
@@ -353,7 +353,7 @@ export const translations = {
     servicesData: [
       {
         id: "digital-ads",
-        icon: "🎯",
+        icon: "📊",
         title: "Digital Advertising",
         shortDesc: "Targeted advertising campaigns across all digital platforms with high conversion rates.",
         price: "Starts from 2,000 SAR/month",
@@ -362,7 +362,7 @@ export const translations = {
       },
       {
         id: "identity",
-        icon: "🎨",
+        icon: "📊",
         title: "Brand Identity Design",
         shortDesc: "Complete brand identity designs reflecting your values and setting you apart.",
         price: "Starts from 5,000 SAR",
@@ -371,7 +371,7 @@ export const translations = {
       },
       {
         id: "social",
-        icon: "📱",
+        icon: "📊",
         title: "Social Media Management",
         shortDesc: "Professional account management with daily creative content and organic growth.",
         price: "Starts from 3,000 SAR/month",
@@ -380,7 +380,7 @@ export const translations = {
       },
       {
         id: "video",
-        icon: "🎬",
+        icon: "📊",
         title: "Visual Content Production",
         shortDesc: "Professional promotional and story-driven videos that communicate with style.",
         price: "Starts from 4,000 SAR",
@@ -389,7 +389,7 @@ export const translations = {
       },
       {
         id: "seo",
-        icon: "🔍",
+        icon: "📊",
         title: "Search Engine Optimization",
         shortDesc: "Boost your Google rankings and attract organic, high-intent traffic.",
         price: "Starts from 2,500 SAR/month",
@@ -423,31 +423,24 @@ export const translations = {
         {
           name: "Ahmed Al-Shammari",
           role: "Marketing Director, Al-Nokhba Co.",
-          text: "AdVision changed the way we think about digital marketing. The results surpassed our expectations.",
+          text: "Untold changed the way we think about digital marketing. The results surpassed our expectations.",
           rating: 5,
           avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop",
         },
         {
           name: "Sara Al-Qahtani",
           role: "Entrepreneur",
-          text: "I have worked with many agencies, but AdVision is by far the most professional and prompt. Strongly recommended.",
+          text: "I have worked with many agencies, but Untold is by far the most professional and prompt. Strongly recommended.",
           rating: 5,
           avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop",
         },
         {
           name: "Mohamed Al-Otaibi",
           role: "Founder, BrandMax",
-          text: "Our sales increased by 300% within 6 months of working with AdVision. A phenomenal team!",
+          text: "Our sales increased by 300% within 6 months of working with Untold. A phenomenal team!",
           rating: 5,
           avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop",
-        },
-        {
-          name: "Latifa Al-Dousari",
-          role: "CEO, Reyadah Group",
-          text: "Professionalism and creativity in every tiny detail. I will never work with any other agency again.",
-          rating: 5,
-          avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150&auto=format&fit=crop",
-        },
+        }
       ]
     },
     faqData: {
@@ -464,7 +457,7 @@ export const translations = {
     aboutData: {
       badge: "About Us",
       title: "Our Story Begins with a Passion for Creativity",
-      subtext: "Founded in 2014, AdVision was built on a simple dream: to help every brand be seen, heard, and loved.",
+      subtext: "Founded in 2014, Untold was built on a simple dream: to help every brand be seen, heard, and loved.",
       storyBadge: "Our Story",
       storyTitle: "Building Success with Our Clients, One by One",
       storyDesc1: "Since our launch, we have partnered with over 250 clients across various sectors — ranging from hot startups to large enterprises.",
@@ -497,7 +490,7 @@ export const translations = {
       badge: "Our Services",
       title: "Advertising Solutions Tailored for Every Need",
       subtext: "From creative designs to high-performance campaigns, we deliver end-to-end services to scale your brand.",
-      whyTitle: "Why Choose AdVision?",
+      whyTitle: "Why Choose Untold?",
       whyList: [
         { icon: "🎯", title: "Guaranteed Results", desc: "We focus on key outcomes and stand accountable for campaign performance." },
         { icon: "📊", title: "Total Transparency", desc: "Understand exactly where your marketing spend goes with easy, detailed reports." },
@@ -514,7 +507,7 @@ export const translations = {
       subtext: "Send us a message and one of our experts will get in touch shortly.",
       infoTitle: "Contact Info",
       infoList: [
-        { icon: "📧", label: "Email Address", value: "hello@advision.agency" },
+        { icon: "📧", label: "Email Address", value: "hello@Untold.agency" },
         { icon: "📞", label: "Phone Number", value: "+966 50 000 0000" },
         { icon: "📍", label: "Office Address", value: "Riyadh, Kingdom of Saudi Arabia" },
         { icon: "⏰", label: "Working Hours", value: "Sunday – Thursday, 9AM – 6PM" },

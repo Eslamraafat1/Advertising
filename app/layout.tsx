@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 import { LanguageProvider } from "./components/LanguageContext";
 
 export const metadata: Metadata = {
-  title: "AdVision Agency | Premium Advertising & Marketing Agency",
+  title: "Untold Agency | Premium Advertising & Marketing Agency",
   description: "وكالة دعاية وإعلان متخصصة في تقديم حلول تسويقية مبتكرة. Professional marketing and advertising agency delivering measurable results.",
 };
 

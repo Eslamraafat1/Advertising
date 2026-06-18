@@ -50,7 +50,7 @@ export default function Navbar() {
         height: 72,
       }}>
         {/* Logo */}
-        <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+        {/* <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{
             width: 40, height: 40,
             background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
@@ -62,7 +62,20 @@ export default function Navbar() {
           <span style={{ fontWeight: 800, fontSize: 22, color: "var(--text)", letterSpacing: "-0.5px" }}>
             Ad<span style={{ color: "var(--primary)" }}>Vision</span>
           </span>
-        </Link>
+        </Link> */}
+        <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+  
+        {/* استبدلنا الـ div بهذا الوسم */}
+        <img 
+          src="/black.png" 
+          alt="Logo" 
+          style={{ width: 70, height: 50, objectFit: "unset" }} 
+        />
+
+        {/* <span style={{ fontWeight: 800, fontSize: 22, color: "var(--text)", letterSpacing: "-0.5px" }}>
+          Ad<span style={{ color: "var(--primary)" }}>Vision</span>
+        </span> */}
+      </Link>
 
         {/* Desktop Links */}
         <div style={{ display: "flex", gap: 6, alignItems: "center" }} className="desktop-nav">
