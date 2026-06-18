@@ -60,10 +60,10 @@ export const translations = {
       ctaBannerText: "تواصل معنا اليوم واحصل على استشارة مجانية لتطوير استراتيجيتك التسويقية",
     },
     statsData: [
-      { value: "250+", label: "عميل راضٍ", icon: "Users" },
-      { value: "1200+", label: "حملة ناجحة", icon: "CheckCircle" },
-      { value: "98%", label: "رضا العملاء", icon: "Star" },
-      { value: "10+", label: "سنوات خبرة", icon: "Trophy" },
+      { value: "250+", label: "عميل راضٍ", icon: "" },
+      { value: "1200+", label: "حملة ناجحة", icon: "" },
+      { value: "98%", label: "رضا العملاء", icon: "" },
+      { value: "10+", label: "سنوات خبرة", icon: "" },
     ],
     servicesData: [
       {
@@ -193,10 +193,10 @@ export const translations = {
       valuesBadge: "قيمنا",
       valuesTitle: "ما الذي يجعلنا مختلفين",
       valuesList: [
-        { icon: "Lightbulb", title: "الإبداع", desc: "نؤمن أن أفضل الحلول تولد من خارج الصندوق." },
-        { icon: "Target", title: "الدقة", desc: "كل قرار مبني على بيانات وتحليل دقيق." },
-        { icon: "Handshake", title: "الشراكة", desc: "نجاحك هو نجاحنا — نعمل كفريق واحد." },
-        { icon: "Zap", title: "السرعة", desc: "نلتزم بالمواعيد ونسلّم بجودة لا تتنازل." },
+        { icon: "", title: "الإبداع", desc: "نؤمن أن أفضل الحلول تولد من خارج الصندوق." },
+        { icon: "", title: "الدقة", desc: "كل قرار مبني على بيانات وتحليل دقيق." },
+        { icon: "", title: "الشراكة", desc: "نجاحك هو نجاحنا — نعمل كفريق واحد." },
+        { icon: "", title: "السرعة", desc: "نلتزم بالمواعيد ونسلّم بجودة لا تتنازل." },
       ],
       teamBadge: "فريقنا",
       teamTitle: "العقول المبدعة خلف النجاح",

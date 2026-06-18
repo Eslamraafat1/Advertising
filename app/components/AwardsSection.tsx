@@ -70,7 +70,7 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
   return (
     <section style={{
       padding: "110px 24px",
-      background: "linear-gradient(160deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%)",
+      background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
       position: "relative",
       overflow: "hidden",
     }}>
@@ -84,9 +84,9 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
           <Reveal direction="down">
             <span style={{
               display: "inline-block",
-              background: "rgba(99,102,241,0.2)",
-              border: "1px solid rgba(99,102,241,0.4)",
-              color: "#a5b4fc",
+              background: "rgba(0, 0, 0, 0.2)",
+              border: "1px solid rgba(0, 0, 0, 0.4)",
+              color: "#ffffff",
               fontWeight: 700,
               fontSize: 13,
               padding: "7px 22px",

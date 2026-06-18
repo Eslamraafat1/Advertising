@@ -96,7 +96,7 @@ export default function AboutPage() {
     <div>
       {/* ── Hero with particle bg ────────────── */}
       <section style={{
-        background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%)",
+        background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
         padding: "100px 24px 80px",
         textAlign: "center",
         position: "relative",
@@ -122,7 +122,7 @@ export default function AboutPage() {
               display: "inline-block",
               background: "rgba(99,102,241,0.2)",
               border: "1px solid rgba(99,102,241,0.4)",
-              color: "#a5b4fc",
+              color: "#fff",
               fontWeight: 700, fontSize: 13,
               padding: "6px 20px", borderRadius: 100, marginBottom: 20,
             }}>{ad.badge}</span>
@@ -153,10 +153,11 @@ export default function AboutPage() {
                   <div style={{
                     fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900,
                     background: "linear-gradient(135deg, #6366f1, #a5b4fc)",
+                    color:"#fff",
                     WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
                     lineHeight: 1,
                   }}>{s.value}</div>
-                  <div style={{ color: "#94a3b8", fontSize: 13, fontWeight: 600, marginTop: 6 }}>{s.label}</div>
+                  <div style={{ color: "#fff", fontSize: 13, fontWeight: 600, marginTop: 6 }}>{s.label}</div>
                 </div>
               ))}
             </div>

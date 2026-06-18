@@ -84,7 +84,7 @@ export default function ServicesPage() {
     <div>
       {/* ── Header ────────────────────────────── */}
       <section style={{
-        background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #312e81 100%)",
+        background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
         padding: "100px 24px 80px",
         textAlign: "center",
         position: "relative",

@@ -201,7 +201,7 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
               onMouseLeave={() => setHoveredPlan(null)}
               style={{
                 background: plan.popular
-                  ? "linear-gradient(145deg, #4f46e5, #7c3aed)"
+                  ? "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)"
                   : "var(--bg-card)",
                 borderRadius: 28,
                 padding: "44px 36px",

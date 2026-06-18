@@ -58,7 +58,7 @@ export default function PortfolioPage() {
     <div>
       {/* ── Hero ─────────────────────────────── */}
       <section style={{
-        background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)",
+        background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
         padding: "100px 24px 80px",
         textAlign: "center",
         position: "relative",
@@ -83,9 +83,9 @@ export default function PortfolioPage() {
           <Reveal direction="down">
             <span style={{
               display: "inline-block",
-              background: "rgba(99,102,241,0.2)",
+              background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
               border: "1px solid rgba(99,102,241,0.4)",
-              color: "#a5b4fc",
+              color: "#fff",
               fontWeight: 700, fontSize: 13,
               padding: "6px 20px", borderRadius: 100, marginBottom: 20,
             }}>
@@ -114,8 +114,8 @@ export default function PortfolioPage() {
                 { num: "15", label: locale === "ar" ? "دولة" : "Countries" },
               ].map((m, i) => (
                 <div key={i} style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#a5b4fc", lineHeight: 1 }}>{m.num}</div>
-                  <div style={{ fontSize: 13, color: "#64748b", fontWeight: 600, marginTop: 6 }}>{m.label}</div>
+                  <div style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{m.num}</div>
+                  <div style={{ fontSize: 13, color: "#fff", fontWeight: 600, marginTop: 6 }}>{m.label}</div>
                 </div>
               ))}
             </div>
@@ -212,7 +212,7 @@ export default function PortfolioPage() {
                     {/* Category tag */}
                     <div style={{
                       position: "absolute", top: 16, left: locale === "ar" ? "auto" : 16, right: locale === "ar" ? 16 : "auto",
-                      background: "rgba(99,102,241,0.9)", backdropFilter: "blur(6px)",
+                      background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)", backdropFilter: "blur(6px)",
                       color: "#fff", padding: "5px 14px", borderRadius: 100,
                       fontSize: 12, fontWeight: 700,
                     }}>
@@ -221,7 +221,7 @@ export default function PortfolioPage() {
                     {/* Hover overlay */}
                     <div style={{
                       position: "absolute", inset: 0,
-                      background: "linear-gradient(to top, rgba(99,102,241,0.9), transparent)",
+                      background: "linear-gradient(to top, #dc2528, transparent)",
                       opacity: hoveredProject === proj.id ? 1 : 0,
                       transition: "opacity 0.4s ease",
                       display: "flex", alignItems: "flex-end", padding: "20px 20px",
@@ -276,7 +276,7 @@ export default function PortfolioPage() {
       {/* ── CTA ───────────────────────────────── */}
       <section style={{
         padding: "100px 24px",
-        background: "linear-gradient(135deg, #0f172a, #1e1b4b)",
+        background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
         textAlign: "center",
         position: "relative", overflow: "hidden",
       }}>
@@ -299,7 +299,7 @@ export default function PortfolioPage() {
               color: "#fff", padding: "16px 48px",
               borderRadius: 14, fontWeight: 800, fontSize: 17,
               display: "inline-block",
-              boxShadow: "0 8px 28px rgba(99,102,241,0.4)",
+              boxShadow: "0 8px 28px #dc2528",
               transition: "all 0.25s ease",
             }}
             className="portfolio-cta-btn"
