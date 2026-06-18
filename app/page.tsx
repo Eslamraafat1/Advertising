@@ -1,0 +1,656 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import { useLanguage } from "./components/LanguageContext";
+import Reveal from "./components/Reveal";
+import HeroCarousel from "./components/HeroCarousel";
+import AnimatedStats from "./components/AnimatedStats";
+import PricingSection from "./components/PricingSection";
+import AwardsSection from "./components/AwardsSection";
+import WorkShowcase from "./components/WorkShowcase";
+import type { ServiceDataItem, FaqItem, ProcessStep, TestimonialItem } from "./lib/data";
+
+function ServiceCard({ s }: { s: ServiceDataItem }) {
+  const [hovered, setHovered] = useState(false);
+  const { t } = useLanguage();
+
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: hovered
+          ? "linear-gradient(135deg, var(--primary), var(--primary-dark))"
+          : "var(--bg-card)",
+        borderRadius: "var(--radius-lg)",
+        padding: 32,
+        border: `1.5px solid ${hovered ? "transparent" : "var(--border)"}`,
+        boxShadow: hovered ? "0 20px 50px rgba(99,102,241,0.3)" : "var(--shadow-sm)",
+        transform: hovered ? "translateY(-10px) scale(1.02)" : "none",
+        transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        cursor: "default",
+        display: "flex",
+        flexDirection: "column",
+        gap: 16,
+      }}
+    >
+      <div style={{
+        width: 60, height: 60,
+        background: hovered ? "rgba(255,255,255,0.2)" : "var(--primary-light)",
+        borderRadius: 16,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: 30, transition: "all 0.3s ease",
+        color: hovered ? "#fff" : "var(--primary)",
+        boxShadow: hovered ? "0 4px 16px rgba(255,255,255,0.2)" : "none",
+      }}>
+        {s.icon}
+      </div>
+      <h3 style={{ fontWeight: 800, fontSize: 19, color: hovered ? "#fff" : "var(--text)" }}>{s.title}</h3>
+      <p style={{ color: hovered ? "rgba(255,255,255,0.85)" : "var(--text-muted)", fontSize: 14.5, lineHeight: 1.8 }}>{s.shortDesc}</p>
+      <Link href="/services" style={{
+        marginTop: "auto",
+        color: hovered ? "#fff" : "var(--primary)",
+        fontWeight: 700, fontSize: 14,
+        textDecoration: "none",
+        display: "inline-flex", alignItems: "center", gap: 6,
+        transition: "gap 0.2s",
+      }}
+      onMouseEnter={(e) => {
+        const arrow = e.currentTarget.querySelector(".arrow");
+        if (arrow) (arrow as HTMLElement).style.transform = "translateX(4px)";
+      }}
+      onMouseLeave={(e) => {
+        const arrow = e.currentTarget.querySelector(".arrow");
+        if (arrow) (arrow as HTMLElement).style.transform = "translateX(0)";
+      }}
+      >
+        <span>{t.common.readMore}</span>
+        <span className="arrow" style={{ transition: "transform 0.2s", display: "inline-block" }}>→</span>
+      </Link>
+    </div>
+  );
+}
+
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{
+      background: "var(--bg-card)",
+      borderRadius: "var(--radius)",
+      border: `1.5px solid ${open ? "var(--primary)" : "var(--border)"}`,
+      overflow: "hidden",
+      transition: "all 0.3s ease",
+      boxShadow: open ? "var(--shadow-md)" : "none",
+    }}>
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          width: "100%", background: "none", border: "none",
+          padding: "20px 24px",
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          cursor: "pointer", fontFamily: "inherit",
+          textAlign: "inherit",
+        }}
+      >
+        <span style={{ fontWeight: 700, fontSize: 16.5, color: "var(--text)" }}>{q}</span>
+        <span style={{
+          color: "var(--primary)", fontSize: 24, fontWeight: 300,
+          transform: open ? "rotate(45deg)" : "none",
+          transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+          flexShrink: 0,
+        }}>+</span>
+      </button>
+      {open && (
+        <div style={{
+          padding: "0 24px 20px",
+          color: "var(--text-muted)",
+          fontSize: 15,
+          lineHeight: 1.8,
+          borderTop: "1px solid var(--border)"
+        }}>
+          {a}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Tools Ticker ─────────────────────── */
+const techTools: string[] = [];
+
+function ToolsTicker() {
+  return (
+    <div style={{ display: "flex", overflow: "hidden", gap: 16, padding: "8px 0" }}>
+      <div style={{
+        display: "flex",
+        gap: 12,
+        animation: "ticker-scroll 20s linear infinite",
+        flexShrink: 0,
+      }}>
+        {[...techTools, ...techTools].map((tool, i) => (
+          <span key={i} style={{
+            background: "rgba(99,102,241,0.08)",
+            border: "1px solid rgba(99,102,241,0.15)",
+            color: "var(--primary)",
+            padding: "6px 18px",
+            borderRadius: 100,
+            fontSize: 13,
+            fontWeight: 600,
+            whiteSpace: "nowrap",
+            flexShrink: 0,
+          }}>
+            {tool}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function Home() {
+  const { locale, t } = useLanguage();
+
+  return (
+    <div>
+      {/* ── Hero Carousel ─────────────────────── */}
+      <HeroCarousel />
+
+      {/* ── Hero Info Split ───────────────────── */}
+      <section style={{
+        background: "linear-gradient(135deg, #f8fafc 0%, #eef2ff 60%, #fef3c7 100%)",
+        padding: "120px 24px 100px",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        <div style={{ position: "absolute", top: -100, right: -100, width: 450, height: 450, background: "radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -80, left: -60, width: 350, height: 350, background: "radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+
+        <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "1.1fr 0.9fr",
+            gap: 56,
+            alignItems: "center",
+          }} className="hero-split">
+            <div style={{ textAlign: "start" }} className="hero-text">
+              <Reveal direction="down">
+                <span style={{
+                  display: "inline-block",
+                  background: "var(--primary-light)",
+                  color: "var(--primary)",
+                  fontWeight: 700,
+                  fontSize: 14,
+                  padding: "8px 22px",
+                  borderRadius: 100,
+                  marginBottom: 24,
+                  boxShadow: "0 4px 12px rgba(99, 102, 241, 0.08)"
+                }}>
+                  {t.heroData.badge}
+                </span>
+              </Reveal>
+              
+              <Reveal direction="up" delay={100}>
+                <h1 style={{
+                  fontSize: "clamp(2.5rem, 5vw, 3.8rem)",
+                  fontWeight: 900,
+                  lineHeight: 1.15,
+                  color: "var(--text)",
+                  marginBottom: 24,
+                  letterSpacing: "-0.5px"
+                }}>
+                  {t.heroData.headline1}{" "}
+                  <span style={{
+                    background: "linear-gradient(135deg, var(--primary), var(--accent))",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent"
+                  }}>
+                    {t.heroData.headline2}
+                  </span>
+                </h1>
+              </Reveal>
+
+              <Reveal direction="up" delay={200}>
+                <p style={{
+                  fontSize: 18,
+                  color: "var(--text-muted)",
+                  maxWidth: 580,
+                  marginBottom: 44,
+                  lineHeight: 1.85
+                }}>
+                  {t.heroData.subtext}
+                </p>
+              </Reveal>
+
+              <Reveal direction="up" delay={300}>
+                <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }} className="hero-ctas">
+                  <Link href={t.heroData.cta1.href} style={{
+                    textDecoration: "none",
+                    background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                    color: "#fff",
+                    padding: "16px 36px",
+                    borderRadius: 14,
+                    fontWeight: 700,
+                    fontSize: 17,
+                    boxShadow: "0 6px 24px rgba(99,102,241,0.35)",
+                    transition: "all 0.2s"
+                  }}
+                  className="btn-glow"
+                  >
+                    {t.heroData.cta1.label}
+                  </Link>
+                  <Link href={t.heroData.cta2.href} style={{
+                    textDecoration: "none",
+                    background: "#fff",
+                    color: "var(--primary)",
+                    padding: "16px 36px",
+                    borderRadius: 14,
+                    fontWeight: 700,
+                    fontSize: 17,
+                    border: "2px solid var(--primary-light)",
+                    transition: "all 0.2s"
+                  }}
+                  className="btn-outline"
+                  >
+                    {t.heroData.cta2.label}
+                  </Link>
+                </div>
+              </Reveal>
+
+              {/* Tools ticker */}
+              <Reveal direction="up" delay={400}>
+                <div style={{ marginTop: 44, overflow: "hidden" }}>
+                  <ToolsTicker />
+                </div>
+              </Reveal>
+
+              <Reveal direction="up" delay={500}>
+                <div style={{ display: "flex", gap: 16, marginTop: 28, flexWrap: "wrap" }}>
+                  {t.heroData.badges.map((b: string, i: number) => (
+                    <span key={i} style={{
+                      background: "#fff",
+                      border: "1px solid var(--border)",
+                      borderRadius: 100,
+                      padding: "8px 18px",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      color: "var(--text-muted)",
+                      boxShadow: "var(--shadow-sm)"
+                    }}>{b}</span>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Hero Image */}
+            <div className="hero-img-container">
+              <Reveal direction="left" delay={200}>
+                <div style={{ position: "relative" }}>
+                  <div style={{
+                    position: "absolute",
+                    top: 15,
+                    left: locale === "ar" ? -15 : 15,
+                    right: locale === "ar" ? 15 : -15,
+                    bottom: -15,
+                    background: "rgba(99, 102, 241, 0.15)",
+                    borderRadius: 24,
+                    zIndex: 1,
+                    filter: "blur(4px)"
+                  }} />
+                  <Image
+                    src={t.heroData.image}
+                    alt={t.heroData.imageAlt}
+                    width={900}
+                    height={600}
+                    unoptimized
+                    style={{
+                      width: "100%",
+                      borderRadius: 24,
+                      position: "relative",
+                      zIndex: 2,
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.12)",
+                      border: "4px solid #fff",
+                      transform: locale === "ar" ? "rotate(-1.5deg)" : "rotate(1.5deg)",
+                      transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                    }}
+                    className="hero-image"
+                  />
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Animated Stats ────────────────────── */}
+      <AnimatedStats locale={locale} />
+
+      {/* ── Services ─────────────────────────── */}
+      <section style={{ padding: "100px 24px", background: "var(--bg-muted)" }}>
+        <div style={{ maxWidth: 1150, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 64 }}>
+            <Reveal direction="down">
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 100, marginBottom: 16 }}>{t.common.exploreServices}</span>
+            </Reveal>
+            <Reveal direction="up" delay={100}>
+              <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)", marginBottom: 16 }}>{t.homeData.servicesTitle}</h2>
+            </Reveal>
+            <Reveal direction="up" delay={200}>
+              <p style={{ color: "var(--text-muted)", fontSize: 16.5, maxWidth: 540, margin: "0 auto" }}>{t.homeData.servicesSubtext}</p>
+            </Reveal>
+          </div>
+          
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 32 }}>
+            {t.servicesData.map((s: ServiceDataItem, i: number) => (
+              <Reveal key={s.id} delay={i * 100} direction="up">
+                <ServiceCard s={s} />
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal direction="up" delay={200}>
+            <div style={{ textAlign: "center", marginTop: 56 }}>
+              <Link href="/services" style={{
+                textDecoration: "none",
+                display: "inline-block",
+                background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                color: "#fff",
+                padding: "15px 40px",
+                borderRadius: 12,
+                fontWeight: 700,
+                fontSize: 16.5,
+                boxShadow: "0 4px 16px rgba(99,102,241,0.2)"
+              }}>
+                {t.common.allServices} &rarr;
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Work Showcase (Bento Grid) ─────────── */}
+      <WorkShowcase locale={locale} />
+
+      {/* ── Process ──────────────────────────── */}
+      <section style={{ padding: "100px 24px", background: "var(--bg-muted)" }}>
+        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 64 }}>
+            <Reveal direction="down">
+              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 100, marginBottom: 16 }}>{t.processData.badge}</span>
+            </Reveal>
+            <Reveal direction="up" delay={100}>
+              <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)" }}>{t.processData.title}</h2>
+            </Reveal>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 32 }}>
+            {t.processData.steps.map((p: ProcessStep, i: number) => (
+              <Reveal key={i} delay={i * 100} direction="up">
+                <div style={{
+                  background: "var(--bg-card)",
+                  borderRadius: "var(--radius-lg)",
+                  padding: 32,
+                  textAlign: "center",
+                  border: "1px solid var(--border)",
+                  position: "relative",
+                  transition: "all 0.3s ease",
+                }}
+                className="process-card"
+                >
+                  <div style={{
+                    width: 58, height: 58,
+                    background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                    borderRadius: "50%",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    margin: "0 auto 20px",
+                    color: "#fff",
+                    fontWeight: 900,
+                    fontSize: 22,
+                    boxShadow: "0 4px 12px rgba(99, 102, 241, 0.2)"
+                  }}>
+                    {p.step}
+                  </div>
+                  <h3 style={{ fontWeight: 800, fontSize: 18, color: "var(--text)", marginBottom: 12 }}>{p.title}</h3>
+                  <p style={{ color: "var(--text-muted)", fontSize: 14.5, lineHeight: 1.8 }}>{p.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Pricing ───────────────────────────── */}
+      <PricingSection locale={locale} />
+
+      {/* ── Testimonials ─────────────────────── */}
+      <section style={{ padding: "100px 24px", background: "var(--bg)" }}>
+        <div style={{ maxWidth: 1150, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 60 }}>
+            <Reveal direction="down">
+              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 100, marginBottom: 16 }}>{t.testimonialsData.badge}</span>
+            </Reveal>
+            <Reveal direction="up" delay={100}>
+              <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)" }}>{t.testimonialsData.title}</h2>
+            </Reveal>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32 }}>
+            {t.testimonialsData.list.map((item: TestimonialItem, i: number) => (
+              <Reveal key={i} delay={i * 100} direction="up">
+                <div style={{
+                  background: "var(--bg-card)",
+                  borderRadius: "var(--radius-lg)",
+                  padding: 32,
+                  border: "1px solid var(--border)",
+                  boxShadow: "var(--shadow-sm)",
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
+                  transition: "all 0.3s ease",
+                }}
+                className="testimonial-card"
+                >
+                  <div style={{ color: "var(--accent)", fontSize: 20, marginBottom: 16 }}>{"★".repeat(item.rating)}</div>
+                  <p style={{ color: "var(--text)", fontSize: 15.5, lineHeight: 1.85, marginBottom: 28, flexGrow: 1 }}>{`\"${item.text}\"`}</p>
+                  
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: "auto" }}>
+                    <Image
+                      src={item.avatar}
+                      alt={item.name}
+                      width={48}
+                      height={48}
+                      unoptimized
+                      style={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        border: "2px solid var(--primary-light)"
+                      }}
+                    />
+                    <div>
+                      <div style={{ fontWeight: 800, fontSize: 15, color: "var(--text)" }}>{item.name}</div>
+                      <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 2 }}>{item.role}</div>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Awards & Recognition ──────────────── */}
+      <AwardsSection locale={locale} />
+
+      {/* ── FAQ ──────────────────────────────── */}
+      <section style={{ padding: "100px 24px", background: "var(--bg)" }}>
+        <div style={{ maxWidth: 800, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <Reveal direction="down">
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 100, marginBottom: 16 }}>{t.faqData.badge}</span>
+            </Reveal>
+            <Reveal direction="up" delay={100}>
+              <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)" }}>{t.faqData.title}</h2>
+            </Reveal>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {t.faqData.list.map((item: FaqItem, i: number) => (
+              <Reveal key={i} delay={i * 50} direction="up">
+                <FaqItem q={item.q} a={item.a} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA Banner ───────────────────────── */}
+      <section style={{
+        padding: "100px 24px",
+        background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden"
+      }}>
+        <div style={{ position: "absolute", top: -80, left: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "50%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -80, right: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "50%", pointerEvents: "none" }} />
+        {/* Animated rings */}
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600, height: 600, border: "1px solid rgba(255,255,255,0.06)", borderRadius: "50%", animation: "ring-pulse 3s ease-in-out infinite", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 400, height: 400, border: "1px solid rgba(255,255,255,0.08)", borderRadius: "50%", animation: "ring-pulse 3s ease-in-out infinite 0.5s", pointerEvents: "none" }} />
+
+        <div style={{ maxWidth: 700, margin: "0 auto", position: "relative" }}>
+          <Reveal direction="down">
+            <h2 style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.2rem)", fontWeight: 900, color: "#fff", marginBottom: 20 }}>{t.homeData.ctaBannerTitle}</h2>
+          </Reveal>
+          <Reveal direction="up" delay={100}>
+            <p style={{ color: "#c7d2fe", fontSize: 18.5, marginBottom: 44, lineHeight: 1.8 }}>
+              {t.homeData.ctaBannerText}
+            </p>
+          </Reveal>
+          
+          <Reveal direction="up" delay={200}>
+            <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href="/contact" style={{
+                textDecoration: "none",
+                background: "#fff",
+                color: "var(--primary)",
+                padding: "16px 44px",
+                borderRadius: 14,
+                fontWeight: 800,
+                fontSize: 17,
+                boxShadow: "0 8px 28px rgba(0,0,0,0.18)",
+                display: "inline-block",
+                transition: "all 0.2s"
+              }}
+              className="btn-glow-white"
+              >
+                {t.common.contactUsNow} &rarr;
+              </Link>
+              <Link href="/services" style={{
+                textDecoration: "none",
+                background: "rgba(255,255,255,0.15)",
+                color: "#fff",
+                padding: "16px 44px",
+                borderRadius: 14,
+                fontWeight: 700,
+                fontSize: 17,
+                border: "2px solid rgba(255,255,255,0.3)",
+                display: "inline-block",
+                transition: "all 0.2s"
+              }}
+              className="btn-outline-white"
+              >
+                {t.common.exploreServices}
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Global styles */}
+      <style>{`
+        @keyframes ticker-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes ring-pulse {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+          50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.8; }
+        }
+        .btn-glow:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(99,102,241,0.45) !important;
+        }
+        .btn-outline:hover {
+          background: var(--primary-light) !important;
+          border-color: var(--primary) !important;
+          color: var(--primary) !important;
+          transform: translateY(-2px);
+        }
+        .btn-glow-white:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(255,255,255,0.2) !important;
+        }
+        .btn-outline-white:hover {
+          background: rgba(255,255,255,0.25) !important;
+          transform: translateY(-2px);
+        }
+        .process-card:hover {
+          transform: translateY(-8px);
+          border-color: var(--primary) !important;
+          box-shadow: var(--shadow-md);
+        }
+        .testimonial-card:hover {
+          transform: translateY(-8px);
+          border-color: var(--primary) !important;
+          box-shadow: var(--shadow-md) !important;
+        }
+        .hero-image:hover {
+          transform: rotate(0deg) scale(1.02) !important;
+        }
+        @media (max-width: 992px) {
+          .hero-split {
+            grid-template-columns: 1fr !important;
+            text-align: center !important;
+            gap: 48px !important;
+          }
+          .hero-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 100%;
+          }
+          .hero-text h1,
+          .hero-text p,
+          .hero-text span {
+            text-align: center !important;
+          }
+          .hero-ctas {
+            justify-content: center;
+          }
+          .hero-img-container {
+            max-width: 550px;
+            margin: 0 auto;
+            width: 100%;
+          }
+        }
+        @media (max-width: 768px) {
+          .hero-split {
+            gap: 32px !important;
+          }
+          .hero-ctas {
+            flex-direction: column;
+            align-items: center;
+          }
+          .hero-ctas a {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}

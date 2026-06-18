@@ -1,0 +1,153 @@
+{
+  "ar": {
+    "siteConfig": {
+      "name": "AdVision",
+      "tagline": "وكالة الإبداع والتأثير",
+      "description": "نبتكر حلولاً إعلانية مدروسة تربط علامتك التجارية بجمهورك المستهدف وتحقق نتائج قابلة للقياس.",
+      "email": "hello@advision.agency",
+      "phone": "+966 50 000 0000",
+      "address": "الرياض، المملكة العربية السعودية",
+      "workingHours": "الأحد – الخميس، ٩ص – ٦م"
+    },
+    "heroData": {
+      "badge": "✦ وكالة الإبداع والتأثير",
+      "headline1": "نصنع الإعلانات التي",
+      "headline2": "تُحرّك العالم",
+      "subtext": "نبتكر حلولاً إعلانية مدروسة تربط علامتك التجارية بجمهورك المستهدف وتحقق نتائج قابلة للقياس.",
+      "cta1": "ابدأ معنا الآن ←",
+      "cta2": "استكشف خدماتنا"
+    },
+    "statsData": [
+      { "value": "٢٥٠+", "label": "عميل راضٍ" },
+      { "value": "١٢٠٠+", "label": "حملة ناجحة" },
+      { "value": "٩٨٪", "label": "رضا العملاء" },
+      { "value": "١٠+", "label": "سنوات خبرة" }
+    ],
+    "announcementBar": "🎉 عرض خاص: استشارة تسويقية مجانية لأول ١٠ عملاء هذا الشهر!",
+    "showAnnouncementBar": true
+  },
+  "en": {
+    "siteConfig": {
+      "name": "AdVision",
+      "tagline": "The Agency of Creativity & Impact",
+      "description": "We craft strategic advertising solutions that connect your brand with your target audience and deliver measurable results.",
+      "email": "hello@advision.agency",
+      "phone": "+966 50 000 0000",
+      "address": "Riyadh, Saudi Arabia",
+      "workingHours": "Sunday – Thursday, 9AM – 6PM"
+    },
+    "heroData": {
+      "badge": "✦ Creativity & Impact Agency",
+      "headline1": "We Make Ads That",
+      "headline2": "Move the World",
+      "subtext": "We craft strategic advertising solutions that connect your brand with your target audience and deliver measurable results.",
+      "cta1": "Start With Us Now →",
+      "cta2": "Explore Our Services"
+    },
+    "statsData": [
+      { "value": "250+", "label": "Happy Clients" },
+      { "value": "1200+", "label": "Successful Campaigns" },
+      { "value": "98%", "label": "Client Satisfaction" },
+      { "value": "10+", "label": "Years of Experience" }
+    ],
+    "announcementBar": "🎉 Special Offer: Free marketing consultation for the first 10 clients this month!",
+    "showAnnouncementBar": true
+  },
+  "stats": {
+    "totalClients": 258,
+    "activeCampaigns": 34,
+    "monthlyImpressions": 2850000,
+    "conversionRate": 4.7,
+    "monthlyRevenue": 185000,
+    "newLeadsThisMonth": 63
+  },
+  "campaigns": [
+    {
+      "id": 1,
+      "name": "حملة رمضان ٢٠٢٥",
+      "client": "شركة الأمل",
+      "status": "active",
+      "budget": 15000,
+      "spent": 9800,
+      "impressions": 420000,
+      "clicks": 12400,
+      "conversions": 340,
+      "startDate": "2025-03-01",
+      "endDate": "2025-04-10"
+    },
+    {
+      "id": 2,
+      "name": "إطلاق المنتج الجديد",
+      "client": "براند ماكس",
+      "status": "active",
+      "budget": 22000,
+      "spent": 16500,
+      "impressions": 580000,
+      "clicks": 18200,
+      "conversions": 520,
+      "startDate": "2025-05-15",
+      "endDate": "2025-07-15"
+    },
+    {
+      "id": 3,
+      "name": "التوعية بالعلامة التجارية",
+      "client": "مجموعة النخبة",
+      "status": "paused",
+      "budget": 8000,
+      "spent": 4200,
+      "impressions": 210000,
+      "clicks": 6800,
+      "conversions": 180,
+      "startDate": "2025-04-01",
+      "endDate": "2025-06-30"
+    },
+    {
+      "id": 4,
+      "name": "حملة الصيف",
+      "client": "شركة الريادة",
+      "status": "completed",
+      "budget": 12000,
+      "spent": 12000,
+      "impressions": 390000,
+      "clicks": 11000,
+      "conversions": 290,
+      "startDate": "2025-06-01",
+      "endDate": "2025-08-31"
+    },
+    {
+      "id": 5,
+      "name": "حملة المبيعات السنوية",
+      "client": "ميغا ستور",
+      "status": "active",
+      "budget": 30000,
+      "spent": 18000,
+      "impressions": 750000,
+      "clicks": 22000,
+      "conversions": 680,
+      "startDate": "2025-01-01",
+      "endDate": "2025-12-31"
+    }
+  ],
+  "recentLeads": [
+    { "id": 1, "name": "محمد العتيبي", "email": "m.otaibi@example.com", "service": "الإعلان الرقمي", "date": "2025-06-17", "status": "new" },
+    { "id": 2, "name": "سارة الزهراني", "email": "s.zahrani@example.com", "service": "تصميم الهوية", "date": "2025-06-16", "status": "contacted" },
+    { "id": 3, "name": "خالد الشمري", "email": "k.shamri@example.com", "service": "السوشيال ميديا", "date": "2025-06-15", "status": "proposal" },
+    { "id": 4, "name": "نورة القحطاني", "email": "n.qahtani@example.com", "service": "إنتاج مرئي", "date": "2025-06-14", "status": "new" },
+    { "id": 5, "name": "فيصل المالكي", "email": "f.malki@example.com", "service": "SEO", "date": "2025-06-13", "status": "won" }
+  ],
+  "monthlyData": [
+    { "month": "يناير", "revenue": 120000, "leads": 40, "campaigns": 18 },
+    { "month": "فبراير", "revenue": 135000, "leads": 45, "campaigns": 20 },
+    { "month": "مارس", "revenue": 180000, "leads": 62, "campaigns": 26 },
+    { "month": "أبريل", "revenue": 155000, "leads": 54, "campaigns": 22 },
+    { "month": "مايو", "revenue": 170000, "leads": 58, "campaigns": 25 },
+    { "month": "يونيو", "revenue": 185000, "leads": 63, "campaigns": 34 }
+  ],
+  "websiteContent": {
+    "heroHeadline": "نرسم مسار نجاحك الإعلاني",
+    "heroSubtext": "نعمل على تحويل أفكارك الرقمية إلى حملات جذابة تحقق نتائج قياسية.",
+    "ctaText": "ابدأ الآن ←",
+    "announcementBar": "🎉 خصم خاص للعملاء الجدد هذا الشهر!",
+    "showAnnouncementBar": true
+  }
+}

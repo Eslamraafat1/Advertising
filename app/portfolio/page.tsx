@@ -1,0 +1,328 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useLanguage } from "../components/LanguageContext";
+import Reveal from "../components/Reveal";
+
+const projects = {
+  ar: [
+    { id: 1, title: "حملة النخبة للتسويق الرقمي", category: "digital-ads", results: "زيادة المبيعات +٢٤٠٪، عائد الاستثمار ٥.٢ ضعف", client: "مجموعة النخبة", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop", duration: "3 أشهر", budget: "50,000 ر.س" },
+    { id: 2, title: "الهوية البصرية لشركة ركاز العقارية", category: "branding", results: "تصميم شعار فريد ودليل هوية بصرية كاملة", client: "ركاز للتطوير", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop", duration: "شهر واحد", budget: "25,000 ر.س" },
+    { id: 3, title: "فيديو إطلاق تطبيق مسار التعليمي", category: "video", results: "٣.٥ مليون مشاهدة، زيادة التحميلات +١٨٠٪", client: "شركة مسار", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", duration: "شهران", budget: "35,000 ر.س" },
+    { id: 4, title: "إدارة السوشيال ميديا لمطاعم جورميه", category: "social", results: "+٤٥ ألف متابع جديد، تفاعل شهري +١٣٠٪", client: "جورميه العالمية", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop", duration: "6 أشهر", budget: "18,000 ر.س / شهر" },
+    { id: 5, title: "حملة إعلانات جوجل لبراند فاشن", category: "digital-ads", results: "+٣٢٠٪ عائد على الإنفاق الإعلاني، ٨ آلاف تحويل", client: "براند فاشن", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop", duration: "4 أشهر", budget: "80,000 ر.س" },
+    { id: 6, title: "حملة المؤثرين لمنتج صحتي الرياضي", category: "social", results: "تغطية من ١٥ مؤثر، مبيعات نفدت بالكامل", client: "صحتي المحدودة", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop", duration: "شهران", budget: "40,000 ر.س" },
+  ],
+  en: [
+    { id: 1, title: "Al-Nokhba Digital Marketing Blitz", category: "digital-ads", results: "+240% Sales Increase, 5.2x ROI", client: "Al-Nokhba Group", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop", duration: "3 Months", budget: "$14,000" },
+    { id: 2, title: "Rikaz Real Estate Visual Identity", category: "branding", results: "Unique modern logo & comprehensive brand guidelines", client: "Rikaz Development", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop", duration: "1 Month", budget: "$7,000" },
+    { id: 3, title: "Masar Learning App Launch Video", category: "video", results: "3.5M Views, +180% App Downloads boost", client: "Masar EdTech", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", duration: "2 Months", budget: "$9,500" },
+    { id: 4, title: "Gourmet Burgers Social Growth & Content", category: "social", results: "+45k New followers, +130% Monthly engagement", client: "Gourmet International", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop", duration: "6 Months", budget: "$5,000/mo" },
+    { id: 5, title: "Fashion Brand Google Search Campaign", category: "digital-ads", results: "+320% Return on Ad Spend, 8,000+ Conversions", client: "Fashion Brand Ltd", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop", duration: "4 Months", budget: "$22,000" },
+    { id: 6, title: "MyHealth Influencer Launch Campaign", category: "social", results: "Featured by 15 major fitness influencers, sold out stock", client: "MyHealth Ltd", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop", duration: "2 Months", budget: "$11,000" },
+  ],
+};
+
+const categories = {
+  ar: [
+    { id: "all", label: "🌟 الكل" },
+    { id: "digital-ads", label: "📊 الإعلانات الرقمية" },
+    { id: "branding", label: "🎨 الهوية البصرية" },
+    { id: "video", label: "🎬 إنتاج الفيديو" },
+    { id: "social", label: "📱 السوشيال ميديا" },
+  ],
+  en: [
+    { id: "all", label: "🌟 All" },
+    { id: "digital-ads", label: "📊 Digital Ads" },
+    { id: "branding", label: "🎨 Branding" },
+    { id: "video", label: "🎬 Video Production" },
+    { id: "social", label: "📱 Social Media" },
+  ],
+};
+
+const clientLogosRow = ["Google Partner", "Meta Business", "TikTok For Business", "HubSpot", "Adobe", "Semrush", "Shopify"];
+
+export default function PortfolioPage() {
+  const { locale } = useLanguage();
+  const [selectedCat, setSelectedCat] = useState("all");
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [expandedProject, setExpandedProject] = useState<number | null>(null);
+
+  const activeProjects = locale === "ar" ? projects.ar : projects.en;
+  const activeCats = locale === "ar" ? categories.ar : categories.en;
+  const filtered = selectedCat === "all" ? activeProjects : activeProjects.filter(p => p.category === selectedCat);
+
+  return (
+    <div>
+      {/* ── Hero ─────────────────────────────── */}
+      <section style={{
+        background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)",
+        padding: "100px 24px 80px",
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        {/* Floating shapes */}
+        {[...Array(5)].map((_, i) => (
+          <div key={i} style={{
+            position: "absolute",
+            width: `${40 + i * 20}px`,
+            height: `${40 + i * 20}px`,
+            background: `rgba(${i % 2 === 0 ? "99,102,241" : "245,158,11"},0.12)`,
+            borderRadius: i % 2 === 0 ? "50%" : "30%",
+            top: `${15 + i * 15}%`,
+            left: `${5 + i * 18}%`,
+            animation: `float-shape ${4 + i}s ease-in-out infinite alternate`,
+            pointerEvents: "none",
+          }} />
+        ))}
+
+        <div style={{ position: "relative" }}>
+          <Reveal direction="down">
+            <span style={{
+              display: "inline-block",
+              background: "rgba(99,102,241,0.2)",
+              border: "1px solid rgba(99,102,241,0.4)",
+              color: "#a5b4fc",
+              fontWeight: 700, fontSize: 13,
+              padding: "6px 20px", borderRadius: 100, marginBottom: 20,
+            }}>
+              {locale === "ar" ? "🎨 معرض الأعمال" : "🎨 Our Portfolio"}
+            </span>
+          </Reveal>
+          <Reveal direction="up" delay={100}>
+            <h1 style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 900, color: "#fff", marginBottom: 20, lineHeight: 1.1 }}>
+              {locale === "ar" ? "قصص نجاح صنعناها لعملائنا" : "Success Stories We Crafted"}
+            </h1>
+          </Reveal>
+          <Reveal direction="up" delay={200}>
+            <p style={{ color: "#94a3b8", fontSize: 17.5, maxWidth: 580, margin: "0 auto", lineHeight: 1.7 }}>
+              {locale === "ar"
+                ? "نستعرض هنا بعضاً من أفضل أعمالنا وحملاتنا الإعلانية الناجحة التي ساهمت في نمو العلامات التجارية لشركائنا."
+                : "Explore some of our premium projects and campaigns that successfully scaled our clients' business presence."}
+            </p>
+          </Reveal>
+
+          {/* Metrics row */}
+          <Reveal direction="up" delay={350}>
+            <div style={{ display: "flex", justifyContent: "center", gap: 48, marginTop: 52, flexWrap: "wrap" }}>
+              {[
+                { num: "500+", label: locale === "ar" ? "مشروع منجز" : "Projects Done" },
+                { num: "120+", label: locale === "ar" ? "عميل راضٍ" : "Happy Clients" },
+                { num: "15", label: locale === "ar" ? "دولة" : "Countries" },
+              ].map((m, i) => (
+                <div key={i} style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#a5b4fc", lineHeight: 1 }}>{m.num}</div>
+                  <div style={{ fontSize: 13, color: "#64748b", fontWeight: 600, marginTop: 6 }}>{m.label}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Client Logos ──────────────────────── */}
+      <section style={{ padding: "40px 24px", background: "var(--bg-card)", borderBottom: "1px solid var(--border)" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+          <span style={{ color: "var(--text-muted)", fontSize: 13, fontWeight: 700, marginLeft: 16 }}>
+            {locale === "ar" ? "عملنا مع:" : "Worked with:"}
+          </span>
+          {clientLogosRow.map((c, i) => (
+            <span key={i} style={{
+              background: "var(--bg-muted)",
+              border: "1px solid var(--border)",
+              borderRadius: 8, padding: "6px 16px",
+              fontSize: 13, fontWeight: 700,
+              color: "var(--text-muted)",
+              transition: "all 0.2s ease",
+            }}
+            className="client-logo-chip"
+            >{c}</span>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Filter Strip ──────────────────────── */}
+      <section style={{ padding: "40px 24px 0", background: "var(--bg)", display: "flex", justifyContent: "center" }}>
+        <Reveal direction="up">
+          <div style={{
+            display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center",
+            background: "var(--bg-card)", padding: "8px 10px",
+            borderRadius: 100, border: "1px solid var(--border)", boxShadow: "var(--shadow-sm)",
+          }}
+          className="filter-strip"
+          >
+            {activeCats.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCat(cat.id)}
+                style={{
+                  background: selectedCat === cat.id ? "linear-gradient(135deg, var(--primary), var(--primary-dark))" : "transparent",
+                  color: selectedCat === cat.id ? "#fff" : "var(--text-muted)",
+                  border: "none", padding: "9px 22px", borderRadius: 100,
+                  fontSize: 14, fontWeight: 700, cursor: "pointer",
+                  transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+                  boxShadow: selectedCat === cat.id ? "0 4px 14px rgba(99,102,241,0.3)" : "none",
+                }}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ── Portfolio Grid ────────────────────── */}
+      <section style={{ padding: "48px 24px 100px", background: "var(--bg)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))",
+            gap: 32,
+          }}
+          className="portfolio-grid"
+          >
+            {filtered.map((proj, i) => (
+              <Reveal key={proj.id} delay={i * 80} direction="up">
+                <div
+                  onMouseEnter={() => setHoveredProject(proj.id)}
+                  onMouseLeave={() => setHoveredProject(null)}
+                  style={{
+                    background: "var(--bg-card)",
+                    borderRadius: 24, overflow: "hidden",
+                    border: `1.5px solid ${hoveredProject === proj.id ? "var(--primary)" : "var(--border)"}`,
+                    boxShadow: hoveredProject === proj.id ? "0 24px 60px rgba(99,102,241,0.15)" : "var(--shadow-sm)",
+                    transform: hoveredProject === proj.id ? "translateY(-8px)" : "none",
+                    transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                  }}
+                >
+                  {/* Image */}
+                  <div style={{ position: "relative", overflow: "hidden", height: 240 }}>
+                    <Image
+                      src={proj.img} alt={proj.title}
+                      fill unoptimized
+                      style={{
+                        objectFit: "cover",
+                        transform: hoveredProject === proj.id ? "scale(1.08)" : "scale(1)",
+                        transition: "transform 0.5s ease",
+                      }}
+                    />
+                    {/* Category tag */}
+                    <div style={{
+                      position: "absolute", top: 16, left: locale === "ar" ? "auto" : 16, right: locale === "ar" ? 16 : "auto",
+                      background: "rgba(99,102,241,0.9)", backdropFilter: "blur(6px)",
+                      color: "#fff", padding: "5px 14px", borderRadius: 100,
+                      fontSize: 12, fontWeight: 700,
+                    }}>
+                      {activeCats.find(c => c.id === proj.category)?.label}
+                    </div>
+                    {/* Hover overlay */}
+                    <div style={{
+                      position: "absolute", inset: 0,
+                      background: "linear-gradient(to top, rgba(99,102,241,0.9), transparent)",
+                      opacity: hoveredProject === proj.id ? 1 : 0,
+                      transition: "opacity 0.4s ease",
+                      display: "flex", alignItems: "flex-end", padding: "20px 20px",
+                    }}>
+                      <div style={{
+                        transform: hoveredProject === proj.id ? "translateY(0)" : "translateY(16px)",
+                        transition: "transform 0.4s ease",
+                        display: "flex", gap: 10,
+                      }}>
+                        <div style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600 }}>
+                          ⏱ {proj.duration}
+                        </div>
+                        <div style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600 }}>
+                          💰 {proj.budget}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Info */}
+                  <div style={{ padding: "28px 28px 32px", textAlign: "start" }}>
+                    <div style={{ fontSize: 13, color: "var(--primary)", fontWeight: 700, marginBottom: 6 }}>{proj.client}</div>
+                    <h3 style={{ fontSize: 18.5, fontWeight: 800, color: "var(--text)", marginBottom: 14, lineHeight: 1.4 }}>{proj.title}</h3>
+                    <div style={{
+                      background: "var(--primary-light)", color: "var(--primary)",
+                      padding: "10px 16px", borderRadius: 10,
+                      fontSize: 13.5, fontWeight: 700,
+                      display: "flex", alignItems: "center", gap: 8,
+                      marginBottom: 16,
+                    }}>
+                      <span>📈</span>
+                      <span>{proj.results}</span>
+                    </div>
+                    <Link href="/contact" style={{
+                      textDecoration: "none",
+                      color: "var(--primary)", fontWeight: 700, fontSize: 13.5,
+                      display: "inline-flex", alignItems: "center", gap: 6,
+                      transition: "gap 0.2s ease",
+                    }}
+                    className="portfolio-link"
+                    >
+                      {locale === "ar" ? "احصل على نفس النتائج" : "Get Similar Results"} →
+                    </Link>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ───────────────────────────────── */}
+      <section style={{
+        padding: "100px 24px",
+        background: "linear-gradient(135deg, #0f172a, #1e1b4b)",
+        textAlign: "center",
+        position: "relative", overflow: "hidden",
+      }}>
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(99,102,241,0.1) 1px, transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none" }} />
+        <div style={{ position: "relative" }}>
+          <Reveal direction="down">
+            <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "#fff", marginBottom: 16 }}>
+              {locale === "ar" ? "هل أنت جاهز لقصة نجاح جديدة؟" : "Ready for the Next Success Story?"}
+            </h2>
+          </Reveal>
+          <Reveal direction="up" delay={100}>
+            <p style={{ color: "#94a3b8", fontSize: 17.5, marginBottom: 44, maxWidth: 480, margin: "0 auto 44px" }}>
+              {locale === "ar" ? "تواصل معنا وسنضع مشروعك في قائمة أعمالنا الناجحة القادمة" : "Contact us and we'll add your project to our next success stories"}
+            </p>
+          </Reveal>
+          <Reveal direction="up" delay={200}>
+            <Link href="/contact" style={{
+              textDecoration: "none",
+              background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+              color: "#fff", padding: "16px 48px",
+              borderRadius: 14, fontWeight: 800, fontSize: 17,
+              display: "inline-block",
+              boxShadow: "0 8px 28px rgba(99,102,241,0.4)",
+              transition: "all 0.25s ease",
+            }}
+            className="portfolio-cta-btn"
+            >
+              {locale === "ar" ? "ابدأ مشروعك الآن" : "Start Your Project Now"} →
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      <style>{`
+        @keyframes float-shape {
+          from { transform: translateY(0) rotate(0deg); }
+          to { transform: translateY(-20px) rotate(15deg); }
+        }
+        .client-logo-chip:hover { border-color: var(--primary) !important; color: var(--primary) !important; background: var(--primary-light) !important; }
+        .portfolio-link:hover { gap: 10px !important; }
+        .portfolio-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(99,102,241,0.5) !important; }
+        @media (max-width: 500px) {
+          .filter-strip { border-radius: 20px !important; width: 100%; }
+          .portfolio-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
