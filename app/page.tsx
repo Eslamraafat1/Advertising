@@ -22,12 +22,13 @@ function ServiceCard({ s }: { s: ServiceDataItem }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         background: hovered
-          ? "linear-gradient(135deg, var(--primary), var(--primary-dark))"
+          ? "#0a0a0a"
           : "var(--bg-card)",
-        borderRadius: "var(--radius-lg)",
+        borderRadius: "0",
         padding: 32,
         border: `1.5px solid ${hovered ? "transparent" : "var(--border)"}`,
-        boxShadow: hovered ? "0 20px 50px rgba(99,102,241,0.3)" : "var(--shadow-sm)",
+        borderLeft: hovered ? "3px solid var(--primary)" : "1.5px solid var(--border)",
+        boxShadow: hovered ? "0 20px 50px rgba(0,0,0,0.25)" : "var(--shadow-sm)",
         transform: hovered ? "translateY(-10px) scale(1.02)" : "none",
         transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         cursor: "default",
@@ -39,7 +40,7 @@ function ServiceCard({ s }: { s: ServiceDataItem }) {
       <div style={{
         width: 60, height: 60,
         background: hovered ? "rgba(255,255,255,0.2)" : "var(--primary-light)",
-        borderRadius: 16,
+        borderRadius: 0,
         display: "flex", alignItems: "center", justifyContent: "center",
         fontSize: 30, transition: "all 0.3s ease",
         color: hovered ? "#fff" : "var(--primary)",
@@ -135,7 +136,7 @@ function ToolsTicker() {
             border: "1px solid rgba(99,102,241,0.15)",
             color: "var(--primary)",
             padding: "6px 18px",
-            borderRadius: 100,
+            borderRadius: 0,
             fontSize: 13,
             fontWeight: 600,
             whiteSpace: "nowrap",
@@ -159,13 +160,14 @@ export default function Home() {
 
       {/* ── Hero Info Split ───────────────────── */}
       <section style={{
-        background: "linear-gradient(135deg, #f8fafc 0%, #eef2ff 60%, #fef3c7 100%)",
+        background: "#fff",
         padding: "120px 24px 100px",
         position: "relative",
         overflow: "hidden",
+        borderBottom: "1px solid var(--border)",
       }}>
-        <div style={{ position: "absolute", top: -100, right: -100, width: 450, height: 450, background: "radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: -80, left: -60, width: 350, height: 350, background: "radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -100, right: -100, width: 450, height: 450, background: "radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 70%)", borderRadius: "10%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -80, left: -60, width: 350, height: 350, background: "radial-gradient(circle, rgba(233,41,44,0.04) 0%, transparent 70%)", borderRadius: "10%", pointerEvents: "none" }} />
 
         <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
           <div style={{
@@ -183,7 +185,7 @@ export default function Home() {
                   fontWeight: 700,
                   fontSize: 14,
                   padding: "8px 22px",
-                  borderRadius: 100,
+                  borderRadius: 0,
                   marginBottom: 24,
                   boxShadow: "0 4px 12px rgba(99, 102, 241, 0.08)"
                 }}>
@@ -227,14 +229,15 @@ export default function Home() {
                 <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }} className="hero-ctas">
                   <Link href={t.heroData.cta1.href} style={{
                     textDecoration: "none",
-                    background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                    background: "#0a0a0a",
                     color: "#fff",
                     padding: "16px 36px",
-                    borderRadius: 14,
+                    borderRadius: 0,
                     fontWeight: 700,
                     fontSize: 17,
-                    boxShadow: "0 6px 24px rgba(99,102,241,0.35)",
-                    transition: "all 0.2s"
+                    boxShadow: "0 6px 24px rgba(0,0,0,0.2)",
+                    transition: "all 0.2s",
+                    border: "2px solid #0a0a0a",
                   }}
                   className="btn-glow"
                   >
@@ -242,13 +245,13 @@ export default function Home() {
                   </Link>
                   <Link href={t.heroData.cta2.href} style={{
                     textDecoration: "none",
-                    background: "#fff",
-                    color: "var(--primary)",
+                    background: "transparent",
+                    color: "#0a0a0a",
                     padding: "16px 36px",
-                    borderRadius: 14,
+                    borderRadius: 0,
                     fontWeight: 700,
                     fontSize: 17,
-                    border: "2px solid var(--primary-light)",
+                    border: "2px solid #0a0a0a",
                     transition: "all 0.2s"
                   }}
                   className="btn-outline"
@@ -271,7 +274,7 @@ export default function Home() {
                     <span key={i} style={{
                       background: "#fff",
                       border: "1px solid var(--border)",
-                      borderRadius: 100,
+                      borderRadius: 0,
                       padding: "8px 18px",
                       fontSize: 13,
                       fontWeight: 600,
@@ -294,7 +297,7 @@ export default function Home() {
                     right: locale === "ar" ? 15 : -15,
                     bottom: -15,
                     background: "rgba(99, 102, 241, 0.15)",
-                    borderRadius: 24,
+                    borderRadius: 0,
                     zIndex: 1,
                     filter: "blur(4px)"
                   }} />
@@ -306,7 +309,7 @@ export default function Home() {
                     unoptimized
                     style={{
                       width: "100%",
-                      borderRadius: 24,
+                      borderRadius: 0,
                       position: "relative",
                       zIndex: 2,
                       boxShadow: "0 20px 40px rgba(0,0,0,0.12)",
@@ -331,7 +334,7 @@ export default function Home() {
         <div style={{ maxWidth: 1150, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 100, marginBottom: 16 }}>{t.common.exploreServices}</span>
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{t.common.exploreServices}</span>
             </Reveal>
             <Reveal direction="up" delay={100}>
               <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)", marginBottom: 16 }}>{t.homeData.servicesTitle}</h2>
@@ -354,13 +357,14 @@ export default function Home() {
               <Link href="/services" style={{
                 textDecoration: "none",
                 display: "inline-block",
-                background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                background: "#0a0a0a",
                 color: "#fff",
                 padding: "15px 40px",
-                borderRadius: 12,
+                borderRadius: 0,
                 fontWeight: 700,
                 fontSize: 16.5,
-                boxShadow: "0 4px 16px rgba(99,102,241,0.2)"
+                boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+                border: "2px solid #0a0a0a",
               }}>
                 {t.common.allServices} &rarr;
               </Link>
@@ -377,7 +381,7 @@ export default function Home() {
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 100, marginBottom: 16 }}>{t.processData.badge}</span>
+              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{t.processData.badge}</span>
             </Reveal>
             <Reveal direction="up" delay={100}>
               <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)" }}>{t.processData.title}</h2>
@@ -389,7 +393,7 @@ export default function Home() {
               <Reveal key={i} delay={i * 100} direction="up">
                 <div style={{
                   background: "var(--bg-card)",
-                  borderRadius: "var(--radius-lg)",
+                  borderRadius: "0",
                   padding: 32,
                   textAlign: "center",
                   border: "1px solid var(--border)",
@@ -401,7 +405,7 @@ export default function Home() {
                   <div style={{
                     width: 58, height: 58,
                     background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
-                    borderRadius: "50%",
+                    borderRadius: "0",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     margin: "0 auto 20px",
                     color: "#fff",
@@ -428,7 +432,7 @@ export default function Home() {
         <div style={{ maxWidth: 1150, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 100, marginBottom: 16 }}>{t.testimonialsData.badge}</span>
+              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{t.testimonialsData.badge}</span>
             </Reveal>
             <Reveal direction="up" delay={100}>
               <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)" }}>{t.testimonialsData.title}</h2>
@@ -440,7 +444,7 @@ export default function Home() {
               <Reveal key={i} delay={i * 100} direction="up">
                 <div style={{
                   background: "var(--bg-card)",
-                  borderRadius: "var(--radius-lg)",
+                  borderRadius: "0",
                   padding: 32,
                   border: "1px solid var(--border)",
                   boxShadow: "var(--shadow-sm)",
@@ -464,7 +468,7 @@ export default function Home() {
                       style={{
                         width: 48,
                         height: 48,
-                        borderRadius: "50%",
+                        borderRadius: "0",
                         objectFit: "cover",
                         border: "2px solid var(--primary-light)"
                       }}
@@ -489,7 +493,7 @@ export default function Home() {
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 100, marginBottom: 16 }}>{t.faqData.badge}</span>
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{t.faqData.badge}</span>
             </Reveal>
             <Reveal direction="up" delay={100}>
               <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)" }}>{t.faqData.title}</h2>
@@ -509,16 +513,16 @@ export default function Home() {
       {/* ── CTA Banner ───────────────────────── */}
       <section style={{
         padding: "100px 24px",
-        background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
+        background: "#000",
         textAlign: "center",
         position: "relative",
         overflow: "hidden"
       }}>
-        <div style={{ position: "absolute", top: -80, left: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "50%", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: -80, right: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "50%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -80, left: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "0%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -80, right: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "0%", pointerEvents: "none" }} />
         {/* Animated rings */}
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600, height: 600, border: "1px solid rgba(255,255,255,0.06)", borderRadius: "50%", animation: "ring-pulse 3s ease-in-out infinite", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 400, height: 400, border: "1px solid rgba(255,255,255,0.08)", borderRadius: "50%", animation: "ring-pulse 3s ease-in-out infinite 0.5s", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600, height: 600, border: "1px solid rgba(255,255,255,0.06)", borderRadius: "0%", animation: "ring-pulse 3s ease-in-out infinite", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 400, height: 400, border: "1px solid rgba(255,255,255,0.08)", borderRadius: "0%", animation: "ring-pulse 3s ease-in-out infinite 0.5s", pointerEvents: "none" }} />
 
         <div style={{ maxWidth: 700, margin: "0 auto", position: "relative" }}>
           <Reveal direction="down">
@@ -537,7 +541,7 @@ export default function Home() {
                 background: "#fff",
                 color: "var(--primary)",
                 padding: "16px 44px",
-                borderRadius: 14,
+                borderRadius: 0,
                 fontWeight: 800,
                 fontSize: 17,
                 boxShadow: "0 8px 28px rgba(0,0,0,0.18)",
@@ -553,7 +557,7 @@ export default function Home() {
                 background: "rgba(255,255,255,0.15)",
                 color: "#fff",
                 padding: "16px 44px",
-                borderRadius: 14,
+                borderRadius: 0,
                 fontWeight: 700,
                 fontSize: 17,
                 border: "2px solid rgba(255,255,255,0.3)",
@@ -581,12 +585,13 @@ export default function Home() {
         }
         .btn-glow:hover {
           transform: translateY(-2px);
-          box-shadow: 0 10px 30px rgba(99,102,241,0.45) !important;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.25) !important;
+          background: #1a1a1a !important;
         }
         .btn-outline:hover {
-          background: var(--primary-light) !important;
-          border-color: var(--primary) !important;
-          color: var(--primary) !important;
+          background: #0a0a0a !important;
+          border-color: #0a0a0a !important;
+          color: #fff !important;
           transform: translateY(-2px);
         }
         .btn-glow-white:hover {

@@ -58,11 +58,12 @@ export default function PortfolioPage() {
     <div>
       {/* ── Hero ─────────────────────────────── */}
       <section style={{
-        background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
+        background: "#0a0a0a",
         padding: "100px 24px 80px",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
+        borderBottom: "3px solid var(--primary)",
       }}>
         {/* Floating shapes */}
         {[...Array(5)].map((_, i) => (
@@ -71,7 +72,7 @@ export default function PortfolioPage() {
             width: `${40 + i * 20}px`,
             height: `${40 + i * 20}px`,
             background: `rgba(${i % 2 === 0 ? "99,102,241" : "245,158,11"},0.12)`,
-            borderRadius: i % 2 === 0 ? "50%" : "30%",
+            borderRadius: i % 2 === 0 ? "0%" : "0%",
             top: `${15 + i * 15}%`,
             left: `${5 + i * 18}%`,
             animation: `float-shape ${4 + i}s ease-in-out infinite alternate`,
@@ -87,7 +88,7 @@ export default function PortfolioPage() {
               border: "1px solid rgba(99,102,241,0.4)",
               color: "#fff",
               fontWeight: 700, fontSize: 13,
-              padding: "6px 20px", borderRadius: 100, marginBottom: 20,
+              padding: "6px 20px", borderRadius: 0, marginBottom: 20,
             }}>
               {locale === "ar" ? "🎨 معرض الأعمال" : "🎨 Our Portfolio"}
             </span>
@@ -150,7 +151,7 @@ export default function PortfolioPage() {
           <div style={{
             display: "flex", flexWrap: "wrap", gap: 10, justifyContent: "center",
             background: "var(--bg-card)", padding: "8px 10px",
-            borderRadius: 100, border: "1px solid var(--border)", boxShadow: "var(--shadow-sm)",
+            borderRadius: 0, border: "1px solid var(--border)", boxShadow: "var(--shadow-sm)",
           }}
           className="filter-strip"
           >
@@ -161,7 +162,7 @@ export default function PortfolioPage() {
                 style={{
                   background: selectedCat === cat.id ? "linear-gradient(135deg, var(--primary), var(--primary-dark))" : "transparent",
                   color: selectedCat === cat.id ? "#fff" : "var(--text-muted)",
-                  border: "none", padding: "9px 22px", borderRadius: 100,
+                  border: "none", padding: "9px 22px", borderRadius: 0,
                   fontSize: 14, fontWeight: 700, cursor: "pointer",
                   transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
                   boxShadow: selectedCat === cat.id ? "0 4px 14px rgba(99,102,241,0.3)" : "none",
@@ -191,7 +192,7 @@ export default function PortfolioPage() {
                   onMouseLeave={() => setHoveredProject(null)}
                   style={{
                     background: "var(--bg-card)",
-                    borderRadius: 24, overflow: "hidden",
+                    borderRadius: 2, overflow: "hidden",
                     border: `1.5px solid ${hoveredProject === proj.id ? "var(--primary)" : "var(--border)"}`,
                     boxShadow: hoveredProject === proj.id ? "0 24px 60px rgba(99,102,241,0.15)" : "var(--shadow-sm)",
                     transform: hoveredProject === proj.id ? "translateY(-8px)" : "none",
@@ -213,7 +214,7 @@ export default function PortfolioPage() {
                     <div style={{
                       position: "absolute", top: 16, left: locale === "ar" ? "auto" : 16, right: locale === "ar" ? 16 : "auto",
                       background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)", backdropFilter: "blur(6px)",
-                      color: "#fff", padding: "5px 14px", borderRadius: 100,
+                      color: "#fff", padding: "5px 14px", borderRadius: 0,
                       fontSize: 12, fontWeight: 700,
                     }}>
                       {activeCats.find(c => c.id === proj.category)?.label}

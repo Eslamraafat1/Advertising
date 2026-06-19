@@ -8,11 +8,11 @@ export default function Footer() {
 
   return (
     <footer style={{
-      background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
+      background: "#0a0a0a",
       color: "#fff",
       padding: "64px 24px 32px",
       marginTop: 80,
-      borderTop: "4px solid var(--primary)",
+      borderTop: "3px solid var(--primary)",
     }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{
@@ -57,7 +57,7 @@ export default function Footer() {
                 height: 2,
                 background: "var(--primary)",
                 marginTop: 8,
-                borderRadius: 2
+                borderRadius: 0
               }} />
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -87,7 +87,7 @@ export default function Footer() {
                 height: 2,
                 background: "var(--primary)",
                 marginTop: 8,
-                borderRadius: 2
+                borderRadius: 0
               }} />
             </h4>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, color: "#94a3b8", fontSize: 14 }}>

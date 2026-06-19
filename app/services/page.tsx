@@ -84,11 +84,12 @@ export default function ServicesPage() {
     <div>
       {/* ── Header ────────────────────────────── */}
       <section style={{
-        background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
+        background: "#0a0a0a",
         padding: "100px 24px 80px",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
+        borderBottom: "3px solid var(--primary)",
       }}>
         {/* Animated grid */}
         <div style={{
@@ -105,7 +106,7 @@ export default function ServicesPage() {
               border: "1px solid rgba(99,102,241,0.5)",
               color: "#a5b4fc",
               fontWeight: 700, fontSize: 13,
-              padding: "6px 20px", borderRadius: 100, marginBottom: 20,
+              padding: "6px 20px", borderRadius: 0, marginBottom: 20,
             }}>{sp.badge}</span>
           </Reveal>
           <Reveal direction="up" delay={100}>
@@ -153,7 +154,7 @@ export default function ServicesPage() {
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 100, marginBottom: 16 }}>
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>
                 {locale === "ar" ? "🚀 خدماتنا الاحترافية" : "🚀 Our Professional Services"}
               </span>
             </Reveal>
@@ -171,9 +172,9 @@ export default function ServicesPage() {
                   onMouseLeave={() => setHovered(null)}
                   style={{
                     background: hovered === s.id
-                      ? "linear-gradient(145deg, #4f46e5, #7c3aed)"
+                      ? "#0a0a0a"
                       : "var(--bg-card)",
-                    borderRadius: "var(--radius-lg)", padding: 36,
+                    borderRadius: "0", padding: 36,
                     border: `1.5px solid ${hovered === s.id ? "transparent" : "var(--border)"}`,
                     boxShadow: hovered === s.id ? "0 24px 60px rgba(99,102,241,0.3)" : "var(--shadow-sm)",
                     transform: hovered === s.id ? "translateY(-10px) scale(1.02)" : "none",
@@ -202,7 +203,7 @@ export default function ServicesPage() {
                           width: 22, height: 22,
                           background: hovered === s.id ? "rgba(255,255,255,0.2)" : "var(--primary-light)",
                           color: hovered === s.id ? "#fff" : "var(--primary)",
-                          borderRadius: "50%",
+                          borderRadius: "0%",
                           display: "flex", alignItems: "center", justifyContent: "center",
                           fontSize: 12, flexShrink: 0, fontWeight: 700,
                         }}>✓</span>
@@ -214,15 +215,16 @@ export default function ServicesPage() {
                   <Link href="/contact" style={{
                     marginTop: "auto",
                     textDecoration: "none",
-                    background: hovered === s.id ? "#fff" : "linear-gradient(135deg, var(--primary), var(--primary-dark))",
-                    color: hovered === s.id ? "#4f46e5" : "#fff",
+                    background: hovered === s.id ? "var(--primary)" : "#0a0a0a",
+                    color: "#fff",
                     padding: "14px 24px",
-                    borderRadius: 12,
+                    borderRadius: 1,
                     fontWeight: 800,
                     fontSize: 15.5,
                     textAlign: "center",
-                    boxShadow: hovered === s.id ? "0 8px 24px rgba(0,0,0,0.15)" : "0 4px 12px rgba(99, 102, 241, 0.15)",
+                    boxShadow: hovered === s.id ? "0 8px 24px rgba(233,41,44,0.3)" : "0 4px 12px rgba(0,0,0,0.15)",
                     transition: "all 0.3s ease",
+                    border: hovered === s.id ? "2px solid var(--primary)" : "2px solid #0a0a0a",
                   }}>
                     {t.common.requestService}
                   </Link>
@@ -238,7 +240,7 @@ export default function ServicesPage() {
         <div style={{ maxWidth: 1150, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 20px", borderRadius: 100, marginBottom: 16 }}>
+              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 20px", borderRadius: 0, marginBottom: 16 }}>
                 {locale === "ar" ? "📈 دراسات الحالة" : "📈 Case Studies"}
               </span>
             </Reveal>
@@ -257,7 +259,7 @@ export default function ServicesPage() {
                   onMouseLeave={() => setActiveCase(null)}
                   style={{
                     background: "var(--bg-card)",
-                    borderRadius: 24,
+                    borderRadius: 0,
                     overflow: "hidden",
                     border: `1.5px solid ${activeCase === i ? cs.color + "66" : "var(--border)"}`,
                     boxShadow: activeCase === i ? `0 20px 50px ${cs.color}22` : "var(--shadow-sm)",
@@ -280,7 +282,7 @@ export default function ServicesPage() {
                       position: "absolute", top: 16, right: locale === "ar" ? "auto" : 16, left: locale === "ar" ? 16 : "auto",
                       background: "rgba(255,255,255,0.15)",
                       backdropFilter: "blur(8px)",
-                      color: "#fff", padding: "5px 14px", borderRadius: 100,
+                      color: "#fff", padding: "5px 14px", borderRadius: 0,
                       fontSize: 12, fontWeight: 700,
                       border: "1px solid rgba(255,255,255,0.3)",
                     }}>
@@ -320,7 +322,7 @@ export default function ServicesPage() {
               <Reveal key={i} delay={i * 100} direction="up">
                 <div style={{
                   background: "var(--bg-card)",
-                  borderRadius: "var(--radius-lg)", padding: 32,
+                  borderRadius: "0", padding: 32,
                   border: "1px solid var(--border)", height: "100%",
                   transition: "all 0.35s ease",
                 }}
@@ -367,7 +369,7 @@ export default function ServicesPage() {
                     {step}
                   </div>
                   {i < arr.length - 1 && (
-                    <div style={{ color: "var(--text-light)", fontSize: 24, margin: "0 8px" }}>→</div>
+                    <div style={{ color: "var(--text-light)", fontSize: 24, margin: "0 8px" }} className="process-arrow">→</div>
                   )}
                 </div>
               </Reveal>
@@ -379,13 +381,13 @@ export default function ServicesPage() {
       {/* ── CTA ───────────────────────────────── */}
       <section style={{
         padding: "110px 24px",
-        background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+        background: "#000",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
       }}>
-        <div style={{ position: "absolute", top: -80, right: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "50%", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: -80, left: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "50%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -80, right: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "0%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -80, left: -80, width: 300, height: 300, background: "rgba(255,255,255,0.05)", borderRadius: "0%", pointerEvents: "none" }} />
         <Reveal direction="down">
           <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "#fff", marginBottom: 16 }}>
             {sp.ctaTitle}
@@ -434,7 +436,8 @@ export default function ServicesPage() {
         .process-strip { justify-content: center; align-items: center; }
         @media (max-width: 640px) {
           .process-strip { flex-direction: column; gap: 12px; }
-          .process-strip > div > div:last-child { transform: rotate(90deg); }
+          .process-strip > div > div { flex-direction: column; }
+          .process-arrow { transform: rotate(90deg); margin: 8px 0 !important; }
         }
       `}</style>
     </div>

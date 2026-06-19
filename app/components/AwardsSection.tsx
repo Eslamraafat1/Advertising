@@ -75,8 +75,8 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
       overflow: "hidden",
     }}>
       {/* Ambient glows */}
-      <div style={{ position: "absolute", top: -100, right: -100, width: 400, height: 400, background: "radial-gradient(circle, rgba(99,102,241,0.15), transparent)", borderRadius: "50%", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: -80, left: -80, width: 350, height: 350, background: "radial-gradient(circle, rgba(245,158,11,0.1), transparent)", borderRadius: "50%", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: -100, right: -100, width: 400, height: 400, background: "radial-gradient(circle, rgba(99,102,241,0.15), transparent)", borderRadius: "0%", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: -80, left: -80, width: 350, height: 350, background: "radial-gradient(circle, rgba(245,158,11,0.1), transparent)", borderRadius: "0%", pointerEvents: "none" }} />
 
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
         {/* Header */}
@@ -90,7 +90,7 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
               fontWeight: 700,
               fontSize: 13,
               padding: "7px 22px",
-              borderRadius: 100,
+              borderRadius: 0,
               marginBottom: 20,
             }}>
               {d.badge}
@@ -130,7 +130,7 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
                     ? `linear-gradient(135deg, ${award.color}22, ${award.color}11)`
                     : "rgba(255,255,255,0.04)",
                   border: `1.5px solid ${hovered === i ? award.color + "55" : "rgba(255,255,255,0.1)"}`,
-                  borderRadius: 20,
+                  borderRadius: 0,
                   padding: "36px 28px",
                   textAlign: "center",
                   transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -160,7 +160,7 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
                   color: award.color,
                   border: `1px solid ${award.color}40`,
                   padding: "4px 14px",
-                  borderRadius: 100,
+                  borderRadius: 0,
                   fontSize: 12,
                   fontWeight: 700,
                 }}>
@@ -176,7 +176,7 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
           <div style={{
             background: "rgba(255,255,255,0.04)",
             border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: 28,
+            borderRadius: 0,
             padding: "56px 48px",
             display: "grid",
             gridTemplateColumns: "1fr auto",
@@ -204,7 +204,7 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
                   width={56}
                   height={56}
                   unoptimized
-                  style={{ borderRadius: "50%", border: "2px solid rgba(99,102,241,0.5)", objectFit: "cover" }}
+                  style={{ borderRadius: "0%", border: "2px solid rgba(99,102,241,0.5)", objectFit: "cover" }}
                 />
                 <div>
                   <div style={{ fontWeight: 800, fontSize: 15.5, color: "#fff" }}>{d.testimonialName}</div>
@@ -212,7 +212,7 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
                 </div>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }} className="award-stars">
               {[1,2,3,4,5].map(s => (
                 <div key={s} style={{ fontSize: 28, color: "#f59e0b", animation: `pulse-star 1.5s ease-in-out infinite`, animationDelay: `${s * 0.1}s` }}>★</div>
               ))}
@@ -229,6 +229,12 @@ export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
         @media (max-width: 768px) {
           .award-testimonial {
             grid-template-columns: 1fr !important;
+            padding: 32px 24px !important;
+          }
+          .award-stars {
+            flex-direction: row !important;
+            justify-content: center !important;
+            margin-top: 16px !important;
           }
         }
       `}</style>

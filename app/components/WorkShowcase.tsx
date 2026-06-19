@@ -109,7 +109,7 @@ export default function WorkShowcase({ locale = "ar" }: { locale?: string }) {
                 fontWeight: 700,
                 fontSize: 13,
                 padding: "6px 20px",
-                borderRadius: 100,
+                borderRadius: 0,
                 marginBottom: 16,
               }}>
                 {d.badge}
@@ -137,7 +137,7 @@ export default function WorkShowcase({ locale = "ar" }: { locale?: string }) {
               background: "var(--primary)",
               color: "#fff",
               padding: "13px 28px",
-              borderRadius: 12,
+              borderRadius: 0,
               fontWeight: 700,
               fontSize: 15,
               display: "inline-flex",
@@ -154,122 +154,104 @@ export default function WorkShowcase({ locale = "ar" }: { locale?: string }) {
         </div>
 
         {/* Bento Grid */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(12, 1fr)",
-          gridTemplateRows: "auto",
-          gap: 20,
-        }}
-        className="work-bento"
+      <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(12, 1fr)",
+    gridTemplateRows: "auto",
+    gap: 24,
+  }}
+  className="work-bento"
+>
+  {d.projects.map((proj, i) => {
+    // نفس توزيعك الأصلي للـ Grid
+    const gridStyles = i === 0
+      ? { gridColumn: "1 / 8", gridRow: "1" }
+      : i === 1
+      ? { gridColumn: "8 / 13", gridRow: "1" }
+      : i === 2
+      ? { gridColumn: "1 / 6", gridRow: "2" }
+      : { gridColumn: "6 / 13", gridRow: "2" };
+
+    return (
+      <Reveal
+        key={i}
+        direction="up"
+        delay={i * 100}
+        style={{ ...gridStyles }}
+        className={`bento-item`}
+      >
+        <div
+          onMouseEnter={() => setHovered(i)}
+          onMouseLeave={() => setHovered(null)}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+            cursor: "pointer",
+            height: "100%",
+          }}
         >
-          {d.projects.map((proj, i) => {
-            const isLarge = proj.size === "large";
-            const gridStyles: React.CSSProperties = i === 0
-              ? { gridColumn: "1 / 8", gridRow: "1" }
-              : i === 1
-              ? { gridColumn: "8 / 13", gridRow: "1" }
-              : i === 2
-              ? { gridColumn: "1 / 6", gridRow: "2" }
-              : { gridColumn: "6 / 13", gridRow: "2" };
+          {/* الصورة بتأثير Hover ناعم */}
+          <div style={{
+            position: "relative",
+            width: "100%",
+            height: i < 2 ? 340 : 280, // قللت الارتفاع قليلاً عشان نسيب مساحة للكلام
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: hovered === i ? `0 20px 40px ${proj.color}20` : "0 4px 16px rgba(0,0,0,0.08)",
+            transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+          }}>
+            <Image
+              src={proj.img}
+              alt={proj.title}
+              fill
+              unoptimized
+              style={{
+                objectFit: "cover",
+                transform: hovered === i ? "scale(1.05)" : "scale(1)",
+                transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+            />
+          </div>
 
-             return (
-              <Reveal
-                key={i}
-                direction="up"
-                delay={i * 100}
-                style={{
-                  ...gridStyles,
-                  height: i < 2 ? 420 : 360,
-                }}
-                className={`bento-item bento-item-${i}`}
-              >
-                <div
-                  onMouseEnter={() => setHovered(i)}
-                  onMouseLeave={() => setHovered(null)}
-                  style={{
-                    position: "relative",
-                    borderRadius: 24,
-                    overflow: "hidden",
-                    width: "100%",
-                    height: "100%",
-                    cursor: "pointer",
-                    boxShadow: hovered === i
-                      ? `0 24px 60px ${proj.color}30`
-                      : "0 4px 16px rgba(0,0,0,0.08)",
-                    transition: "box-shadow 0.4s ease",
-                  }}
-                >
-                  <Image
-                    src={proj.img}
-                    alt={proj.title}
-                    fill
-                    unoptimized
-                    style={{
-                      objectFit: "cover",
-                      transform: hovered === i ? "scale(1.08)" : "scale(1)",
-                      transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-                    }}
-                  />
-                  {/* Overlay */}
-                  <div style={{
-                    position: "absolute", inset: 0,
-                    background: `linear-gradient(to top, ${proj.color}dd 0%, transparent 60%)`,
-                    opacity: hovered === i ? 1 : 0.7,
-                    transition: "opacity 0.4s ease",
-                  }} />
-
-                  {/* Content */}
-                  <div style={{
-                    position: "absolute",
-                    bottom: 0, left: 0, right: 0,
-                    padding: "28px 28px",
-                    transform: hovered === i ? "translateY(0)" : "translateY(8px)",
-                    transition: "transform 0.4s ease",
-                  }}>
-                    <span style={{
-                      background: "rgba(255,255,255,0.2)",
-                      backdropFilter: "blur(8px)",
-                      color: "#fff",
-                      padding: "4px 14px",
-                      borderRadius: 100,
-                      fontSize: 12,
-                      fontWeight: 700,
-                      display: "inline-block",
-                      marginBottom: 10,
-                      border: "1px solid rgba(255,255,255,0.3)",
-                    }}>
-                      {proj.category}
-                    </span>
-                    <h3 style={{
-                      fontSize: isLarge ? 22 : 18,
-                      fontWeight: 900,
-                      color: "#fff",
-                      marginBottom: 8,
-                    }}>
-                      {proj.title}
-                    </h3>
-                    <div style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 6,
-                      background: "rgba(255,255,255,0.15)",
-                      backdropFilter: "blur(8px)",
-                      color: "#fff",
-                      padding: "5px 14px",
-                      borderRadius: 100,
-                      fontSize: 13,
-                      fontWeight: 700,
-                      opacity: hovered === i ? 1 : 0,
-                      transition: "opacity 0.3s ease 0.1s",
-                    }}>
-                      📈 {proj.metric}
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            );
-          })}
+          {/* الكلام تحت الصورة بشكل عصري */}
+          <div style={{ padding: "0 4px" }}>
+            <span style={{
+              color: proj.color,
+              fontSize: 11,
+              fontWeight: 800,
+              textTransform: "uppercase",
+              letterSpacing: "1px",
+              display: "block",
+              marginBottom: "8px",
+            }}>
+              {proj.category}
+            </span>
+            <h3 style={{
+              fontSize: 20,
+              fontWeight: 800,
+              color: "#111",
+              marginBottom: "6px",
+            }}>
+              {proj.title}
+            </h3>
+            <div style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              fontSize: 14,
+              fontWeight: 600,
+              color: "#666",
+            }}>
+              📈 <span style={{ color: "#000" }}>{proj.metric}</span>
+            </div>
+          </div>
         </div>
+      </Reveal>
+    );
+  })}
+</div>
       </div>
 
       <style>{`
@@ -279,14 +261,13 @@ export default function WorkShowcase({ locale = "ar" }: { locale?: string }) {
         }
         @media (max-width: 900px) {
           .work-bento {
-            display: grid !important;
-            grid-template-columns: 1fr !important;
-            grid-template-rows: auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 32px !important;
           }
-          .bento-item-0, .bento-item-1, .bento-item-2, .bento-item-3 {
-            grid-column: 1 !important;
+          .bento-item {
+            grid-column: span 12 / span 12 !important;
             grid-row: auto !important;
-            height: 300px !important;
           }
         }
       `}</style>

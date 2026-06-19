@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { LanguageProvider } from "./components/LanguageContext";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: "Untold Agency | Premium Advertising & Marketing Agency",
@@ -16,6 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"
+        />
+      </head>
       <body>
         {/* Pre-hydration cleanup: remove attributes injected by browser extensions
             (e.g. cz-shortcut-listen) that can cause React hydration mismatches. */}

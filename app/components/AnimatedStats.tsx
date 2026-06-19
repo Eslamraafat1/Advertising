@@ -148,7 +148,7 @@ export default function AnimatedStats() {
         transform: "translate(-50%, -50%)",
         width: 600, height: 600,
         background: "radial-gradient(circle, rgba(233,41,44,0.05) 0%, transparent 70%)",
-        borderRadius: "50%",
+        borderRadius: "0%",
         pointerEvents: "none",
       }} />
 
@@ -156,14 +156,14 @@ export default function AnimatedStats() {
         <div style={{ textAlign: "center", marginBottom: 72 }}>
           <span style={{
             display: "inline-block",
-            background: "linear-gradient(135deg, #e9292c, #c41e21)",
+            background: "#0a0a0a",
             color: "#fff",
             fontWeight: 700,
             fontSize: 13,
             padding: "6px 20px",
-            borderRadius: 100,
+            borderRadius: 0,
             marginBottom: 20,
-            boxShadow: "0 4px 16px rgba(233,41,44,0.3)",
+            borderLeft: "3px solid var(--primary)",
           }}>
             {locale === "ar" ? "🔥 أرقام تتحدث عن نفسها" : "🔥 Numbers That Speak"}
           </span>
@@ -192,7 +192,7 @@ export default function AnimatedStats() {
             return (
               <div key={i} className="stat-card" style={{
                 background: stat.bg,
-                borderRadius: 24,
+                borderRadius: 0,
                 padding: "44px 32px",
                 textAlign: "center",
                 border: `1.5px solid ${stat.color}22`,
@@ -207,7 +207,7 @@ export default function AnimatedStats() {
                   bottom: -30, right: -30,
                   width: 100, height: 100,
                   background: `radial-gradient(circle, ${stat.color}25, transparent)`,
-                  borderRadius: "50%",
+                  borderRadius: "0%",
                 }} />
 
                 {/* Icon */}
@@ -215,7 +215,7 @@ export default function AnimatedStats() {
                   display: "inline-block",
                   padding: 12,
                   background: "#fff",
-                  borderRadius: 12,
+                  borderRadius: 0,
                   marginBottom: 20,
                   boxShadow: `0 4px 12px ${stat.color}15`,
                 }}>

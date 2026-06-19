@@ -68,7 +68,7 @@ function SkillBar({ label, percent, color, delay }: { label: string; percent: nu
             height: "100%",
             width: animated ? `${percent}%` : "0%",
             background: `linear-gradient(90deg, ${color}, ${color}bb)`,
-            borderRadius: 100,
+            borderRadius: 0,
             transition: `width 1.2s cubic-bezier(0.16, 1, 0.3, 1) ${delay * 0.5}ms`,
             position: "relative",
             overflow: "hidden",
@@ -96,11 +96,12 @@ export default function AboutPage() {
     <div>
       {/* ── Hero with particle bg ────────────── */}
       <section style={{
-        background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
+        background: "#0a0a0a",
         padding: "100px 24px 80px",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
+        borderBottom: "3px solid var(--primary)",
       }}>
         {/* Animated circles */}
         {[...Array(6)].map((_, i) => (
@@ -109,7 +110,7 @@ export default function AboutPage() {
             width: `${80 + i * 40}px`,
             height: `${80 + i * 40}px`,
             border: `1px solid rgba(99,102,241,${0.15 - i * 0.02})`,
-            borderRadius: "50%",
+            borderRadius: "0%",
             top: `${20 + i * 8}%`,
             left: `${10 + i * 15}%`,
             animation: `spin-slow ${8 + i * 2}s linear infinite`,
@@ -124,7 +125,7 @@ export default function AboutPage() {
               border: "1px solid rgba(99,102,241,0.4)",
               color: "#fff",
               fontWeight: 700, fontSize: 13,
-              padding: "6px 20px", borderRadius: 100, marginBottom: 20,
+              padding: "6px 20px", borderRadius: 0, marginBottom: 20,
             }}>{ad.badge}</span>
           </Reveal>
           <Reveal direction="up" delay={100}>
@@ -180,7 +181,7 @@ export default function AboutPage() {
                   display: "inline-block",
                   background: "var(--accent-light)", color: "#92400e",
                   fontWeight: 700, fontSize: 13, padding: "5px 16px",
-                  borderRadius: 100, marginBottom: 20
+                  borderRadius: 0, marginBottom: 20
                 }}>{ad.storyBadge}</span>
               </Reveal>
               <Reveal direction="up" delay={100}>
@@ -198,11 +199,12 @@ export default function AboutPage() {
                 <Link href="/contact" style={{
                   textDecoration: "none",
                   display: "inline-block",
-                  background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                  background: "#0a0a0a",
                   color: "#fff", padding: "14px 32px",
-                  borderRadius: 12, fontWeight: 700, fontSize: 15.5,
-                  boxShadow: "0 4px 14px rgba(99, 102, 241, 0.25)",
+                  borderRadius: 0, fontWeight: 700, fontSize: 15.5,
+                  boxShadow: "0 4px 14px rgba(0,0,0,0.2)",
                   transition: "all 0.25s ease",
+                  border: "2px solid #0a0a0a",
                 }}
                 className="story-cta"
                 >
@@ -221,7 +223,7 @@ export default function AboutPage() {
                     unoptimized
                     style={{
                       width: "100%", height: "100%",
-                      borderRadius: 24,
+                      borderRadius: 0,
                       boxShadow: "var(--shadow-lg)",
                       border: "1.5px solid var(--border)",
                       objectFit: "cover",
@@ -232,7 +234,7 @@ export default function AboutPage() {
                     position: "absolute", bottom: 20, right: 20,
                     background: "rgba(255,255,255,0.95)",
                     backdropFilter: "blur(12px)",
-                    borderRadius: 16, padding: "14px 20px",
+                    borderRadius: 0, padding: "14px 20px",
                     boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
                     display: "flex", alignItems: "center", gap: 10,
                   }}>
@@ -250,16 +252,17 @@ export default function AboutPage() {
                 {t.statsData.map((s: StatDataItem, i: number) => (
                   <Reveal key={i} delay={i * 100} direction="up">
                     <div style={{
-                      background: i === 0 ? "linear-gradient(135deg, var(--primary), var(--primary-dark))" : "var(--bg-card)",
-                      borderRadius: "var(--radius-lg)", padding: 24,
+                      background: i === 0 ? "#0a0a0a" : "var(--bg-card)",
+                      borderRadius: "0", padding: 24,
                       textAlign: "center", border: "1px solid var(--border)",
+                      borderLeft: i === 0 ? "3px solid var(--primary)" : "1px solid var(--border)",
                       transition: "all 0.3s ease",
                     }}
                     className="story-stat-card"
                     >
                       <div style={{ fontSize: 30, marginBottom: 8 }}>{s.icon}</div>
                       <div style={{ fontSize: 28, fontWeight: 900, color: i === 0 ? "#fff" : "var(--primary)" }}>{s.value}</div>
-                      <div style={{ fontSize: 13, color: i === 0 ? "#c7d2fe" : "var(--text-muted)", marginTop: 4 }}>{s.label}</div>
+                      <div style={{ fontSize: 13, color: i === 0 ? "rgba(255,255,255,0.6)" : "var(--text-muted)", marginTop: 4 }}>{s.label}</div>
                     </div>
                   </Reveal>
                 ))}
@@ -274,7 +277,7 @@ export default function AboutPage() {
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 72 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 20px", borderRadius: 100, marginBottom: 16 }}>
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 20px", borderRadius: 0, marginBottom: 16 }}>
                 {locale === "ar" ? "📅 مسيرتنا عبر السنين" : "📅 Our Journey"}
               </span>
             </Reveal>
@@ -295,7 +298,7 @@ export default function AboutPage() {
               background: "linear-gradient(to bottom, var(--primary), var(--accent))",
               transform: "translateX(-50%)",
               opacity: 0.3,
-            }} />
+            }} className="timeline-line" />
 
             {timeline.map((item, i) => (
               <Reveal key={i} direction={i % 2 === 0 ? "right" : "left"} delay={i * 120}>
@@ -309,11 +312,11 @@ export default function AboutPage() {
                 className="timeline-row"
                 >
                   {/* Left content (even) or empty (odd) */}
-                  <div style={{ padding: "0 24px", textAlign: i % 2 === 0 ? "end" : "start" }}>
+                  <div style={{ padding: "0 24px", textAlign: i % 2 === 0 ? "end" : "start" }} className={i % 2 === 0 ? "timeline-content-col" : "timeline-empty-col"}>
                     {i % 2 === 0 && (
                       <div style={{
                         background: "var(--bg-card)",
-                        borderRadius: 20,
+                        borderRadius: 0,
                         padding: "28px 32px",
                         border: "1px solid var(--border)",
                         boxShadow: "var(--shadow-sm)",
@@ -330,11 +333,11 @@ export default function AboutPage() {
                   </div>
 
                   {/* Center dot */}
-                  <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                  <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} className="timeline-col-center">
                     <div style={{
                       width: 20, height: 20,
                       background: "linear-gradient(135deg, var(--primary), var(--accent))",
-                      borderRadius: "50%",
+                      borderRadius: "0",
                       border: "3px solid var(--bg-muted)",
                       boxShadow: "0 0 0 4px rgba(99,102,241,0.2)",
                       zIndex: 1,
@@ -342,11 +345,11 @@ export default function AboutPage() {
                   </div>
 
                   {/* Right content (odd) or empty (even) */}
-                  <div style={{ padding: "0 24px" }}>
+                  <div style={{ padding: "0 24px" }} className={i % 2 === 1 ? "timeline-content-col" : "timeline-empty-col"}>
                     {i % 2 === 1 && (
                       <div style={{
                         background: "var(--bg-card)",
-                        borderRadius: 20,
+                        borderRadius: 0,
                         padding: "28px 32px",
                         border: "1px solid var(--border)",
                         boxShadow: "var(--shadow-sm)",
@@ -374,7 +377,7 @@ export default function AboutPage() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center" }} className="skills-split">
             <div>
               <Reveal direction="down">
-                <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 20px", borderRadius: 100, marginBottom: 20 }}>
+                <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 20px", borderRadius: 0, marginBottom: 20 }}>
                   {locale === "ar" ? "💡 خبراتنا ومهاراتنا" : "💡 Our Expertise"}
                 </span>
               </Reveal>
@@ -399,7 +402,7 @@ export default function AboutPage() {
                       background: "var(--primary-light)",
                       color: "var(--primary)",
                       padding: "8px 18px",
-                      borderRadius: 100,
+                      borderRadius: 0,
                       fontSize: 13,
                       fontWeight: 700,
                       border: "1px solid rgba(99,102,241,0.2)",
@@ -425,12 +428,13 @@ export default function AboutPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32 }}>
             <Reveal direction="up">
               <div style={{
-                background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
-                borderRadius: "var(--radius-lg)", padding: 44,
+                background: "#0a0a0a",
+                borderRadius: "0", padding: 44,
                 textAlign: "center", height: "100%",
                 position: "relative", overflow: "hidden",
+                borderLeft: "3px solid var(--primary)",
               }}>
-                <div style={{ position: "absolute", top: -30, right: -30, width: 120, height: 120, background: "rgba(255,255,255,0.08)", borderRadius: "50%" }} />
+                <div style={{ position: "absolute", top: -30, right: -30, width: 120, height: 120, background: "rgba(255,255,255,0.08)", borderRadius: "0%" }} />
                 <div style={{ fontSize: 52, marginBottom: 20 }}>🎯</div>
                 <h3 style={{ fontWeight: 900, fontSize: 22, color: "#fff", marginBottom: 18 }}>{ad.missionTitle}</h3>
                 <p style={{ color: "rgba(255,255,255,0.85)", fontSize: 15.5, lineHeight: 1.9 }}>{ad.missionDesc}</p>
@@ -439,7 +443,7 @@ export default function AboutPage() {
 
             <Reveal direction="up" delay={200}>
               <div style={{
-                background: "var(--bg-card)", borderRadius: "var(--radius-lg)",
+                background: "var(--bg-card)", borderRadius: "0",
                 padding: 44, border: "1.5px solid var(--border)",
                 textAlign: "center", height: "100%",
                 transition: "all 0.3s ease",
@@ -455,11 +459,11 @@ export default function AboutPage() {
             <Reveal direction="up" delay={400}>
               <div style={{
                 background: "linear-gradient(135deg, #f59e0b, #d97706)",
-                borderRadius: "var(--radius-lg)", padding: 44,
+                borderRadius: "0", padding: 44,
                 textAlign: "center", height: "100%",
                 position: "relative", overflow: "hidden",
               }}>
-                <div style={{ position: "absolute", bottom: -30, left: -30, width: 120, height: 120, background: "rgba(255,255,255,0.08)", borderRadius: "50%" }} />
+                <div style={{ position: "absolute", bottom: -30, left: -30, width: 120, height: 120, background: "rgba(255,255,255,0.08)", borderRadius: "0%" }} />
                 <div style={{ fontSize: 52, marginBottom: 20 }}>💡</div>
                 <h3 style={{ fontWeight: 900, fontSize: 22, color: "#fff", marginBottom: 18 }}>
                   {locale === "ar" ? "قيمنا وفلسفتنا" : "Our Values & Philosophy"}
@@ -478,7 +482,7 @@ export default function AboutPage() {
         <div style={{ maxWidth: 1050, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "5px 18px", borderRadius: 100, marginBottom: 16 }}>{ad.valuesBadge}</span>
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "5px 18px", borderRadius: 0, marginBottom: 16 }}>{ad.valuesBadge}</span>
             </Reveal>
             <Reveal direction="up" delay={100}>
               <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", fontWeight: 900, color: "var(--text)" }}>{ad.valuesTitle}</h2>
@@ -489,7 +493,7 @@ export default function AboutPage() {
               <Reveal key={i} delay={i * 100} direction="up">
                 <div style={{
                   background: "var(--bg-card)",
-                  borderRadius: "var(--radius-lg)", padding: 32,
+                  borderRadius: "0", padding: 32,
                   textAlign: "center", border: "1px solid var(--border)",
                   height: "100%", transition: "all 0.35s ease",
                 }}
@@ -510,7 +514,7 @@ export default function AboutPage() {
         <div style={{ maxWidth: 1050, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "5px 18px", borderRadius: 100, marginBottom: 16 }}>{ad.teamBadge}</span>
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "5px 18px", borderRadius: 0, marginBottom: 16 }}>{ad.teamBadge}</span>
             </Reveal>
             <Reveal direction="up" delay={100}>
               <h2 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", fontWeight: 900, color: "var(--text)" }}>{ad.teamTitle}</h2>
@@ -525,7 +529,7 @@ export default function AboutPage() {
                   onMouseLeave={() => setHoveredTeam(null)}
                   style={{
                     background: "var(--bg-card)",
-                    borderRadius: "var(--radius-lg)", padding: 32,
+                    borderRadius: "0", padding: 32,
                     textAlign: "center",
                     border: `1.5px solid ${hoveredTeam === i ? "var(--primary)" : "var(--border)"}`,
                     boxShadow: hoveredTeam === i ? "var(--shadow-lg)" : "var(--shadow-sm)",
@@ -541,7 +545,7 @@ export default function AboutPage() {
                       unoptimized
                       style={{
                         width: "100%", height: "100%",
-                        borderRadius: "50%", objectFit: "cover",
+                        borderRadius: "0%", objectFit: "cover",
                         border: `3px solid ${hoveredTeam === i ? "var(--primary)" : "var(--primary-light)"}`,
                         boxShadow: hoveredTeam === i ? "0 0 0 4px rgba(99,102,241,0.15)" : "0 4px 10px rgba(0,0,0,0.1)",
                         transition: "all 0.4s ease",
@@ -552,7 +556,7 @@ export default function AboutPage() {
                       position: "absolute", bottom: 4, right: 4,
                       width: 14, height: 14,
                       background: "#10b981",
-                      borderRadius: "50%",
+                      borderRadius: "0%",
                       border: "2px solid var(--bg-card)",
                     }} />
                   </div>
@@ -578,7 +582,7 @@ export default function AboutPage() {
                 <span key={i} style={{
                   background: "var(--bg-muted)",
                   border: "1px solid var(--border)",
-                  borderRadius: 12, padding: "12px 28px",
+                  borderRadius: 0, padding: "12px 28px",
                   fontSize: 14, fontWeight: 700,
                   color: "var(--text-muted)",
                   boxShadow: "var(--shadow-sm)",
@@ -605,8 +609,11 @@ export default function AboutPage() {
           .about-story-split { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center !important; }
           .about-story-graphics { gap: 24px !important; }
           .skills-split { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .timeline-row { grid-template-columns: 1fr !important; }
-          .timeline-row > div:first-child, .timeline-row > div:last-child { display: block !important; }
+          .timeline-line { display: none !important; }
+          .timeline-col-center { display: none !important; }
+          .timeline-empty-col { display: none !important; }
+          .timeline-row { grid-template-columns: 1fr !important; margin-bottom: 24px !important; }
+          .timeline-content-col { padding: 0 !important; text-align: inherit !important; }
         }
       `}</style>
     </div>

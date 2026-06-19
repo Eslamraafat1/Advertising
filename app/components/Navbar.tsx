@@ -19,13 +19,13 @@ export default function Navbar() {
     }}>
       {t.showAnnouncementBar && t.announcementBar && (
         <div style={{
-          background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+          background: "#0a0a0a",
           color: "#fff",
           padding: "10px 24px",
           textAlign: "center",
           fontSize: 13.5,
           fontWeight: 600,
-          borderBottom: "1px solid rgba(255,255,255,0.1)",
+          borderBottom: "2px solid var(--primary)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -83,11 +83,12 @@ export default function Navbar() {
             <Link key={link.href} href={link.href} style={{
               textDecoration: "none",
               padding: "8px 16px",
-              borderRadius: 8,
+              borderRadius: 0,
               fontSize: 15,
-              fontWeight: pathname === link.href ? 600 : 500,
-              color: pathname === link.href ? "var(--primary)" : "var(--text-muted)",
-              background: pathname === link.href ? "var(--primary-light)" : "transparent",
+              fontWeight: pathname === link.href ? 700 : 500,
+              color: pathname === link.href ? "#0a0a0a" : "var(--text-muted)",
+              background: "transparent",
+              borderBottom: pathname === link.href ? "2px solid var(--primary)" : "2px solid transparent",
               transition: "all 0.25s ease",
             }}>
               {link.label}
@@ -101,11 +102,11 @@ export default function Navbar() {
           <button
             onClick={toggleLocale}
             style={{
-              background: "var(--bg-muted)",
-              border: "1.5px solid var(--border)",
-              color: "var(--text)",
-              padding: "6px 14px",
-              borderRadius: 8,
+              background: "#ffffff",
+              border: "1.5px solid #ffffff",
+              color: "#fff",
+              padding: "6px 12px",
+              borderRadius: 0,
               fontSize: 14,
               fontWeight: 600,
               cursor: "pointer",
@@ -115,8 +116,12 @@ export default function Navbar() {
               transition: "all 0.2s ease",
             }}
             className="lang-toggle-btn"
+            title={locale === "ar" ? "Switch to English" : "التبديل إلى العربية"}
           >
-            🌐 {locale === "ar" ? "English" : "العربية"}
+            <span
+              className={locale === "ar" ? "fi fi-us" : "fi fi-sa"}
+              style={{ fontSize: 22, lineHeight: 1, borderRadius: 3, boxShadow: "0 1px 4px rgba(0,0,0,0.3)" }}
+            />
           </button>
 
           {/* Dashboard Button */}
@@ -142,17 +147,23 @@ export default function Navbar() {
           <button
             onClick={toggleLocale}
             style={{
-              background: "var(--bg-muted)",
-              border: "1px solid var(--border)",
-              color: "var(--text)",
+              background: "#0a0a0a",
+              border: "1px solid #0a0a0a",
+              color: "#fff",
               padding: "5px 10px",
-              borderRadius: 8,
+              borderRadius: 0,
               fontSize: 13,
               fontWeight: 600,
               cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
             }}
+            title={locale === "ar" ? "Switch to English" : "التبديل إلى العربية"}
           >
-            🌐 {locale === "ar" ? "EN" : "عربي"}
+            <span
+              className={locale === "ar" ? "fi fi-us" : "fi fi-sa"}
+              style={{ fontSize: 20, lineHeight: 1, borderRadius: 3, boxShadow: "0 1px 4px rgba(0,0,0,0.3)" }}
+            />
           </button>
 
           <button
@@ -186,7 +197,7 @@ export default function Navbar() {
               style={{
                 textDecoration: "none",
                 padding: "10px 16px",
-                borderRadius: 8,
+                borderRadius: 0,
                 fontSize: 15,
                 fontWeight: pathname === link.href ? 600 : 500,
                 color: pathname === link.href ? "var(--primary)" : "var(--text)",
@@ -195,13 +206,13 @@ export default function Navbar() {
                 {link.label}
             </Link>
           ))}
-          <Link href="/dashboard"
+          {/* <Link href="/dashboard"
             onClick={() => setMenuOpen(false)}
             style={{
               marginTop: 10,
               textDecoration: "none",
               padding: "11px 16px",
-              borderRadius: 8,
+              borderRadius: 0,
               fontSize: 15,
               fontWeight: 600,
               color: "#fff",
@@ -209,15 +220,19 @@ export default function Navbar() {
               textAlign: "center",
             }}>
               {t.common.dashboardBtn}
-          </Link>
+          </Link> */}
         </div>
       )}
 
       <style>{`
         .lang-toggle-btn:hover {
-          background: var(--primary-light);
-          border-color: var(--primary);
-          color: var(--primary);
+          background: #0a0a0a !important;
+          border-color: #0a0a0a !important;
+          color: #fff !important;
+        }
+        .desktop-nav a:hover {
+          color: #0a0a0a !important;
+          border-bottom-color: var(--primary) !important;
         }
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }

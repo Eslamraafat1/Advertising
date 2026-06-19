@@ -54,21 +54,22 @@ export default function BlogPage() {
     <div>
       {/* ── Hero ──────────────────────────────── */}
       <section style={{
-        background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
+        background: "#0a0a0a",
         padding: "100px 24px 80px",
         position: "relative",
         overflow: "hidden",
+        borderBottom: "3px solid var(--primary)",
       }}>
         {/* Animated dots grid */}
         <div style={{
           position: "absolute", inset: 0,
-          backgroundImage: "radial-gradient(rgba(99,102,241,0.2) 1.5px, transparent 1.5px)",
+          backgroundImage: "radial-gradient(rgba(255,255,255,0.05) 1.5px, transparent 1.5px)",
           backgroundSize: "32px 32px",
           pointerEvents: "none",
         }} />
         {/* Glow blobs */}
-        <div style={{ position: "absolute", top: -100, right: "20%", width: 400, height: 400, background: "radial-gradient(circle, rgba(99,102,241,0.2), transparent)", borderRadius: "50%", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: -60, left: "10%", width: 300, height: 300, background: "radial-gradient(circle, rgba(245,158,11,0.12), transparent)", borderRadius: "50%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: -100, right: "20%", width: 400, height: 400, background: "radial-gradient(circle, rgba(255,255,255,0.04), transparent)", borderRadius: "0%", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -60, left: "10%", width: 300, height: 300, background: "radial-gradient(circle, rgba(233,41,44,0.08), transparent)", borderRadius: "0%", pointerEvents: "none" }} />
 
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center", position: "relative" }}>
           <Reveal direction="down">
@@ -78,7 +79,7 @@ export default function BlogPage() {
               border: "1px solid rgba(99,102,241,0.4)",
               color: "#a5b4fc",
               fontWeight: 700, fontSize: 13,
-              padding: "7px 22px", borderRadius: 100, marginBottom: 24,
+              padding: "7px 22px", borderRadius: 0, marginBottom: 24,
             }}>
               {blog.badge}
             </span>
@@ -113,7 +114,7 @@ export default function BlogPage() {
                       ? "rgba(99,102,241,0.6)"
                       : "rgba(255,255,255,0.12)"}`,
                     color: (i === 0 ? activeTag === "all" : activeTag === tag) ? "#a5b4fc" : "#94a3b8",
-                    padding: "8px 20px", borderRadius: 100,
+                    padding: "8px 20px", borderRadius: 0,
                     fontSize: 13, fontWeight: 600, cursor: "pointer",
                     transition: "all 0.25s ease",
                     fontFamily: "inherit",
@@ -136,7 +137,7 @@ export default function BlogPage() {
               gridTemplateColumns: "1.4fr 1fr",
               gap: 48,
               background: "var(--bg-card)",
-              borderRadius: 28,
+              borderRadius: 0,
               overflow: "hidden",
               border: "1.5px solid var(--border)",
               boxShadow: "var(--shadow-lg)",
@@ -158,7 +159,7 @@ export default function BlogPage() {
                 <div style={{
                   position: "absolute", top: 20, left: 20,
                   background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
-                  color: "#fff", padding: "6px 16px", borderRadius: 100,
+                  color: "#fff", padding: "6px 16px", borderRadius: 0,
                   fontSize: 12, fontWeight: 700,
                 }}>
                   ⭐ {locale === "ar" ? "المقالة المميزة" : "Featured Post"}
@@ -166,12 +167,12 @@ export default function BlogPage() {
               </div>
 
               {/* Content */}
-              <div style={{ padding: "44px 40px 44px 0", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <div style={{ padding: "44px 40px 44px 0", display: "flex", flexDirection: "column", justifyContent: "center" }} className="featured-content">
                 <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
                   {featured.tags.map((tag, i) => (
                     <span key={i} style={{
                       background: "var(--primary-light)", color: "var(--primary)",
-                      padding: "4px 14px", borderRadius: 100,
+                      padding: "4px 14px", borderRadius: 0,
                       fontSize: 12, fontWeight: 700,
                     }}>{tag}</span>
                   ))}
@@ -184,7 +185,7 @@ export default function BlogPage() {
                 </p>
                 <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
                   <Image src={featured.authorImg} alt={featured.author} width={40} height={40} unoptimized
-                    style={{ borderRadius: "50%", objectFit: "cover", border: "2px solid var(--primary-light)" }} />
+                    style={{ borderRadius: "0%", objectFit: "cover", border: "2px solid var(--primary-light)" }} />
                   <div>
                     <div style={{ fontWeight: 700, fontSize: 14, color: "var(--text)" }}>{featured.author}</div>
                     <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{featured.date} · {featured.readTime}</div>
@@ -194,7 +195,7 @@ export default function BlogPage() {
                   textDecoration: "none",
                   background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
                   color: "#fff", padding: "13px 28px",
-                  borderRadius: 12, fontWeight: 700, fontSize: 15,
+                  borderRadius: 0, fontWeight: 700, fontSize: 15,
                   display: "inline-block", boxShadow: "0 4px 16px rgba(99,102,241,0.25)",
                   transition: "all 0.25s ease",
                 }}
@@ -219,7 +220,7 @@ export default function BlogPage() {
                   onMouseLeave={() => setHoveredPost(null)}
                   style={{
                     background: "var(--bg-card)",
-                    borderRadius: 20,
+                    borderRadius: 0,
                     border: `1.5px solid ${hoveredPost === index ? "var(--primary)" : "var(--border)"}`,
                     overflow: "hidden",
                     boxShadow: hoveredPost === index ? "0 20px 50px rgba(99,102,241,0.12)" : "var(--shadow-sm)",
@@ -241,7 +242,7 @@ export default function BlogPage() {
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, marginBottom: 18 }}>
                       <span style={{
                         fontWeight: 700, color: "var(--primary)", fontSize: 12.5,
-                        background: "var(--primary-light)", padding: "4px 12px", borderRadius: 100,
+                        background: "var(--primary-light)", padding: "4px 12px", borderRadius: 0,
                       }}>{post.category}</span>
                       <span style={{ color: "var(--text-muted)", fontSize: 12 }}>{post.date}</span>
                     </div>
@@ -254,7 +255,7 @@ export default function BlogPage() {
                           ? "linear-gradient(135deg, var(--primary), var(--primary-dark))"
                           : "var(--primary-light)",
                         color: hoveredPost === index ? "#fff" : "var(--primary)",
-                        padding: "10px 22px", borderRadius: 999,
+                        padding: "10px 22px", borderRadius: 0,
                         fontWeight: 700, fontSize: 13.5,
                         transition: "all 0.3s ease",
                       }}>
@@ -305,7 +306,7 @@ export default function BlogPage() {
                   background: "rgba(255,255,255,0.06)",
                   border: "1px solid rgba(255,255,255,0.12)",
                   color: "#94a3b8", padding: "6px 16px",
-                  borderRadius: 100, fontSize: 13, fontWeight: 600,
+                  borderRadius: 0, fontSize: 13, fontWeight: 600,
                 }}>
                   ✓ {t}
                 </span>
@@ -318,7 +319,7 @@ export default function BlogPage() {
               <div style={{
                 background: "rgba(16,185,129,0.15)",
                 border: "1.5px solid rgba(16,185,129,0.4)",
-                borderRadius: 20, padding: "32px 40px",
+                borderRadius: 0, padding: "32px 40px",
               }}>
                 <div style={{ fontSize: 52, marginBottom: 16 }}>🎉</div>
                 <h3 style={{ color: "#34d399", fontWeight: 800, fontSize: 22, marginBottom: 8 }}>
@@ -344,7 +345,7 @@ export default function BlogPage() {
                   placeholder={locale === "ar" ? "أدخل بريدك الإلكتروني..." : "Enter your email..."}
                   style={{
                     flex: 1, padding: "14px 20px",
-                    borderRadius: 12, border: "1.5px solid rgba(255,255,255,0.15)",
+                    borderRadius: 0, border: "1.5px solid rgba(255,255,255,0.15)",
                     background: "rgba(255,255,255,0.06)",
                     color: "#fff", fontSize: 15,
                     fontFamily: "inherit", outline: "none",
@@ -355,7 +356,7 @@ export default function BlogPage() {
                 <button type="submit" style={{
                   background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
                   color: "#fff", border: "none",
-                  padding: "14px 28px", borderRadius: 12,
+                  padding: "14px 28px", borderRadius: 0,
                   fontWeight: 700, fontSize: 15, cursor: "pointer",
                   fontFamily: "inherit",
                   boxShadow: "0 4px 16px rgba(99,102,241,0.4)",
@@ -399,7 +400,7 @@ export default function BlogPage() {
             ).map((r, i) => (
               <Reveal key={i} direction="up" delay={i * 80}>
                 <div style={{
-                  background: "var(--bg-card)", borderRadius: 20,
+                  background: "var(--bg-card)", borderRadius: 0,
                   padding: "32px 24px", border: "1.5px solid var(--border)",
                   textAlign: "center", transition: "all 0.35s ease",
                   cursor: "pointer",
@@ -411,7 +412,7 @@ export default function BlogPage() {
                   <span style={{
                     background: `${r.color}18`, color: r.color,
                     border: `1px solid ${r.color}33`,
-                    padding: "5px 14px", borderRadius: 100,
+                    padding: "5px 14px", borderRadius: 0,
                     fontSize: 12, fontWeight: 700,
                   }}>{r.type}</span>
                 </div>
@@ -429,6 +430,7 @@ export default function BlogPage() {
         .resource-card:hover { transform: translateY(-8px); border-color: var(--primary) !important; box-shadow: var(--shadow-md); }
         @media (max-width: 768px) {
           .featured-post { grid-template-columns: 1fr !important; }
+          .featured-content { padding: 32px 24px !important; }
           .newsletter-form { flex-direction: column !important; }
         }
       `}</style>

@@ -53,12 +53,12 @@ const STATUS: Record<string, { bg: string; color: string; label: string }> = {
 // ─── Helpers ──────────────────────────────────────────────
 function Badge({ status }: { status: string }) {
   const s = STATUS[status] ?? { bg: "#f1f5f9", color: "#64748b", label: status };
-  return <span style={{ fontSize: 12, fontWeight: 700, padding: "4px 12px", borderRadius: 20, background: s.bg, color: s.color, whiteSpace: "nowrap" }}>{s.label}</span>;
+  return <span style={{ fontSize: 12, fontWeight: 700, padding: "4px 12px", borderRadius: 0, background: s.bg, color: s.color, whiteSpace: "nowrap" }}>{s.label}</span>;
 }
 
 function StatCard({ icon, label, value, sub, accent }: { icon: string; label: string; value: string; sub?: string; accent?: boolean }) {
   return (
-    <div style={{ background: accent ? "linear-gradient(135deg, var(--primary), var(--primary-dark))" : "var(--bg-card)", borderRadius: "var(--radius-lg)", padding: "22px 24px", border: "1px solid var(--border)", boxShadow: "var(--shadow-sm)" }}>
+    <div style={{ background: accent ? "linear-gradient(135deg, var(--primary), var(--primary-dark))" : "var(--bg-card)", borderRadius: "0", padding: "22px 24px", border: "1px solid var(--border)", boxShadow: "var(--shadow-sm)" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
         <span style={{ fontSize: 22 }}>{icon}</span>
         <span style={{ fontSize: 13, color: accent ? "#c7d2fe" : "var(--text-muted)", fontWeight: 500 }}>{label}</span>
@@ -120,7 +120,7 @@ function EditContentModal({
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "rgba(15,23,42,0.5)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-      <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", padding: 36, maxWidth: 640, width: "100%", boxShadow: "0 24px 64px rgba(0,0,0,0.2)", maxHeight: "90vh", overflowY: "auto" }}>
+      <div style={{ background: "var(--bg-card)", borderRadius: "0", padding: 36, maxWidth: 640, width: "100%", boxShadow: "0 24px 64px rgba(0,0,0,0.2)", maxHeight: "90vh", overflowY: "auto" }}>
         
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
           <h2 style={{ fontWeight: 800, fontSize: 20, color: "var(--text)" }}>✏️ تعديل محتوى الموقع / Edit Site Content</h2>
@@ -305,7 +305,7 @@ export default function DashboardPage() {
   if (loading) return (
     <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ textAlign: "center" }}>
-        <div style={{ width: 48, height: 48, border: "4px solid var(--border)", borderTopColor: "var(--primary)", borderRadius: "50%", margin: "0 auto 16px", animation: "spin 0.8s linear infinite" }} />
+        <div style={{ width: 48, height: 48, border: "4px solid var(--border)", borderTopColor: "var(--primary)", borderRadius: "0%", margin: "0 auto 16px", animation: "spin 0.8s linear infinite" }} />
         <p style={{ color: "var(--text-muted)", fontSize: 17 }}>جارٍ تحميل البيانات...</p>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
@@ -314,7 +314,7 @@ export default function DashboardPage() {
 
   if (error) return (
     <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-      <div style={{ textAlign: "center", maxWidth: 520, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 20, padding: 28, boxShadow: "var(--shadow-sm)" }}>
+      <div style={{ textAlign: "center", maxWidth: 520, background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 0, padding: 28, boxShadow: "var(--shadow-sm)" }}>
         <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--text)", marginBottom: 12 }}>تعذّر تحميل لوحة التحكم</h2>
         <p style={{ color: "var(--text-muted)", fontSize: 15, lineHeight: 1.7, marginBottom: 22 }}>{error}</p>
         <button onClick={() => { setLoading(true); setError(""); window.location.reload(); }} style={{ border: "none", cursor: "pointer", background: "linear-gradient(135deg, var(--primary), var(--primary-dark))", color: "#fff", padding: "12px 24px", borderRadius: 10, fontWeight: 700, fontSize: 14 }}>إعادة المحاولة</button>
@@ -389,13 +389,13 @@ export default function DashboardPage() {
             </div>
 
             {/* Chart + Quick Lists */}
-            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 24 }}>
-              <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", padding: 28, border: "1px solid var(--border)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 24 }} className="dashboard-overview-grid">
+              <div style={{ background: "var(--bg-card)", borderRadius: "0", padding: 28, border: "1px solid var(--border)" }}>
                 <h3 style={{ fontWeight: 700, fontSize: 16, color: "var(--text)", marginBottom: 20 }}>📈 الإيرادات الشهرية (ريال)</h3>
                 <BarChart data={monthlyData} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", padding: 22, border: "1px solid var(--border)" }}>
+                <div style={{ background: "var(--bg-card)", borderRadius: "0", padding: 22, border: "1px solid var(--border)" }}>
                   <h4 style={{ fontWeight: 700, fontSize: 15, color: "var(--text)", marginBottom: 14 }}>🎯 أحدث الحملات</h4>
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {campaigns.slice(0, 3).map(c => (
@@ -406,7 +406,7 @@ export default function DashboardPage() {
                     ))}
                   </div>
                 </div>
-                <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", padding: 22, border: "1px solid var(--border)" }}>
+                <div style={{ background: "var(--bg-card)", borderRadius: "0", padding: 22, border: "1px solid var(--border)" }}>
                   <h4 style={{ fontWeight: 700, fontSize: 15, color: "var(--text)", marginBottom: 14 }}>👥 أحدث العملاء</h4>
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {recentLeads.slice(0, 3).map(l => (
@@ -421,7 +421,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Monthly Table */}
-            <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", overflow: "hidden" }}>
+            <div style={{ background: "var(--bg-card)", borderRadius: "0", border: "1px solid var(--border)", overflow: "hidden" }}>
               <div style={{ padding: "18px 24px", borderBottom: "1px solid var(--border)" }}>
                 <h3 style={{ fontWeight: 700, fontSize: 16, color: "var(--text)" }}>📅 الأداء الشهري</h3>
               </div>
@@ -452,7 +452,7 @@ export default function DashboardPage() {
 
         {/* ── Campaigns ─────────────────────────────── */}
         {tab === "campaigns" && (
-          <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", overflow: "hidden" }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: "0", border: "1px solid var(--border)", overflow: "hidden" }}>
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <h2 style={{ fontWeight: 800, fontSize: 18, color: "var(--text)" }}>جميع الحملات الإعلانية ({campaigns.length})</h2>
               <span style={{ fontSize: 13, color: "var(--text-muted)" }}>آخر تحديث: يونيو ٢٠٢٥</span>
@@ -497,14 +497,14 @@ export default function DashboardPage() {
 
         {/* ── Leads ─────────────────────────────────── */}
         {tab === "leads" && (
-          <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", overflow: "hidden" }}>
+          <div style={{ background: "var(--bg-card)", borderRadius: "0", border: "1px solid var(--border)", overflow: "hidden" }}>
             <div style={{ padding: "20px 24px", borderBottom: "1px solid var(--border)" }}>
               <h2 style={{ fontWeight: 800, fontSize: 18, color: "var(--text)" }}>العملاء المحتملون ({recentLeads.length})</h2>
             </div>
             <div>
               {recentLeads.map((lead, i) => (
                 <div key={lead.id} style={{ display: "flex", alignItems: "center", gap: 16, padding: "18px 24px", borderTop: i > 0 ? "1px solid var(--border)" : "none", background: i % 2 ? "var(--bg-muted)" : "transparent", flexWrap: "wrap" }}>
-                  <div style={{ width: 46, height: 46, borderRadius: "50%", background: "linear-gradient(135deg, var(--primary), var(--primary-dark))", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 18, flexShrink: 0 }}>
+                  <div style={{ width: 46, height: 46, borderRadius: "0%", background: "linear-gradient(135deg, var(--primary), var(--primary-dark))", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 18, flexShrink: 0 }}>
                     {lead.name.charAt(0)}
                   </div>
                   <div style={{ flex: 1, minWidth: 140 }}>
@@ -527,7 +527,7 @@ export default function DashboardPage() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }} className="dashboard-content-grid">
               
               {/* Arabic Content */}
-              <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", padding: 32, direction: "rtl", textAlign: "right" }}>
+              <div style={{ background: "var(--bg-card)", borderRadius: "0", border: "1px solid var(--border)", padding: 32, direction: "rtl", textAlign: "right" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
                   <h2 style={{ fontWeight: 800, fontSize: 18, color: "var(--text)" }}>🇸🇦 المحتوى العربي</h2>
                   <button onClick={() => setEditOpen(true)} style={{ border: "none", cursor: "pointer", background: "linear-gradient(135deg, var(--primary), var(--primary-dark))", color: "#fff", padding: "8px 18px", borderRadius: 8, fontWeight: 700, fontSize: 13, fontFamily: "inherit" }}>
@@ -541,7 +541,7 @@ export default function DashboardPage() {
                     { label: "النص التعريفي للهيرو", value: data.ar.heroData.subtext },
                     { label: "شريط الإعلانات", value: data.ar.announcementBar },
                   ].map((item, i) => (
-                    <div key={i} style={{ background: "var(--bg-muted)", borderRadius: 10, padding: "14px 18px" }}>
+                    <div key={i} style={{ background: "var(--bg-muted)", borderRadius: 0, padding: "14px 18px" }}>
                       <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-muted)", marginBottom: 6 }}>{item.label}</div>
                       <div style={{ fontSize: 14, color: "var(--text)", fontWeight: 500, lineHeight: 1.6 }}>{item.value}</div>
                     </div>
@@ -556,7 +556,7 @@ export default function DashboardPage() {
               </div>
 
               {/* English Content */}
-              <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", padding: 32, direction: "ltr", textAlign: "left" }}>
+              <div style={{ background: "var(--bg-card)", borderRadius: "0", border: "1px solid var(--border)", padding: 32, direction: "ltr", textAlign: "left" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
                   <h2 style={{ fontWeight: 800, fontSize: 18, color: "var(--text)" }}>🇬🇧 English Content</h2>
                   <button onClick={() => setEditOpen(true)} style={{ border: "none", cursor: "pointer", background: "linear-gradient(135deg, var(--primary), var(--primary-dark))", color: "#fff", padding: "8px 18px", borderRadius: 8, fontWeight: 700, fontSize: 13, fontFamily: "inherit" }}>
@@ -587,12 +587,12 @@ export default function DashboardPage() {
             </div>
 
             {/* Preview Arabic */}
-            <div style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", overflow: "hidden" }}>
+            <div style={{ background: "var(--bg-card)", borderRadius: "0", border: "1px solid var(--border)", overflow: "hidden" }}>
               <div style={{ padding: "16px 24px", borderBottom: "1px solid var(--border)", background: "var(--bg-muted)", direction: "rtl", textAlign: "right" }}>
                 <h3 style={{ fontWeight: 700, fontSize: 15, color: "var(--text)" }}>👁️ معاينة الهيرو (العربية)</h3>
               </div>
               <div style={{ padding: 32, background: "linear-gradient(135deg, #f8fafc, #eef2ff)", textAlign: "center", direction: "rtl" }}>
-                <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 12, padding: "5px 14px", borderRadius: 100, marginBottom: 12 }}>
+                <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 12, padding: "5px 14px", borderRadius: 0, marginBottom: 12 }}>
                   {data.ar.heroData.badge}
                 </span>
                 <h1 style={{ fontSize: "clamp(1.4rem, 4vw, 2.4rem)", fontWeight: 900, color: "var(--text)", marginBottom: 12 }}>
@@ -620,6 +620,17 @@ export default function DashboardPage() {
           onSave={handleSaveContent}
         />
       )}
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 992px) {
+          .dashboard-overview-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .dashboard-content-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

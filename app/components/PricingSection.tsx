@@ -154,7 +154,7 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
         position: "absolute", top: -100, right: -150,
         width: 500, height: 500,
         background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)",
-        borderRadius: "50%", pointerEvents: "none",
+        borderRadius: "0%", pointerEvents: "none",
       }} />
 
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
@@ -167,7 +167,7 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
             fontWeight: 700,
             fontSize: 13,
             padding: "6px 20px",
-            borderRadius: 100,
+            borderRadius: 0,
             marginBottom: 20,
           }}>
             {locale === "ar" ? "💰 باقاتنا الاحترافية" : "💰 Our Packages"}
@@ -197,27 +197,18 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
           {activePlans.map((plan, i) => (
             <div
               key={i}
-              onMouseEnter={() => setHoveredPlan(i)}
-              onMouseLeave={() => setHoveredPlan(null)}
+              className={`pricing-card ${plan.popular ? "pricing-card-popular" : ""}`}
               style={{
                 background: plan.popular
-                  ? "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)"
+                  ? "#0a0a0a"
                   : "var(--bg-card)",
-                borderRadius: 28,
+                borderRadius: 0,
                 padding: "44px 36px",
-                border: plan.popular
-                  ? "none"
-                  : `1.5px solid ${hoveredPlan === i ? "var(--primary)" : "var(--border)"}`,
+                border: plan.popular ? "none" : "1.5px solid var(--border)",
+                borderLeft: plan.popular ? "3px solid var(--primary)" : undefined,
                 boxShadow: plan.popular
-                  ? "0 24px 60px rgba(99,102,241,0.35)"
-                  : hoveredPlan === i
-                  ? "0 20px 50px rgba(0,0,0,0.1)"
+                  ? "0 24px 60px rgba(0,0,0,0.4)"
                   : "var(--shadow-sm)",
-                transform: plan.popular
-                  ? "scale(1.04)"
-                  : hoveredPlan === i
-                  ? "translateY(-8px)"
-                  : "none",
                 transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                 position: "relative",
                 overflow: "hidden",
@@ -229,7 +220,7 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
                   position: "absolute", top: -60, right: -60,
                   width: 200, height: 200,
                   background: "rgba(255,255,255,0.1)",
-                  borderRadius: "50%",
+                  borderRadius: "0%",
                 }} />
               )}
 
@@ -239,7 +230,7 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
                   background: plan.popular ? "rgba(255,255,255,0.2)" : "var(--primary-light)",
                   color: plan.popular ? "#fff" : "var(--primary)",
                   padding: "5px 16px",
-                  borderRadius: 100,
+                  borderRadius: 0,
                   fontSize: 12,
                   fontWeight: 700,
                   marginBottom: 20,
@@ -306,7 +297,7 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
                       width: 22, height: 22,
                       background: plan.popular ? "rgba(255,255,255,0.2)" : "var(--primary-light)",
                       color: plan.popular ? "#fff" : "var(--primary)",
-                      borderRadius: "50%",
+                      borderRadius: "0%",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       fontSize: 12, flexShrink: 0, fontWeight: 700,
                     }}>✓</span>
@@ -327,7 +318,7 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
                     <span style={{
                       width: 22, height: 22,
                       background: "var(--bg-muted)",
-                      borderRadius: "50%",
+                      borderRadius: "0%",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       fontSize: 12, flexShrink: 0,
                     }}>✕</span>
@@ -341,17 +332,18 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
                 display: "block",
                 textAlign: "center",
                 padding: "15px 24px",
-                borderRadius: 14,
+                borderRadius: 0,
                 fontWeight: 800,
                 fontSize: 16,
                 background: plan.popular
-                  ? "#fff"
-                  : "linear-gradient(135deg, var(--primary), var(--primary-dark))",
-                color: plan.popular ? "#4f46e5" : "#fff",
+                  ? "var(--primary)"
+                  : "#0a0a0a",
+                color: "#fff",
                 boxShadow: plan.popular
-                  ? "0 8px 24px rgba(0,0,0,0.15)"
-                  : "0 4px 14px rgba(99,102,241,0.2)",
+                  ? "0 8px 24px rgba(233,41,44,0.3)"
+                  : "0 4px 14px rgba(0,0,0,0.2)",
                 transition: "all 0.25s ease",
+                border: plan.popular ? "2px solid var(--primary)" : "2px solid #0a0a0a",
               }}
               className="pricing-cta"
               >
@@ -366,6 +358,27 @@ export default function PricingSection({ locale = "ar" }: { locale?: string }) {
         .pricing-cta:hover {
           transform: translateY(-2px) scale(1.02);
           box-shadow: 0 12px 30px rgba(0,0,0,0.2) !important;
+        }
+        .pricing-card-popular {
+          transform: scale(1.04);
+          z-index: 2;
+        }
+        .pricing-card:not(.pricing-card-popular):hover {
+          transform: translateY(-8px);
+          border-color: var(--primary) !important;
+          box-shadow: 0 20px 50px rgba(0,0,0,0.1) !important;
+        }
+        .pricing-card-popular:hover {
+          transform: scale(1.06) translateY(-4px);
+          box-shadow: 0 30px 70px rgba(99,102,241,0.45) !important;
+        }
+        @media (max-width: 768px) {
+          .pricing-card-popular {
+            transform: scale(1) !important;
+          }
+          .pricing-card-popular:hover {
+            transform: translateY(-4px) !important;
+          }
         }
       `}</style>
     </section>

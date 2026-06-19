@@ -62,7 +62,7 @@ export default function ContactPage() {
           <div style={{
             textAlign: "center",
             background: "var(--bg-card)",
-            borderRadius: 32,
+            borderRadius: 0,
             padding: "72px 56px",
             border: "1.5px solid var(--border)",
             maxWidth: 520,
@@ -76,12 +76,12 @@ export default function ContactPage() {
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <button onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", service: "", message: "", budget: "" }); setStep(1); }}
                 style={{
-                  border: "none", cursor: "pointer",
-                  background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
-                  color: "#fff", padding: "14px 32px", borderRadius: 12,
+                  border: "2px solid #0a0a0a", cursor: "pointer",
+                  background: "#0a0a0a",
+                  color: "#fff", padding: "14px 32px", borderRadius: 0,
                   fontWeight: 700, fontSize: 15.5,
                   fontFamily: "inherit",
-                  boxShadow: "0 4px 16px rgba(99,102,241,0.25)",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
                   transition: "all 0.25s ease",
                 }}
                 className="success-btn"
@@ -93,7 +93,7 @@ export default function ContactPage() {
                 border: "1.5px solid var(--border)",
                 background: "var(--bg)",
                 color: "var(--text)",
-                padding: "14px 28px", borderRadius: 12,
+                padding: "14px 28px", borderRadius: 0,
                 fontWeight: 600, fontSize: 15.5,
                 display: "inline-block",
                 transition: "all 0.25s ease",
@@ -110,7 +110,7 @@ export default function ContactPage() {
   const inputStyle = (fieldName: string): React.CSSProperties => ({
     width: "100%", padding: "14px 18px",
     border: `1.5px solid ${focusedField === fieldName ? "var(--primary)" : "var(--border)"}`,
-    borderRadius: 12, fontSize: 15,
+    borderRadius: 0, fontSize: 15,
     fontFamily: "inherit", outline: "none",
     background: focusedField === fieldName ? "rgba(99,102,241,0.04)" : "var(--bg)",
     color: "var(--text)",
@@ -124,11 +124,12 @@ export default function ContactPage() {
     <div>
       {/* ── Hero ─────────────────────────────── */}
       <section style={{
-        background: "linear-gradient(160deg, #dc2528 0%, #000000 50%, #000000e0 100%)",
+        background: "#0a0a0a",
         padding: "100px 24px 80px",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
+        borderBottom: "3px solid var(--primary)",
       }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(99,102,241,0.15) 1.5px, transparent 1.5px)", backgroundSize: "36px 36px", pointerEvents: "none" }} />
         <div style={{ position: "relative" }}>
@@ -139,7 +140,7 @@ export default function ContactPage() {
               border: "1px solid rgba(99,102,241,0.4)",
               color: "#a5b4fc",
               fontWeight: 700, fontSize: 13,
-              padding: "6px 20px", borderRadius: 100, marginBottom: 20,
+              padding: "6px 20px", borderRadius: 0, marginBottom: 20,
             }}>{cp.badge}</span>
           </Reveal>
           <Reveal direction="up" delay={100}>
@@ -227,7 +228,7 @@ export default function ContactPage() {
               <Reveal key={i} delay={i * 100} direction="right">
                 <div style={{
                   background: "var(--bg-card)",
-                  borderRadius: 16, padding: "20px 22px",
+                  borderRadius: 0, padding: "20px 22px",
                   border: "1px solid var(--border)",
                   display: "flex", alignItems: "flex-start", gap: 14,
                   textAlign: "start",
@@ -261,7 +262,7 @@ export default function ContactPage() {
                       textDecoration: "none",
                       background: "var(--bg-card)", border: "1px solid var(--border)",
                       color: "var(--text-muted)",
-                      padding: "8px 16px", borderRadius: 10,
+                      padding: "8px 16px", borderRadius: 0,
                       fontSize: 13, fontWeight: 600,
                       transition: "all 0.25s ease",
                     }}
@@ -277,7 +278,7 @@ export default function ContactPage() {
           <Reveal direction="left" delay={150}>
             <form onSubmit={handleSubmit} style={{
               background: "var(--bg-card)",
-              borderRadius: 24, padding: "44px 40px",
+              borderRadius: 2, padding: "44px 40px",
               border: "1px solid var(--border)",
               boxShadow: "var(--shadow-lg)",
               display: "flex", flexDirection: "column", gap: 24,
@@ -288,7 +289,7 @@ export default function ContactPage() {
               <div style={{ display: "flex", gap: 8, marginBottom: 4 }}>
                 {[1, 2, 3].map(s => (
                   <div key={s} style={{
-                    flex: 1, height: 4, borderRadius: 100,
+                    flex: 1, height: 4, borderRadius: 0,
                     background: s <= step ? "linear-gradient(90deg, var(--primary), var(--primary-dark))" : "var(--border)",
                     transition: "background 0.4s ease",
                   }} />
@@ -359,7 +360,7 @@ export default function ContactPage() {
                           : "var(--bg)",
                         color: form.budget === b ? "#fff" : "var(--text-muted)",
                         border: `1.5px solid ${form.budget === b ? "var(--primary)" : "var(--border)"}`,
-                        padding: "9px 16px", borderRadius: 10,
+                        padding: "9px 16px", borderRadius: 0,
                         fontSize: 13, fontWeight: 700, cursor: "pointer",
                         fontFamily: "inherit",
                         transition: "all 0.25s ease",
@@ -383,7 +384,7 @@ export default function ContactPage() {
                 background: loading ? "var(--border)" : "linear-gradient(135deg, var(--primary), var(--primary-dark))",
                 color: loading ? "var(--text-muted)" : "#fff",
                 padding: "17px 32px",
-                borderRadius: 14,
+                borderRadius: 1,
                 fontWeight: 800, fontSize: 16.5,
                 fontFamily: "inherit",
                 boxShadow: loading ? "none" : "0 6px 24px rgba(99,102,241,0.32)",
@@ -394,7 +395,7 @@ export default function ContactPage() {
               >
                 {loading ? (
                   <>
-                    <div style={{ width: 18, height: 18, border: "2px solid rgba(255,255,255,0.4)", borderTopColor: "#fff", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+                    <div style={{ width: 18, height: 18, border: "2px solid rgba(255,255,255,0.4)", borderTopColor: "#fff", borderRadius: "0%", animation: "spin 0.8s linear infinite" }} />
                     {t.common.loading}
                   </>
                 ) : (
@@ -430,7 +431,7 @@ export default function ContactPage() {
                   background: i === 0
                     ? "linear-gradient(135deg, var(--primary), var(--primary-dark))"
                     : "var(--bg-card)",
-                  borderRadius: 20, padding: "36px 28px",
+                  borderRadius: 0, padding: "36px 28px",
                   border: i === 0 ? "none" : "1.5px solid var(--border)",
                   boxShadow: i === 0 ? "0 12px 36px rgba(99,102,241,0.3)" : "var(--shadow-sm)",
                   textAlign: "center",
@@ -445,7 +446,7 @@ export default function ContactPage() {
                     background: i === 0 ? "rgba(255,255,255,0.2)" : "var(--primary-light)",
                     color: i === 0 ? "#fff" : "var(--primary)",
                     border: i === 0 ? "1px solid rgba(255,255,255,0.3)" : "none",
-                    padding: "5px 14px", borderRadius: 100,
+                    padding: "5px 14px", borderRadius: 0,
                     fontSize: 12, fontWeight: 700,
                   }}>{office.status}</span>
                 </div>
