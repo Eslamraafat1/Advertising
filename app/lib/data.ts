@@ -325,9 +325,9 @@ export const translations = {
       ],
       servicesTitle: "صفحات أخرى",
       serviceLinks: [
-        { href: "/services#documentary", label: "إنتاج الأفلام الوثائقية" },
-        { href: "/services#on-ground-egypt", label: "الإنتاج على أرض الواقع في مصر" },
-        { href: "/services#podcast", label: "إنتاج البودكاست" },
+        { href: "/services#documentary", label: "إنتاج أفلام وثائقية" },
+        { href: "/services#original-ip", label: "تطوير ملكية فكرية أصلية" },
+        { href: "/services#podcast", label: "إنتاج بودكاست" },
         { href: "/services#photography", label: "التصوير" },
       ],
       quickLinks: "روابط سريعة",
@@ -666,7 +666,7 @@ export const translations = {
       servicesTitle: "Other pages",
       serviceLinks: [
         { href: "/services#documentary", label: "Documentary Production" },
-        { href: "/services#on-ground-egypt", label: "On Ground Production Services in Egypt" },
+        { href: "/services#original-ip", label: "Original IP Development" },
         { href: "/services#podcast", label: "Podcast Production" },
         { href: "/services#photography", label: "Photography" },
       ],

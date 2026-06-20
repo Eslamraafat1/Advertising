@@ -170,7 +170,6 @@ export default function Home() {
 
         <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
           <div style={{
-            display: "grid",
             gridTemplateColumns: "1.1fr 0.9fr",
             gap: 56,
             alignItems: "center",
