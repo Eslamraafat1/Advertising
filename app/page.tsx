@@ -7,7 +7,6 @@ import { useLanguage } from "./components/LanguageContext";
 import Reveal from "./components/Reveal";
 import HeroCarousel from "./components/HeroCarousel";
 import AnimatedStats from "./components/AnimatedStats";
-import PricingSection from "./components/PricingSection";
 import AwardsSection from "./components/AwardsSection";
 import WorkShowcase from "./components/WorkShowcase";
 import type { ServiceDataItem, FaqItem, ProcessStep, TestimonialItem } from "./lib/data";
@@ -423,9 +422,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* ── Pricing ───────────────────────────── */}
-      <PricingSection />
 
       {/* ── Testimonials ─────────────────────── */}
       <section style={{ padding: "100px 24px", background: "var(--bg)" }}>
