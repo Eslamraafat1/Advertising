@@ -387,9 +387,9 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 32 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 32 }}>
             {t.processData.steps.map((p: ProcessStep, i: number) => (
-              <Reveal key={i} delay={i * 100} direction="up">
+              <Reveal key={i} delay={i * 100} direction="up" style={{ flex: "0 1 220px", maxWidth: 280, width: "100%" }}>
                 <div style={{
                   background: "var(--bg-card)",
                   borderRadius: "0",
@@ -398,6 +398,7 @@ export default function Home() {
                   border: "1px solid var(--border)",
                   position: "relative",
                   transition: "all 0.3s ease",
+                  width: "100%",
                 }}
                 className="process-card"
                 >
