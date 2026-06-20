@@ -39,7 +39,7 @@ const awardsData = {
   },
 };
 
-export default function AwardsSection({ locale = "ar" }: { locale?: string }) {
+export default function AwardsSection({ locale = "en" }: { locale?: string }) {
   const [hovered, setHovered] = useState<number | null>(null);
   const d = locale === "ar" ? awardsData.ar : awardsData.en;
 

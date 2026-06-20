@@ -88,7 +88,7 @@ const workShowcase = {
   },
 };
 
-export default function WorkShowcase({ locale = "ar", title }: { locale?: string; title?: string }) {
+export default function WorkShowcase({ locale = "en", title }: { locale?: string; title?: string }) {
   const [hovered, setHovered] = useState<number | null>(null);
   const d = locale === "ar" ? workShowcase.ar : workShowcase.en;
   const displayTitle = title || d.title;

@@ -39,7 +39,7 @@ interface LanguageContextProps {
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocale] = useState<Locale>("ar");
+  const [locale, setLocale] = useState<Locale>("en");
   const [dynamicTrans, setDynamicTrans] = useState(translations);
 
   useEffect(() => {
