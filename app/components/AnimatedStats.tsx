@@ -9,9 +9,10 @@ interface CounterProps {
   suffix?: string;
   prefix?: string;
   duration?: number;
+  locale?: "ar" | "en";
 }
 
-function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2000 }: CounterProps) {
+function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2000, locale = "en" }: CounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const [started, setStarted] = useState(false);
@@ -42,7 +43,8 @@ function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2000 }: Cou
     requestAnimationFrame(step);
   }, [started, end, duration]);
 
-  return <span ref={ref}>{prefix}{count.toLocaleString("ar-EG")}{suffix}</span>;
+  const numberLocale = locale === "ar" ? "ar-EG" : "en-US";
+  return <span ref={ref}>{prefix}{count.toLocaleString(numberLocale)}{suffix}</span>;
 }
 
 const statsData = {
@@ -172,6 +174,7 @@ export default function AnimatedStats() {
                       end={stat.value}
                       suffix={stat.suffix}
                       duration={2000}
+                      locale={locale}
                     />
                   </div>
                 </div>
