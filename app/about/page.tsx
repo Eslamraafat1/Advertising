@@ -10,38 +10,38 @@ import type { StatDataItem, ValueItem, TeamMember } from "../lib/data";
 /* ── Timeline Section ───────────────────────── */
 const timelineData = {
   ar: [
-    { year: "2015", title: "التأسيس", desc: "انطلقنا بفريق صغير من المبدعين بحلم كبير لتغيير مشهد الإعلان العربي", icon: "🚀" },
-    { year: "2017", title: "أول 100 عميل", desc: "حققنا معلماً بارزاً بإتمام خدمة 100 عميل راضٍ في منطقة الخليج", icon: "🎯" },
-    { year: "2019", title: "التوسع الإقليمي", desc: "افتتحنا مكاتب في دبي والقاهرة وبيروت لخدمة العملاء في كل مكان", icon: "🌍" },
-    { year: "2021", title: "جائزة أفضل وكالة", desc: "فزنا بجائزة أفضل وكالة إعلانية رقمية في منطقة الشرق الأوسط وشمال أفريقيا", icon: "🏆" },
-    { year: "2024", title: "500+ مشروع ناجح", desc: "أتممنا أكثر من 500 مشروع ناجح عبر 15 دولة مع أكثر من 120 شريك استراتيجي", icon: "⭐" },
+    { year: "2015", title: "تأسيس الاستوديو", desc: "انطلقنا كاستوديو إنتاج أفلام وفيديو متخصص برؤية للسرد السينمائي", icon: "🎬" },
+    { year: "2018", title: "التوسع في المنطقة", desc: "افتتحنا مكاتب في منطقة الشرق الأوسط وشمال أفريقيا لخدمة العلامات والمنصات والقنوات", icon: "🌍" },
+    { year: "2020", title: "50+ عميل", desc: "وصلنا إلى أكثر من 50 عميل راضٍ مع معدل متزايد من العمل المتكرر", icon: "🤝" },
+    { year: "2022", title: "مركز الإنتاج في مصر", desc: "أنشأنا دعماً إنتاجياً كاملاً على أرض الواقع للتصوير الدولي في مصر", icon: "🇪🇬" },
+    { year: "2024", title: "صيغ أصلية", desc: "توسّعنا في تطوير قصص وصيغ أصلية مصمّمة للسفر والإلهام", icon: "✨" },
   ],
   en: [
-    { year: "2015", title: "Foundation", desc: "Started with a small team of creatives with a big dream to transform Arab advertising", icon: "🚀" },
-    { year: "2017", title: "First 100 Clients", desc: "Reached a milestone of serving 100 satisfied clients across the Gulf region", icon: "🎯" },
-    { year: "2019", title: "Regional Expansion", desc: "Opened offices in Dubai, Cairo, and Beirut to serve clients everywhere", icon: "🌍" },
-    { year: "2021", title: "Best Agency Award", desc: "Won the Best Digital Advertising Agency award in the MENA region", icon: "🏆" },
-    { year: "2024", title: "500+ Successful Projects", desc: "Completed over 500 successful projects across 15 countries with 120+ strategic partners", icon: "⭐" },
+    { year: "2015", title: "Studio Founded", desc: "Launched as a boutique film and video production studio with a vision for cinematic storytelling", icon: "🎬" },
+    { year: "2018", title: "MENA Expansion", desc: "Opened offices across the MENA region to serve brands, platforms, and broadcasters", icon: "🌍" },
+    { year: "2020", title: "50+ Clients", desc: "Reached 50+ satisfied clients with a growing repeat business rate", icon: "🤝" },
+    { year: "2022", title: "Egypt Production Hub", desc: "Established full on-the-ground production support for international shoots in Egypt", icon: "🇪🇬" },
+    { year: "2024", title: "Original Formats", desc: "Expanded into original stories and formats designed to travel and inspire global audiences", icon: "✨" },
   ],
 };
 
 /* ── Skills Bar Section ───────────────────────── */
 const skillsData = {
   ar: [
-    { label: "التسويق الرقمي", percent: 97, color: "#6366f1" },
-    { label: "الهوية البصرية والتصميم", percent: 94, color: "#f59e0b" },
-    { label: "إدارة السوشيال ميديا", percent: 96, color: "#10b981" },
-    { label: "إنتاج المحتوى المرئي", percent: 90, color: "#8b5cf6" },
-    { label: "تحسين محركات البحث SEO", percent: 88, color: "#ef4444" },
-    { label: "تحليل البيانات والاستراتيجية", percent: 93, color: "#06b6d4" },
+    { label: "الإعلانات التجارية", percent: 97, color: "#6366f1" },
+    { label: "الأفلام الوثائقية والعلامات التجارية", percent: 94, color: "#f59e0b" },
+    { label: "الفعاليات الحية والبودكاست", percent: 92, color: "#10b981" },
+    { label: "الموشن/CGI والتصوير", percent: 90, color: "#8b5cf6" },
+    { label: "الإنتاج متعدد اللغات", percent: 95, color: "#ef4444" },
+    { label: "الدعم الإنتاجي في مصر", percent: 93, color: "#06b6d4" },
   ],
   en: [
-    { label: "Digital Marketing", percent: 97, color: "#6366f1" },
-    { label: "Brand Identity & Design", percent: 94, color: "#f59e0b" },
-    { label: "Social Media Management", percent: 96, color: "#10b981" },
-    { label: "Visual Content Production", percent: 90, color: "#8b5cf6" },
-    { label: "SEO Optimization", percent: 88, color: "#ef4444" },
-    { label: "Data Analysis & Strategy", percent: 93, color: "#06b6d4" },
+    { label: "Commercial Production", percent: 97, color: "#6366f1" },
+    { label: "Documentaries & Branded Films", percent: 94, color: "#f59e0b" },
+    { label: "Live Events & Podcasts", percent: 92, color: "#10b981" },
+    { label: "Motion/CGI & Photography", percent: 90, color: "#8b5cf6" },
+    { label: "Multilingual Production", percent: 95, color: "#ef4444" },
+    { label: "Egypt Ground Support", percent: 93, color: "#06b6d4" },
   ],
 };
 
@@ -134,8 +134,13 @@ export default function AboutPage() {
             </h1>
           </Reveal>
           <Reveal direction="up" delay={200}>
-            <p style={{ color: "#94a3b8", fontSize: 18, maxWidth: 580, margin: "0 auto", lineHeight: 1.8 }}>
+            <p style={{ color: "#94a3b8", fontSize: 18, maxWidth: 680, margin: "0 auto", lineHeight: 1.8 }}>
               {ad.subtext}
+            </p>
+          </Reveal>
+          <Reveal direction="up" delay={280}>
+            <p style={{ color: "#fff", fontSize: 16, fontWeight: 700, marginTop: 28, letterSpacing: 0.5 }}>
+              {ad.ceoName} | {ad.ceoRole}
             </p>
           </Reveal>
           {/* Quick stats row */}
@@ -144,12 +149,7 @@ export default function AboutPage() {
               display: "flex", justifyContent: "center", gap: 40, marginTop: 56,
               flexWrap: "wrap",
             }}>
-              {[
-                { value: "9+", label: locale === "ar" ? "سنوات خبرة" : "Years Experience" },
-                { value: "500+", label: locale === "ar" ? "مشروع ناجح" : "Successful Projects" },
-                { value: "15", label: locale === "ar" ? "دولة نعمل فيها" : "Countries We Serve" },
-                { value: "120+", label: locale === "ar" ? "عميل سعيد" : "Happy Clients" },
-              ].map((s, i) => (
+              {ad.heroStats.map((s, i) => (
                 <div key={i} style={{ textAlign: "center" }}>
                   <div style={{
                     fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900,
@@ -158,7 +158,7 @@ export default function AboutPage() {
                     WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
                     lineHeight: 1,
                   }}>{s.value}</div>
-                  <div style={{ color: "#fff", fontSize: 13, fontWeight: 600, marginTop: 6 }}>{s.label}</div>
+                  <div style={{ color: "#fff", fontSize: 13, fontWeight: 600, marginTop: 6, maxWidth: 160 }}>{s.label}</div>
                 </div>
               ))}
             </div>
@@ -193,9 +193,15 @@ export default function AboutPage() {
                 <p style={{ color: "var(--text-muted)", fontSize: 16, lineHeight: 1.9, marginBottom: 16 }}>{ad.storyDesc1}</p>
               </Reveal>
               <Reveal direction="up" delay={300}>
-                <p style={{ color: "var(--text-muted)", fontSize: 16, lineHeight: 1.9, marginBottom: 32 }}>{ad.storyDesc2}</p>
+                <p style={{ color: "var(--text-muted)", fontSize: 16, lineHeight: 1.9, marginBottom: 16 }}>{ad.storyDesc2}</p>
               </Reveal>
               <Reveal direction="up" delay={400}>
+                <p style={{ color: "var(--text-muted)", fontSize: 16, lineHeight: 1.9, marginBottom: 16 }}>{ad.storyDesc3}</p>
+              </Reveal>
+              <Reveal direction="up" delay={500}>
+                <p style={{ color: "var(--text-muted)", fontSize: 16, lineHeight: 1.9, marginBottom: 32 }}>{ad.storyDesc4}</p>
+              </Reveal>
+              <Reveal direction="up" delay={600}>
                 <Link href="/contact" style={{
                   textDecoration: "none",
                   display: "inline-block",
@@ -238,18 +244,18 @@ export default function AboutPage() {
                     boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
                     display: "flex", alignItems: "center", gap: 10,
                   }}>
-                    <span style={{ fontSize: 28 }}>🏆</span>
+                    <span style={{ fontSize: 28 }}>🎬</span>
                     <div>
                       <div style={{ fontWeight: 800, fontSize: 13, color: "var(--text)" }}>
-                        {locale === "ar" ? "أفضل وكالة 2024" : "Best Agency 2024"}
+                        {locale === "ar" ? "استوديو إنتاج متكامل" : "Full-Service Studio"}
                       </div>
-                      <div style={{ fontSize: 11, color: "var(--text-muted)" }}>MENA Awards</div>
+                      <div style={{ fontSize: 11, color: "var(--text-muted)" }}>The Untold Story</div>
                     </div>
                   </div>
                 </div>
               </Reveal>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-                {t.statsData.map((s: StatDataItem, i: number) => (
+                {ad.aboutStats.map((s: StatDataItem, i: number) => (
                   <Reveal key={i} delay={i * 100} direction="up">
                     <div style={{
                       background: i === 0 ? "#0a0a0a" : "var(--bg-card)",
@@ -378,26 +384,26 @@ export default function AboutPage() {
             <div>
               <Reveal direction="down">
                 <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 20px", borderRadius: 0, marginBottom: 20 }}>
-                  {locale === "ar" ? "💡 خبراتنا ومهاراتنا" : "💡 Our Expertise"}
+                  {locale === "ar" ? "🎬 خبراتنا الإنتاجية" : "🎬 Our Production Expertise"}
                 </span>
               </Reveal>
               <Reveal direction="up" delay={100}>
                 <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.4rem)", fontWeight: 900, color: "var(--text)", marginBottom: 16, lineHeight: 1.3 }}>
-                  {locale === "ar" ? "نتقن فن التسويق الرقمي بكل أبعاده" : "We Master Digital Marketing in All Its Dimensions"}
+                  {locale === "ar" ? "نصنع تجارب سينمائية من الفكرة إلى الإطار الأخير" : "We Craft Cinematic Experiences from Spark to Final Frame"}
                 </h2>
               </Reveal>
               <Reveal direction="up" delay={200}>
                 <p style={{ color: "var(--text-muted)", fontSize: 15.5, lineHeight: 1.9, marginBottom: 36 }}>
                   {locale === "ar"
-                    ? "فريقنا من الخبراء المتخصصين يمتلك الأدوات والمعرفة لتحقيق نتائج استثنائية في كل مجال."
-                    : "Our team of specialized experts possesses the tools and knowledge to achieve exceptional results in every field."}
+                    ? "فريقنا يمتلك الأدوات والخبرة لإنتاج مرئيات جريئة لا تُنسى عبر كل التنسيقات — بإتقان ولمسة مميزة."
+                    : "Our team possesses the tools and expertise to produce bold, unforgettable visuals across every format — with precision and flair."}
                 </p>
               </Reveal>
               <Reveal direction="up" delay={300}>
                 <div style={{
                   display: "flex", gap: 16, flexWrap: "wrap",
                 }}>
-                  {["UI/UX", "SEO", "PPC", "CRM", "Analytics", "Email"].map((tag, i) => (
+                  {["Commercials", "Documentaries", "Branded Films", "Live Events", "Podcasts", "Motion/CGI"].map((tag, i) => (
                     <span key={i} style={{
                       background: "var(--primary-light)",
                       color: "var(--primary)",
@@ -469,7 +475,7 @@ export default function AboutPage() {
                   {locale === "ar" ? "قيمنا وفلسفتنا" : "Our Values & Philosophy"}
                 </h3>
                 <p style={{ color: "rgba(255,255,255,0.9)", fontSize: 15.5, lineHeight: 1.9 }}>
-                  {locale === "ar" ? "نؤمن بأن الإبداع الحقيقي يولد من فهم عميق لاحتياجات العميل وسوقه." : "We believe true creativity is born from a deep understanding of the client's needs and market."}
+                  {locale === "ar" ? "نؤمن بأن كل قصة تستحق أن تُروى بجمال سينمائي يبقى مع الجمهور." : "We believe every story deserves to be told with cinematic beauty that stays with audiences."}
                 </p>
               </div>
             </Reveal>
@@ -578,7 +584,10 @@ export default function AboutPage() {
           </Reveal>
           <Reveal direction="up" delay={100}>
             <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap" }}>
-              {["Google Partner", "Meta Business", "TikTok For Business", "HubSpot Certified", "ISO 9001"].map((p, i) => (
+              {(locale === "ar"
+                ? ["العلامات التجارية", "المنصات", "القنوات", "المؤسسات", "الإنتاج الدولي"]
+                : ["Brands", "Platforms", "Broadcasters", "Institutions", "International Production"]
+              ).map((p, i) => (
                 <span key={i} style={{
                   background: "var(--bg-muted)",
                   border: "1px solid var(--border)",

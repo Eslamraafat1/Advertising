@@ -47,10 +47,10 @@ const workShowcase = {
     ],
   },
   en: {
-    badge: "✨ Latest Work",
-    title: "Creativity Beyond Expectations",
-    subtitle: "Samples from our successful projects across various industries",
-    viewAll: "View All Projects",
+    badge: "✨ Our Work",
+    title: "Projects done by The Untold Story",
+    subtitle: "Film, video, advertising, documentaries, and corporate content",
+    viewAll: "Our Work",
     projects: [
       {
         img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
@@ -88,9 +88,10 @@ const workShowcase = {
   },
 };
 
-export default function WorkShowcase({ locale = "ar" }: { locale?: string }) {
+export default function WorkShowcase({ locale = "ar", title }: { locale?: string; title?: string }) {
   const [hovered, setHovered] = useState<number | null>(null);
   const d = locale === "ar" ? workShowcase.ar : workShowcase.en;
+  const displayTitle = title || d.title;
 
   return (
     <section style={{
@@ -122,7 +123,7 @@ export default function WorkShowcase({ locale = "ar" }: { locale?: string }) {
                 color: "var(--text)",
                 marginBottom: 12,
               }}>
-                {d.title}
+                {displayTitle}
               </h2>
             </Reveal>
             <Reveal direction="up" delay={200}>

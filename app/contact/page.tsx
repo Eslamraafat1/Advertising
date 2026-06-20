@@ -5,20 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
-import type { InfoItem } from "../lib/data";
-
-const mapOffices = {
-  ar: [
-    { city: "الرياض", country: "المملكة العربية السعودية", flag: "🇸🇦", time: "GMT+3", status: "المقر الرئيسي" },
-    { city: "دبي", country: "الإمارات العربية المتحدة", flag: "🇦🇪", time: "GMT+4", status: "مكتب إقليمي" },
-    { city: "القاهرة", country: "مصر", flag: "🇪🇬", time: "GMT+2", status: "مكتب إقليمي" },
-  ],
-  en: [
-    { city: "Riyadh", country: "Saudi Arabia", flag: "🇸🇦", time: "GMT+3", status: "HQ" },
-    { city: "Dubai", country: "UAE", flag: "🇦🇪", time: "GMT+4", status: "Regional Office" },
-    { city: "Cairo", country: "Egypt", flag: "🇪🇬", time: "GMT+2", status: "Regional Office" },
-  ],
-};
+import type { InfoItem as OfficeItem } from "../lib/data";
 
 const whyContactUs = {
   ar: [
@@ -38,7 +25,7 @@ const whyContactUs = {
 export default function ContactPage() {
   const { locale, t } = useLanguage();
   const cp = t.contactPage;
-  const offices = locale === "ar" ? mapOffices.ar : mapOffices.en;
+  const offices = cp.offices;
   const whyUs = locale === "ar" ? whyContactUs.ar : whyContactUs.en;
 
   const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "", budget: "" });
@@ -169,7 +156,7 @@ export default function ContactPage() {
                 >
                   <span style={{ fontSize: 22 }}>{office.flag}</span>
                   <div style={{ textAlign: "start" }}>
-                    <div style={{ fontWeight: 700, fontSize: 14, color: "#fff" }}>{office.city}</div>
+                    <div style={{ fontWeight: 700, fontSize: 14, color: "#fff" }}>{office.title}</div>
                     <div style={{ fontSize: 11, color: "#64748b" }}>{office.status} · {office.time}</div>
                   </div>
                 </div>
@@ -224,8 +211,35 @@ export default function ContactPage() {
                 {cp.infoTitle}
               </h3>
             </Reveal>
-            {cp.infoList.map((item: InfoItem, i: number) => (
-              <Reveal key={i} delay={i * 100} direction="right">
+            <Reveal direction="right" delay={50}>
+              <div style={{
+                background: "var(--bg-card)",
+                borderRadius: 0, padding: "20px 22px",
+                border: "1px solid var(--border)",
+                display: "flex", alignItems: "flex-start", gap: 14,
+                textAlign: "start",
+                transition: "all 0.3s ease",
+              }}
+              className="info-card"
+              >
+                <div style={{
+                  width: 44, height: 44, flexShrink: 0,
+                  background: "var(--primary-light)",
+                  borderRadius: 12, display: "flex", alignItems: "center",
+                  justifyContent: "center", fontSize: 22,
+                }}>📧</div>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: 12.5, color: "var(--text-muted)", marginBottom: 4 }}>
+                    {locale === "ar" ? "البريد الإلكتروني" : "Email Address"}
+                  </div>
+                  <a href={`mailto:${cp.email}`} style={{ fontWeight: 700, fontSize: 15.5, color: "var(--text)", textDecoration: "none", direction: "ltr", display: "inline-block" }}>
+                    {cp.email}
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+            {offices.map((office: OfficeItem, i: number) => (
+              <Reveal key={i} delay={(i + 1) * 100} direction="right">
                 <div style={{
                   background: "var(--bg-card)",
                   borderRadius: 0, padding: "20px 22px",
@@ -241,10 +255,33 @@ export default function ContactPage() {
                     background: "var(--primary-light)",
                     borderRadius: 12, display: "flex", alignItems: "center",
                     justifyContent: "center", fontSize: 22,
-                  }}>{item.icon}</div>
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: 12.5, color: "var(--text-muted)", marginBottom: 4 }}>{item.label}</div>
-                    <div style={{ fontWeight: 700, fontSize: 15.5, color: "var(--text)" }}>{item.value}</div>
+                  }}>{office.flag}</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    <div style={{ fontWeight: 800, fontSize: 15.5, color: "var(--text)" }}>{office.title}</div>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: 12.5, color: "var(--text-muted)", marginBottom: 4 }}>
+                        {locale === "ar" ? "عنوان المكتب" : "Office Address"}
+                      </div>
+                      <div style={{ fontWeight: 700, fontSize: 14.5, color: "var(--text)", lineHeight: 1.6 }}>{office.address}</div>
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: 12.5, color: "var(--text-muted)", marginBottom: 4 }}>
+                        {locale === "ar" ? "رقم الهاتف" : "Phone Number"}
+                      </div>
+                      <a href={`tel:${office.phone.replace(/\s/g, "")}`} style={{ fontWeight: 700, fontSize: 15.5, color: "var(--text)", textDecoration: "none", direction: "ltr", display: "inline-block" }}>
+                        {office.phone}
+                      </a>
+                    </div>
+                    {"email" in office && office.email && (
+                      <div>
+                        <div style={{ fontWeight: 600, fontSize: 12.5, color: "var(--text-muted)", marginBottom: 4 }}>
+                          {locale === "ar" ? "البريد الإلكتروني" : "Email Address"}
+                        </div>
+                        <a href={`mailto:${office.email}`} style={{ fontWeight: 700, fontSize: 14.5, color: "var(--text)", textDecoration: "none", direction: "ltr", display: "inline-block" }}>
+                          {office.email}
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </Reveal>
@@ -416,15 +453,15 @@ export default function ContactPage() {
         <div style={{ maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
           <Reveal direction="down">
             <h2 style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 900, color: "var(--text)", marginBottom: 16 }}>
-              {locale === "ar" ? "🌍 مكاتبنا حول العالم" : "🌍 Our Offices Around the World"}
+              🌍 {cp.officesSectionTitle}
             </h2>
           </Reveal>
           <Reveal direction="up" delay={100}>
             <p style={{ color: "var(--text-muted)", fontSize: 16, marginBottom: 52 }}>
-              {locale === "ar" ? "نحن موجودون في أكثر من 3 مدن لنكون دائماً قريبين منك" : "We are present in more than 3 cities to always be close to you"}
+              {cp.officesSectionSubtext}
             </p>
           </Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24, maxWidth: 720, margin: "0 auto" }}>
             {offices.map((office, i) => (
               <Reveal key={i} direction="up" delay={i * 120}>
                 <div style={{
@@ -440,8 +477,14 @@ export default function ContactPage() {
                 className="office-card"
                 >
                   <div style={{ fontSize: 44, marginBottom: 16 }}>{office.flag}</div>
-                  <h3 style={{ fontWeight: 900, fontSize: 20, color: i === 0 ? "#fff" : "var(--text)", marginBottom: 6 }}>{office.city}</h3>
-                  <p style={{ color: i === 0 ? "rgba(255,255,255,0.75)" : "var(--text-muted)", fontSize: 14, marginBottom: 14 }}>{office.country}</p>
+                  <h3 style={{ fontWeight: 900, fontSize: 20, color: i === 0 ? "#fff" : "var(--text)", marginBottom: 6 }}>{office.title}</h3>
+                  <p style={{ color: i === 0 ? "rgba(255,255,255,0.75)" : "var(--text-muted)", fontSize: 14, marginBottom: 10, lineHeight: 1.6 }}>{office.address}</p>
+                  <a href={`tel:${office.phone.replace(/\s/g, "")}`} style={{
+                    color: i === 0 ? "#fff" : "var(--primary)",
+                    fontWeight: 700, fontSize: 15, textDecoration: "none",
+                    direction: "ltr", display: "inline-block", marginBottom: 14,
+                  }}>{office.phone}</a>
+                  <br />
                   <span style={{
                     background: i === 0 ? "rgba(255,255,255,0.2)" : "var(--primary-light)",
                     color: i === 0 ? "#fff" : "var(--primary)",

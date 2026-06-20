@@ -47,80 +47,16 @@ function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2000 }: Cou
 
 const statsData = {
   ar: [
-    {
-      iconName: "Trophy",
-      value: 500,
-      suffix: "+",
-      label: "مشروع ناجح",
-      sublabel: "منذ التأسيس",
-      color: "#e9292c",
-      bg: "linear-gradient(135deg, #fee3e5, #fcc4c6)",
-    },
-    {
-      iconName: "Users",
-      value: 120,
-      suffix: "+",
-      label: "عميل راضٍ",
-      sublabel: "في 15 دولة",
-      color: "#10b981",
-      bg: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
-    },
-    {
-      iconName: "TrendingUp",
-      value: 340,
-      suffix: "%",
-      label: "متوسط نمو العملاء",
-      sublabel: "في السنة الأولى",
-      color: "#f59e0b",
-      bg: "linear-gradient(135deg, #fffbeb, #fef3c7)",
-    },
-    {
-      iconName: "Star",
-      value: 99,
-      suffix: "%",
-      label: "معدل الرضا",
-      sublabel: "تقييمات موثقة",
-      color: "#8b5cf6",
-      bg: "linear-gradient(135deg, #f5f3ff, #ede9fe)",
-    },
+    { iconName: "Trophy", value: 50, suffix: "+", label: "عميل راضٍ", sublabel: "90% عمل متكرر", color: "#e9292c", bg: "linear-gradient(135deg, #fee3e5, #fcc4c6)" },
+    { iconName: "Users", value: 3, suffix: "+", label: "مكاتب في المنطقة", sublabel: "مصر ودبي وجدة", color: "#10b981", bg: "linear-gradient(135deg, #ecfdf5, #d1fae5)" },
+    { iconName: "TrendingUp", value: 90, suffix: "%", label: "معدل العمل المتكرر", sublabel: "شراكات موثوقة", color: "#f59e0b", bg: "linear-gradient(135deg, #fffbeb, #fef3c7)" },
+    { iconName: "Star", value: 360, suffix: "°", label: "دورة إنتاج متكاملة", sublabel: "من التخطيط للتسليم", color: "#8b5cf6", bg: "linear-gradient(135deg, #f5f3ff, #ede9fe)" },
   ],
   en: [
-    {
-      iconName: "Trophy",
-      value: 500,
-      suffix: "+",
-      label: "Successful Projects",
-      sublabel: "Since launch",
-      color: "#e9292c",
-      bg: "linear-gradient(135deg, #fee3e5, #fcc4c6)",
-    },
-    {
-      iconName: "Users",
-      value: 120,
-      suffix: "+",
-      label: "Happy Clients",
-      sublabel: "Across 15 countries",
-      color: "#10b981",
-      bg: "linear-gradient(135deg, #ecfdf5, #d1fae5)",
-    },
-    {
-      iconName: "TrendingUp",
-      value: 340,
-      suffix: "%",
-      label: "Average Client Growth",
-      sublabel: "In the first year",
-      color: "#f59e0b",
-      bg: "linear-gradient(135deg, #fffbeb, #fef3c7)",
-    },
-    {
-      iconName: "Star",
-      value: 99,
-      suffix: "%",
-      label: "Satisfaction Rate",
-      sublabel: "Verified reviews",
-      color: "#8b5cf6",
-      bg: "linear-gradient(135deg, #f5f3ff, #ede9fe)",
-    },
+    { iconName: "Trophy", value: 50, suffix: "+", label: "Satisfied clients", sublabel: "90% repeat business", color: "#e9292c", bg: "linear-gradient(135deg, #fee3e5, #fcc4c6)" },
+    { iconName: "Users", value: 3, suffix: "+", label: "Offices across MENA", sublabel: "Egypt, Dubai & Jeddah", color: "#10b981", bg: "linear-gradient(135deg, #ecfdf5, #d1fae5)" },
+    { iconName: "TrendingUp", value: 90, suffix: "%", label: "Repeat business rate", sublabel: "Trusted partnerships", color: "#f59e0b", bg: "linear-gradient(135deg, #fffbeb, #fef3c7)" },
+    { iconName: "Star", value: 360, suffix: "°", label: "Full production cycle", sublabel: "Planning to delivery", color: "#8b5cf6", bg: "linear-gradient(135deg, #f5f3ff, #ede9fe)" },
   ],
 };
 
@@ -165,7 +101,7 @@ export default function AnimatedStats() {
             marginBottom: 20,
             borderLeft: "3px solid var(--primary)",
           }}>
-            {locale === "ar" ? "🔥 أرقام تتحدث عن نفسها" : "🔥 Numbers That Speak"}
+            {locale === "ar" ? "🎬 The Untold Story" : "🎬 The Untold Story"}
           </span>
           <h2 style={{
             fontSize: "clamp(2rem, 3.5vw, 2.8rem)",
@@ -173,12 +109,12 @@ export default function AnimatedStats() {
             color: "var(--text)",
             marginBottom: 16,
           }}>
-            {locale === "ar" ? "إنجازاتنا بالأرقام" : "Our Achievements in Numbers"}
+            {locale === "ar" ? "إنجازاتنا بالأرقام" : "Production by the Numbers"}
           </h2>
           <p style={{ color: "var(--text-muted)", fontSize: 16.5, maxWidth: 480, margin: "0 auto" }}>
             {locale === "ar"
-              ? "كل رقم يعكس قصة نجاح حقيقية مع عملائنا حول العالم"
-              : "Every number reflects a real success story with our global clients"}
+              ? "مكاتب في مصر ودبي وجدة — نخدم المنطقة والعملاء حول العالم"
+              : "Offices in Egypt, Dubai, and Jeddah — serving MENA and clients worldwide"}
           </p>
         </div>
 

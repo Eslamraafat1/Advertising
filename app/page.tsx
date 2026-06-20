@@ -119,9 +119,8 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 }
 
 /* ── Tools Ticker ─────────────────────── */
-const techTools: string[] = [];
-
-function ToolsTicker() {
+function ToolsTicker({ items }: { items: string[] }) {
+  if (!items.length) return null;
   return (
     <div style={{ display: "flex", overflow: "hidden", gap: 16, padding: "8px 0" }}>
       <div style={{
@@ -130,7 +129,7 @@ function ToolsTicker() {
         animation: "ticker-scroll 20s linear infinite",
         flexShrink: 0,
       }}>
-        {[...techTools, ...techTools].map((tool, i) => (
+        {[...items, ...items].map((tool, i) => (
           <span key={i} style={{
             background: "rgba(99,102,241,0.08)",
             border: "1px solid rgba(99,102,241,0.15)",
@@ -152,6 +151,7 @@ function ToolsTicker() {
 
 export default function Home() {
   const { locale, t } = useLanguage();
+  const hd = t.homeData;
 
   return (
     <div>
@@ -264,7 +264,7 @@ export default function Home() {
               {/* Tools ticker */}
               <Reveal direction="up" delay={400}>
                 <div style={{ marginTop: 44, overflow: "hidden" }}>
-                  <ToolsTicker />
+                  <ToolsTicker items={hd.productionPipeline} />
                 </div>
               </Reveal>
 
@@ -334,13 +334,13 @@ export default function Home() {
         <div style={{ maxWidth: 1150, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{t.common.exploreServices}</span>
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{hd.servicesBadge}</span>
             </Reveal>
             <Reveal direction="up" delay={100}>
-              <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)", marginBottom: 16 }}>{t.homeData.servicesTitle}</h2>
+              <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)", marginBottom: 16 }}>{hd.servicesTitle}</h2>
             </Reveal>
             <Reveal direction="up" delay={200}>
-              <p style={{ color: "var(--text-muted)", fontSize: 16.5, maxWidth: 540, margin: "0 auto" }}>{t.homeData.servicesSubtext}</p>
+              <p style={{ color: "var(--text-muted)", fontSize: 16.5, maxWidth: 540, margin: "0 auto" }}>{hd.servicesSubtext}</p>
             </Reveal>
           </div>
           
@@ -374,7 +374,7 @@ export default function Home() {
       </section>
 
       {/* ── Work Showcase (Bento Grid) ─────────── */}
-      <WorkShowcase locale={locale} />
+      <WorkShowcase locale={locale} title={hd.portfolioTitle} />
 
       {/* ── Process ──────────────────────────── */}
       <section style={{ padding: "100px 24px", background: "var(--bg-muted)" }}>
@@ -425,17 +425,17 @@ export default function Home() {
       </section>
 
       {/* ── Pricing ───────────────────────────── */}
-      <PricingSection locale={locale} />
+      <PricingSection />
 
       {/* ── Testimonials ─────────────────────── */}
       <section style={{ padding: "100px 24px", background: "var(--bg)" }}>
         <div style={{ maxWidth: 1150, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <Reveal direction="down">
-              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{t.testimonialsData.badge}</span>
+              <span style={{ display: "inline-block", background: "var(--accent-light)", color: "#92400e", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{hd.creativeTitle}</span>
             </Reveal>
             <Reveal direction="up" delay={100}>
-              <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)" }}>{t.testimonialsData.title}</h2>
+              <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)" }}>{hd.creativeSubtitle}</h2>
             </Reveal>
           </div>
 
@@ -485,8 +485,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Photography ──────────────────────── */}
+      <section style={{ padding: "100px 24px", background: "var(--bg)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }} className="hero-split">
+          <Reveal direction="right">
+            <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{hd.photographyBadge}</span>
+            <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "var(--text)", marginBottom: 20, lineHeight: 1.2 }}>{hd.photographyTitle}</h2>
+            <p style={{ color: "var(--text-muted)", fontSize: 16.5, lineHeight: 1.85, marginBottom: 16 }}>{hd.photographyDesc}</p>
+            <p style={{ color: "var(--primary)", fontWeight: 700, fontSize: 15, marginBottom: 28 }}>{hd.photographyTagline}</p>
+            <Link href="/contact" style={{
+              textDecoration: "none", background: "#0a0a0a", color: "#fff",
+              padding: "14px 32px", borderRadius: 0, fontWeight: 700, fontSize: 15.5,
+              display: "inline-block", border: "2px solid #0a0a0a",
+            }}>{t.common.contactUs} &rarr;</Link>
+          </Reveal>
+          <Reveal direction="left" delay={150}>
+            <Image
+              src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop"
+              alt={hd.photographyTitle}
+              width={800} height={500} unoptimized
+              style={{ width: "100%", borderRadius: 0, boxShadow: "var(--shadow-lg)", border: "1px solid var(--border)" }}
+            />
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── Awards & Recognition ──────────────── */}
       <AwardsSection locale={locale} />
+
+      {/* ── Blog Preview ─────────────────────── */}
+      <section style={{ padding: "100px 24px", background: "var(--bg-muted)" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <Reveal direction="down">
+              <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 18px", borderRadius: 0, marginBottom: 16 }}>{hd.blogBadge}</span>
+            </Reveal>
+            <Reveal direction="up" delay={100}>
+              <h2 style={{ fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 900, color: "var(--text)", marginBottom: 12 }}>{hd.blogTitle}</h2>
+            </Reveal>
+            <Reveal direction="up" delay={200}>
+              <p style={{ color: "var(--text-muted)", fontSize: 16.5 }}>{hd.blogSubtext}</p>
+            </Reveal>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 28 }}>
+            {t.blogPage.posts.map((post, i) => (
+              <Reveal key={post.id} delay={i * 100} direction="up">
+                <Link href="/blog" style={{
+                  textDecoration: "none", background: "var(--bg-card)", borderRadius: 0,
+                  padding: 28, border: "1px solid var(--border)", display: "block", height: "100%",
+                  transition: "all 0.3s ease",
+                }} className="process-card">
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "var(--primary)" }}>{post.category}</span>
+                  <h3 style={{ fontWeight: 800, fontSize: 18, color: "var(--text)", margin: "10px 0" }}>{post.title}</h3>
+                  <p style={{ color: "var(--text-muted)", fontSize: 14, lineHeight: 1.75 }}>{post.excerpt}</p>
+                  <p style={{ color: "var(--text-muted)", fontSize: 12, marginTop: 16 }}>{post.date}</p>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── FAQ ──────────────────────────────── */}
       <section style={{ padding: "100px 24px", background: "var(--bg)" }}>
@@ -526,11 +584,11 @@ export default function Home() {
 
         <div style={{ maxWidth: 700, margin: "0 auto", position: "relative" }}>
           <Reveal direction="down">
-            <h2 style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.2rem)", fontWeight: 900, color: "#fff", marginBottom: 20 }}>{t.homeData.ctaBannerTitle}</h2>
+            <h2 style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.2rem)", fontWeight: 900, color: "#fff", marginBottom: 20 }}>{hd.ctaBannerTitle}</h2>
           </Reveal>
           <Reveal direction="up" delay={100}>
             <p style={{ color: "#c7d2fe", fontSize: 18.5, marginBottom: 44, lineHeight: 1.8 }}>
-              {t.homeData.ctaBannerText}
+              {hd.ctaBannerText}
             </p>
           </Reveal>
           

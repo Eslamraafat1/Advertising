@@ -5,128 +5,37 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "./LanguageContext";
 
-const heroSlides = {
-  ar: [
-    {
-      img: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1400&auto=format&fit=crop",
-      badge: "🚀 التسويق الرقمي",
-      title: "نبني علامتك",
-      titleHighlight: "التجارية",
-      subtitle: "بإبداع لا حدود له",
-      desc: "استراتيجيات تسويقية مبتكرة تحوّل أحلامك إلى نتائج قابلة للقياس",
-      cta: "ابدأ رحلتك",
-      ctaHref: "/contact",
-      ctaSecondary: "اكتشف أعمالنا",
-      ctaSecondaryHref: "/portfolio",
-      gradient: "linear-gradient(160deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.4) 100%)",
-      accentColor: "#6366f1",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1400&auto=format&fit=crop",
-      badge: "🎨 الهوية البصرية",
-      title: "هوية بصرية",
-      titleHighlight: "استثنائية",
-      subtitle: "تعكس جوهر علامتك",
-      desc: "نصمم هويات بصرية متكاملة تترك انطباعاً لا يُنسى في ذهن جمهورك",
-      cta: "احصل على هويتك",
-      ctaHref: "/services",
-      ctaSecondary: "شاهد الأعمال",
-      ctaSecondaryHref: "/portfolio",
-      gradient: "linear-gradient(135deg, rgba(245,158,11,0.85) 0%, rgba(239,68,68,0.7) 50%, rgba(0,0,0,0.3) 100%)",
-      accentColor: "#f59e0b",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1400&auto=format&fit=crop",
-      badge: "📱 السوشيال ميديا",
-      title: "محتوى يشعل",
-      titleHighlight: "التفاعل",
-      subtitle: "ويبني المجتمعات",
-      desc: "نُدير حساباتك على السوشيال ميديا بأسلوب احترافي يضاعف متابعيك ومبيعاتك",
-      cta: "ادِر حساباتك",
-      ctaHref: "/services",
-      ctaSecondary: "تعرف علينا",
-      ctaSecondaryHref: "/about",
-      gradient: "linear-gradient(135deg, rgba(16,185,129,0.85) 0%, rgba(6,182,212,0.7) 50%, rgba(0,0,0,0.3) 100%)",
-      accentColor: "#10b981",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1400&auto=format&fit=crop",
-      badge: "📊 تحليل البيانات",
-      title: "قرارات مبنية",
-      titleHighlight: "على البيانات",
-      subtitle: "لنتائج مضمونة",
-      desc: "نحلل بياناتك ونحوّلها إلى استراتيجيات نمو قابلة للتطبيق وذات عائد استثمار مرتفع",
-      cta: "ابدأ التحليل",
-      ctaHref: "/contact",
-      ctaSecondary: "اعرف أكثر",
-      ctaSecondaryHref: "/about",
-      gradient: "linear-gradient(160deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.4) 100%)",
-      accentColor: "#8b5cf6",
-    },
-  ],
-  en: [
-    {
-      img: "https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1400&auto=format&fit=crop",
-      badge: "🚀 Digital Marketing",
-      title: "We Build Your",
-      titleHighlight: "Brand",
-      subtitle: "With Unlimited Creativity",
-      desc: "Innovative marketing strategies that turn your vision into measurable growth",
-      cta: "Start Your Journey",
-      ctaHref: "/contact",
-      ctaSecondary: "Explore Our Work",
-      ctaSecondaryHref: "/portfolio",
-      gradient: "linear-gradient(160deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.4) 100%)",
-      accentColor: "#6366f1",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1400&auto=format&fit=crop",
-      badge: "🎨 Brand Identity",
-      title: "Exceptional",
-      titleHighlight: "Visual Identity",
-      subtitle: "That reflects your brand essence",
-      desc: "We design comprehensive visual identities that leave a lasting impression",
-      cta: "Get Your Identity",
-      ctaHref: "/services",
-      ctaSecondary: "See Our Work",
-      ctaSecondaryHref: "/portfolio",
-      gradient: "linear-gradient(135deg, rgba(245,158,11,0.85) 0%, rgba(239,68,68,0.7) 50%, rgba(0,0,0,0.3) 100%)",
-      accentColor: "#f59e0b",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1400&auto=format&fit=crop",
-      badge: "📱 Social Media",
-      title: "Content that",
-      titleHighlight: "Drives Engagement",
-      subtitle: "And builds loyal communities",
-      desc: "We manage your social channels professionally to boost followers and sales",
-      cta: "Grow Your Reach",
-      ctaHref: "/services",
-      ctaSecondary: "Learn About Us",
-      ctaSecondaryHref: "/about",
-      gradient: "linear-gradient(135deg, rgba(16,185,129,0.85) 0%, rgba(6,182,212,0.7) 50%, rgba(0,0,0,0.3) 100%)",
-      accentColor: "#10b981",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1400&auto=format&fit=crop",
-      badge: "📊 Data Analysis",
-      title: "Decisions Built",
-      titleHighlight: "On Data",
-      subtitle: "For guaranteed results",
-      desc: "We analyze your data and convert it into actionable growth strategies with high ROI",
-      cta: "Start Analysis",
-      ctaHref: "/contact",
-      ctaSecondary: "Learn More",
-      ctaSecondaryHref: "/about",
-      gradient: "linear-gradient(160deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.4) 100%)",
-      accentColor: "#8b5cf6",
-    },
-  ],
-};
-
 export default function HeroCarousel() {
-  const { locale } = useLanguage();
-  const slides = locale === "ar" ? heroSlides.ar : heroSlides.en;
+  const { t } = useLanguage();
+  const slides = [
+    {
+      img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1400&auto=format&fit=crop",
+      badge: t.heroData.badge,
+      title: t.heroData.headline1,
+      titleHighlight: t.heroData.headline2,
+      subtitle: t.heroData.quoteBadge,
+      desc: t.heroData.subtext,
+      cta: t.heroData.cta1.label.replace(" →", "").replace(" ←", ""),
+      ctaHref: t.heroData.cta1.href,
+      ctaSecondary: t.heroData.cta2.label,
+      ctaSecondaryHref: t.heroData.cta2.href,
+      gradient: "linear-gradient(160deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.35) 100%)",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1400&auto=format&fit=crop",
+      badge: t.homeData.quoteBadge,
+      title: t.homeData.quoteTitle.split(".")[0],
+      titleHighlight: t.homeData.quoteTitle.split(".")[1]?.trim() || "",
+      subtitle: t.homeData.servicesTitle,
+      desc: t.homeData.servicesSubtext,
+      cta: t.common.contactUs,
+      ctaHref: "/contact",
+      ctaSecondary: t.heroData.cta2.label,
+      ctaSecondaryHref: "/portfolio",
+      gradient: "linear-gradient(160deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.5) 100%)",
+    },
+  ];
+
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [direction, setDirection] = useState<"next" | "prev">("next");
@@ -143,11 +52,11 @@ export default function HeroCarousel() {
 
   const next = useCallback(() => {
     goTo((current + 1) % slides.length, "next");
-  }, [current, goTo]);
+  }, [current, goTo, slides.length]);
 
   const prev = useCallback(() => {
     goTo((current - 1 + slides.length) % slides.length, "prev");
-  }, [current, goTo]);
+  }, [current, goTo, slides.length]);
 
   useEffect(() => {
     const timer = setInterval(next, 5500);
@@ -167,7 +76,6 @@ export default function HeroCarousel() {
         position: "relative",
         boxShadow: "0 32px 80px rgba(0,0,0,0.2)",
       }}>
-        {/* Background Image */}
         <div style={{
           position: "absolute", inset: 0,
           transform: isAnimating
@@ -185,7 +93,6 @@ export default function HeroCarousel() {
           />
         </div>
 
-        {/* Gradient Overlay */}
         <div style={{
           position: "absolute", inset: 0,
           background: slide.gradient,
@@ -193,27 +100,6 @@ export default function HeroCarousel() {
           transition: "opacity 0.6s ease, background 0.8s ease",
         }} />
 
-        {/* Animated Particles */}
-        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
-          {[...Array(8)].map((_, i) => {
-            const size = ((i * 13 + 5) % 6) + 3;
-            return (
-              <div key={i} style={{
-                position: "absolute",
-                width: `${size}px`,
-                height: `${size}px`,
-                background: "rgba(255,255,255,0.4)",
-                borderRadius: "0%",
-                top: `${10 + i * 11}%`,
-                left: `${5 + i * 12}%`,
-                animation: `float-particle ${3 + i * 0.4}s ease-in-out infinite alternate`,
-                animationDelay: `${i * 0.3}s`,
-              }} />
-            );
-          })}
-        </div>
-
-        {/* Content */}
         <div style={{
           position: "absolute", inset: 0,
           display: "flex",
@@ -222,7 +108,6 @@ export default function HeroCarousel() {
           padding: "clamp(32px, 5vw, 80px)",
           color: "#fff",
         }}>
-          {/* Badge */}
           <div style={{
             display: "inline-block",
             background: "rgba(255,255,255,0.18)",
@@ -241,9 +126,8 @@ export default function HeroCarousel() {
             {slide.badge}
           </div>
 
-          {/* Title */}
           <h2 style={{
-            fontSize: "clamp(2.4rem, 6vw, 5.5rem)",
+            fontSize: "clamp(2.4rem, 6vw, 5rem)",
             fontWeight: 900,
             lineHeight: 1.1,
             marginBottom: 12,
@@ -252,20 +136,19 @@ export default function HeroCarousel() {
             transition: "all 0.55s ease 0.15s",
           }}>
             {slide.title}{" "}
-            <span style={{
-              background: "linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.75) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              textDecoration: "underline",
-              textDecorationColor: "rgba(255,255,255,0.4)",
-              textUnderlineOffset: 8,
-            }}>
-              {slide.titleHighlight}
-            </span>
+            {slide.titleHighlight && (
+              <span style={{
+                background: "linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.75) 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}>
+                {slide.titleHighlight}
+              </span>
+            )}
           </h2>
 
           <h3 style={{
-            fontSize: "clamp(1.3rem, 3vw, 2.4rem)",
+            fontSize: "clamp(1.1rem, 2.5vw, 1.8rem)",
             fontWeight: 600,
             color: "rgba(255,255,255,0.85)",
             marginBottom: 20,
@@ -279,7 +162,7 @@ export default function HeroCarousel() {
           <p style={{
             fontSize: "clamp(14px, 2vw, 18px)",
             color: "rgba(255,255,255,0.8)",
-            maxWidth: 540,
+            maxWidth: 580,
             lineHeight: 1.8,
             marginBottom: 40,
             opacity: isAnimating ? 0 : 1,
@@ -289,7 +172,6 @@ export default function HeroCarousel() {
             {slide.desc}
           </p>
 
-          {/* CTAs */}
           <div style={{
             display: "flex",
             gap: 16,
@@ -330,7 +212,6 @@ export default function HeroCarousel() {
           </div>
         </div>
 
-        {/* Slide Counter */}
         <div style={{
           position: "absolute",
           bottom: 32,
@@ -358,7 +239,6 @@ export default function HeroCarousel() {
           ))}
         </div>
 
-        {/* Nav Arrows */}
         <button onClick={prev} className="carousel-nav-btn" style={{
           position: "absolute", top: "50%", right: 24,
           transform: "translateY(-50%)",
@@ -392,7 +272,6 @@ export default function HeroCarousel() {
           ›
         </button>
 
-        {/* Progress Bar */}
         <div style={{
           position: "absolute",
           bottom: 0, left: 0,
@@ -410,10 +289,6 @@ export default function HeroCarousel() {
       </div>
 
       <style>{`
-        @keyframes float-particle {
-          from { transform: translateY(0) rotate(0deg); opacity: 0.4; }
-          to { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
-        }
         .carousel-btn-primary:hover {
           transform: translateY(-3px) scale(1.03) !important;
           box-shadow: 0 14px 36px rgba(0,0,0,0.35) !important;
