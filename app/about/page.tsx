@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
 import type { StatDataItem, ValueItem, TeamMember } from "../lib/data";
+import { fetchAbout } from "../lib/api";
+import type { AboutPayload, ApiLocale } from "../lib/api";
 
 /* ── Timeline Section ───────────────────────── */
 const timelineData = {
@@ -88,9 +90,32 @@ function SkillBar({ label, percent, color, delay }: { label: string; percent: nu
 export default function AboutPage() {
   const { locale, t } = useLanguage();
   const ad = t.aboutData;
-  const timeline = locale === "ar" ? timelineData.ar : timelineData.en;
-  const skills = locale === "ar" ? skillsData.ar : skillsData.en;
   const [hoveredTeam, setHoveredTeam] = useState<number | null>(null);
+  const [cmsAbout, setCmsAbout] = useState<AboutPayload | null>(null);
+
+  useEffect(() => {
+    fetchAbout(locale as ApiLocale)
+      .then((data) => setCmsAbout(data))
+      .catch(() => setCmsAbout(null));
+  }, [locale]);
+
+  const timeline =
+    (cmsAbout?.timeline?.length ? cmsAbout.timeline : null) ??
+    (locale === "ar" ? timelineData.ar : timelineData.en);
+
+  const skills =
+    (cmsAbout?.skills?.length
+      ? cmsAbout.skills.map((s) => ({ ...s, color: s.color ?? "#6366f1" }))
+      : null) ??
+    (locale === "ar" ? skillsData.ar : skillsData.en);
+
+  const teamList: TeamMember[] =
+    (cmsAbout?.team?.length ? (cmsAbout.team as TeamMember[]) : null) ??
+    ad.teamList;
+
+  const valuesList: ValueItem[] =
+    (cmsAbout?.values?.length ? (cmsAbout.values as ValueItem[]) : null) ??
+    ad.valuesList;
 
   return (
     <div>
@@ -495,7 +520,7 @@ export default function AboutPage() {
             </Reveal>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))", gap: 28 }}>
-            {ad.valuesList.map((v: ValueItem, i: number) => (
+            {valuesList.map((v: ValueItem, i: number) => (
               <Reveal key={i} delay={i * 100} direction="up">
                 <div style={{
                   background: "var(--bg-card)",
@@ -528,7 +553,7 @@ export default function AboutPage() {
           </div>
           
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 32 }}>
-            {ad.teamList.map((m: TeamMember, i: number) => (
+            {teamList.map((m: TeamMember, i: number) => (
               <Reveal key={i} delay={i * 100} direction="up">
                 <div
                   onMouseEnter={() => setHoveredTeam(i)}

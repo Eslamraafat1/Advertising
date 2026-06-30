@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "./components/LanguageContext";
 import Reveal from "./components/Reveal";
 import HeroCarousel from "./components/HeroCarousel";
@@ -10,6 +10,8 @@ import AnimatedStats from "./components/AnimatedStats";
 import AwardsSection from "./components/AwardsSection";
 import WorkShowcase from "./components/WorkShowcase";
 import type { ServiceDataItem, FaqItem, ProcessStep, TestimonialItem } from "./lib/data";
+import { fetchFaqs } from "./lib/api";
+import type { ApiLocale } from "./lib/api";
 
 function ServiceCard({ s }: { s: ServiceDataItem }) {
   const [hovered, setHovered] = useState(false);
@@ -151,6 +153,18 @@ function ToolsTicker({ items }: { items: string[] }) {
 export default function Home() {
   const { locale, t } = useLanguage();
   const hd = t.homeData;
+  const [cmsFaqs, setCmsFaqs] = useState<Array<{ q: string; a: string }> | null>(null);
+
+  useEffect(() => {
+    fetchFaqs(locale as ApiLocale)
+      .then((data) => {
+        const list = Array.isArray(data)
+          ? (data as Array<{ q: string; a: string }>)
+          : ((data as { data?: Array<{ q: string; a: string }> }).data ?? null);
+        if (list && list.length > 0) setCmsFaqs(list);
+      })
+      .catch(() => setCmsFaqs(null));
+  }, [locale]);
 
   return (
     <div>
@@ -555,7 +569,7 @@ export default function Home() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {t.faqData.list.map((item: FaqItem, i: number) => (
+            {(cmsFaqs ?? t.faqData.list).map((item: FaqItem, i: number) => (
               <Reveal key={i} delay={i * 50} direction="up">
                 <FaqItem q={item.q} a={item.a} />
               </Reveal>

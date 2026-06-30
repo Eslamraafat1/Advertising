@@ -18,9 +18,23 @@ export default function ServicesPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const { submitQuote } = await import("../lib/api");
+      await submitQuote({
+        name: form.name,
+        email: form.email,
+        phone: form.phone || undefined,
+        service: form.service || undefined,
+        message: form.message,
+        locale,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Quote submission failed:", err);
+      alert(locale === "ar" ? "تعذر إرسال الطلب. حاول مرة أخرى." : "Could not submit your request. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

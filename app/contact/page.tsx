@@ -37,9 +37,24 @@ export default function ContactPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const { submitContact } = await import("../lib/api");
+      await submitContact({
+        name: form.name,
+        email: form.email,
+        phone: form.phone || undefined,
+        service: form.service || undefined,
+        budget: form.budget || undefined,
+        message: form.message,
+        locale,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Contact submission failed:", err);
+      alert(locale === "ar" ? "تعذر إرسال الرسالة. حاول مرة أخرى." : "Could not send your message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (submitted) {
@@ -368,12 +383,9 @@ export default function ContactPage() {
                     onFocus={() => setFocusedField("service")} onBlur={() => setFocusedField(null)}
                     className="form-input">
                     <option value="">{cp.labels.chooseService}</option>
-                    <option value="digital-ads">{locale === "ar" ? "الإعلان الرقمي" : "Digital Advertising"}</option>
-                    <option value="identity">{locale === "ar" ? "تصميم الهوية البصرية" : "Brand Identity Design"}</option>
-                    <option value="social">{locale === "ar" ? "إدارة السوشيال ميديا" : "Social Media Management"}</option>
-                    <option value="video">{locale === "ar" ? "إنتاج المحتوى المرئي" : "Visual Content Production"}</option>
-                    <option value="seo">{locale === "ar" ? "تحسين محركات البحث" : "Search Engine Optimization"}</option>
-                    <option value="strategy">{locale === "ar" ? "التحليل والاستراتيجية" : "Analysis & Strategy"}</option>
+                    {t.servicesData.map((s) => (
+                      <option key={s.id} value={s.id}>{s.title}</option>
+                    ))}
                   </select>
                 </div>
               </div>

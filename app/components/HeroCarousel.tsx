@@ -1,40 +1,47 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "./LanguageContext";
 
 export default function HeroCarousel() {
-  const { t } = useLanguage();
-  const slides = [
-    {
-      img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1400&auto=format&fit=crop",
-      badge: t.heroData.badge,
-      title: t.heroData.headline1,
-      titleHighlight: t.heroData.headline2,
-      subtitle: t.heroData.quoteBadge,
-      desc: t.heroData.subtext,
-      cta: t.heroData.cta1.label.replace(" →", "").replace(" ←", ""),
-      ctaHref: t.heroData.cta1.href,
-      ctaSecondary: t.heroData.cta2.label,
-      ctaSecondaryHref: t.heroData.cta2.href,
-      gradient: "linear-gradient(160deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.35) 100%)",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1400&auto=format&fit=crop",
-      badge: t.homeData.quoteBadge,
-      title: t.homeData.quoteTitle.split(".")[0],
-      titleHighlight: t.homeData.quoteTitle.split(".")[1]?.trim() || "",
-      subtitle: t.homeData.servicesTitle,
-      desc: t.homeData.servicesSubtext,
-      cta: t.common.contactUs,
-      ctaHref: "/contact",
-      ctaSecondary: t.heroData.cta2.label,
-      ctaSecondaryHref: "/portfolio",
-      gradient: "linear-gradient(160deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.5) 100%)",
-    },
-  ];
+  const { t, heroSlides: cmsSlides } = useLanguage();
+
+  const slides = useMemo(() => {
+    if (cmsSlides && cmsSlides.length > 0) {
+      return cmsSlides;
+    }
+
+    return [
+      {
+        img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1400&auto=format&fit=crop",
+        badge: t.heroData.badge,
+        title: t.heroData.headline1,
+        titleHighlight: t.heroData.headline2,
+        subtitle: t.heroData.quoteBadge,
+        desc: t.heroData.subtext,
+        cta: t.heroData.cta1.label.replace(" →", "").replace(" ←", ""),
+        ctaHref: t.heroData.cta1.href,
+        ctaSecondary: t.heroData.cta2.label,
+        ctaSecondaryHref: t.heroData.cta2.href,
+        gradient: "linear-gradient(160deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.35) 100%)",
+      },
+      {
+        img: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=1400&auto=format&fit=crop",
+        badge: t.homeData.quoteBadge,
+        title: t.homeData.quoteTitle.split(".")[0],
+        titleHighlight: t.homeData.quoteTitle.split(".")[1]?.trim() || "",
+        subtitle: t.homeData.servicesTitle,
+        desc: t.homeData.servicesSubtext,
+        cta: t.common.contactUs,
+        ctaHref: "/contact",
+        ctaSecondary: t.heroData.cta2.label,
+        ctaSecondaryHref: "/portfolio",
+        gradient: "linear-gradient(160deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.5) 100%)",
+      },
+    ];
+  }, [cmsSlides, t]);
 
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);

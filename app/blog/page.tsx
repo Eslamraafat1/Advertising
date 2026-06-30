@@ -1,32 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
+import { fetchBlog } from "../lib/api";
+import type { BlogPost, BlogListPayload, ApiLocale } from "../lib/api";
 
-const featuredPost = {
+const staticFeaturedPost = {
   ar: {
+    slug: "",
     category: "استراتيجية تسويقية",
     date: "يونيو ٢٠٢٤",
-    readTime: "٨ دقائق",
+    read_time: "٨ دقائق",
     title: "مستقبل التسويق الرقمي في 2024: 10 اتجاهات ستغيّر قواعد اللعبة",
     excerpt: "استعراض شامل لأهم التحولات في عالم التسويق الرقمي خلال العام الجاري، من الذكاء الاصطناعي إلى التسويق عبر المؤثرين والمحتوى التفاعلي.",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    featured_image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
     author: "أحمد الزهراني",
-    authorImg: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
+    author_image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
     tags: ["AI تسويق", "2024", "اتجاهات"],
   },
   en: {
+    slug: "",
     category: "Marketing Strategy",
     date: "June 2024",
-    readTime: "8 min read",
+    read_time: "8 min read",
     title: "The Future of Digital Marketing in 2024: 10 Trends That Will Change the Game",
     excerpt: "A comprehensive overview of the most important shifts in digital marketing this year, from AI to influencer marketing and interactive content.",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    featured_image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
     author: "Ahmed Al-Zahrani",
-    authorImg: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
+    author_image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
     tags: ["AI Marketing", "2024", "Trends"],
   },
 };
@@ -36,15 +40,77 @@ const newsletterTopics = {
   en: ["Marketing Strategies", "Social Media Tips", "Industry Analytics", "New Tools"],
 };
 
+type PostShape = {
+  id: string | number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  category: string;
+  author?: string;
+  author_image?: string;
+  read_time?: string;
+  featured_image?: string;
+  tags?: string[];
+};
+
+function normalisePosts(raw: BlogPost[]): PostShape[] {
+  return raw.map((p) => ({
+    id: p.id,
+    slug: p.slug ?? String(p.id),
+    title: p.title ?? "",
+    excerpt: p.excerpt ?? "",
+    date: p.date ?? "",
+    category: p.category ?? "",
+    author: p.author,
+    author_image: p.author_image,
+    read_time: p.read_time,
+    featured_image: p.featured_image,
+    tags: p.tags,
+  }));
+}
+
 export default function BlogPage() {
   const { locale, t } = useLanguage();
   const blog = t.blogPage;
-  const featured = locale === "ar" ? featuredPost.ar : featuredPost.en;
   const topics = locale === "ar" ? newsletterTopics.ar : newsletterTopics.en;
-  const [hoveredPost, setHoveredPost] = useState<number | null>(null);
+  const [hoveredPost, setHoveredPost] = useState<number | string | null>(null);
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [activeTag, setActiveTag] = useState("all");
+  const [cmsPosts, setCmsPosts] = useState<PostShape[] | null>(null);
+  const [cmsFeatured, setCmsFeatured] = useState<PostShape | null>(null);
+
+  useEffect(() => {
+    fetchBlog(locale as ApiLocale)
+      .then((data: BlogListPayload) => {
+        const list = data.data ?? data.posts ?? [];
+        if (list.length > 0) {
+          const normalised = normalisePosts(list);
+          setCmsFeatured(
+            data.featured ? normalisePosts([data.featured])[0] : normalised[0]
+          );
+          setCmsPosts(normalised.slice(data.featured ? 0 : 1));
+        }
+      })
+      .catch(() => {
+        setCmsPosts(null);
+        setCmsFeatured(null);
+      });
+  }, [locale]);
+
+  const staticFeatured = locale === "ar" ? staticFeaturedPost.ar : staticFeaturedPost.en;
+  const featured = cmsFeatured ?? staticFeatured;
+
+  const staticPostList: PostShape[] = blog.posts.map((p) => ({
+    id: p.id,
+    slug: p.id,
+    title: p.title,
+    excerpt: p.excerpt,
+    date: p.date,
+    category: p.category,
+  }));
+  const posts: PostShape[] = cmsPosts ?? staticPostList;
 
   const allTags = locale === "ar"
     ? ["الكل", "التسويق الرقمي", "السوشيال ميديا", "الهوية البصرية", "SEO", "الإعلانات"]
@@ -147,7 +213,7 @@ export default function BlogPage() {
               {/* Image */}
               <div style={{ position: "relative", minHeight: 380, overflow: "hidden" }}>
                 <Image
-                  src={featured.img} alt={featured.title}
+                  src={featured.featured_image ?? "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop"} alt={featured.title}
                   fill unoptimized
                   style={{ objectFit: "cover", transition: "transform 0.6s ease" }}
                   className="featured-img"
@@ -169,7 +235,7 @@ export default function BlogPage() {
               {/* Content */}
               <div style={{ padding: "44px 40px 44px 0", display: "flex", flexDirection: "column", justifyContent: "center" }} className="featured-content">
                 <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
-                  {featured.tags.map((tag, i) => (
+                  {(featured.tags ?? []).map((tag, i) => (
                     <span key={i} style={{
                       background: "var(--primary-light)", color: "var(--primary)",
                       padding: "4px 14px", borderRadius: 0,
@@ -184,14 +250,16 @@ export default function BlogPage() {
                   {featured.excerpt}
                 </p>
                 <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
-                  <Image src={featured.authorImg} alt={featured.author} width={40} height={40} unoptimized
-                    style={{ borderRadius: "0%", objectFit: "cover", border: "2px solid var(--primary-light)" }} />
+                  {featured.author_image && (
+                    <Image src={featured.author_image} alt={featured.author ?? ""} width={40} height={40} unoptimized
+                      style={{ borderRadius: "0%", objectFit: "cover", border: "2px solid var(--primary-light)" }} />
+                  )}
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: 14, color: "var(--text)" }}>{featured.author}</div>
-                    <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{featured.date} · {featured.readTime}</div>
+                    {featured.author && <div style={{ fontWeight: 700, fontSize: 14, color: "var(--text)" }}>{featured.author}</div>}
+                    <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{featured.date}{featured.read_time ? ` · ${featured.read_time}` : ""}</div>
                   </div>
                 </div>
-                <Link href="/contact" style={{
+                <Link href={featured.slug ? `/blog/${featured.slug}` : "/blog"} style={{
                   textDecoration: "none",
                   background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
                   color: "#fff", padding: "13px 28px",
@@ -213,18 +281,18 @@ export default function BlogPage() {
       <section style={{ padding: "60px 24px 80px", background: "var(--bg)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 32 }}>
-            {blog.posts.map((post, index) => (
+            {posts.map((post, index) => (
               <Reveal key={post.id} direction="up" delay={index * 100}>
                 <article
-                  onMouseEnter={() => setHoveredPost(index)}
+                  onMouseEnter={() => setHoveredPost(post.id)}
                   onMouseLeave={() => setHoveredPost(null)}
                   style={{
                     background: "var(--bg-card)",
                     borderRadius: 0,
-                    border: `1.5px solid ${hoveredPost === index ? "var(--primary)" : "var(--border)"}`,
+                    border: `1.5px solid ${hoveredPost === post.id ? "var(--primary)" : "var(--border)"}`,
                     overflow: "hidden",
-                    boxShadow: hoveredPost === index ? "0 20px 50px rgba(99,102,241,0.12)" : "var(--shadow-sm)",
-                    transform: hoveredPost === index ? "translateY(-8px)" : "none",
+                    boxShadow: hoveredPost === post.id ? "0 20px 50px rgba(99,102,241,0.12)" : "var(--shadow-sm)",
+                    transform: hoveredPost === post.id ? "translateY(-8px)" : "none",
                     transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                     display: "flex", flexDirection: "column",
                   }}
@@ -233,7 +301,7 @@ export default function BlogPage() {
                   <div style={{
                     height: 5,
                     background: `linear-gradient(90deg, ${["#6366f1","#f59e0b","#10b981","#8b5cf6"][index % 4]}, ${["#8b5cf6","#ef4444","#06b6d4","#6366f1"][index % 4]})`,
-                    transform: hoveredPost === index ? "scaleX(1)" : "scaleX(0.3)",
+                    transform: hoveredPost === post.id ? "scaleX(1)" : "scaleX(0.3)",
                     transformOrigin: "left",
                     transition: "transform 0.4s ease",
                   }} />
@@ -249,12 +317,12 @@ export default function BlogPage() {
                     <h2 style={{ fontSize: "clamp(1.2rem, 2vw, 1.55rem)", fontWeight: 900, marginBottom: 14, lineHeight: 1.4, color: "var(--text)" }}>{post.title}</h2>
                     <p style={{ color: "var(--text-muted)", fontSize: 14.5, lineHeight: 1.85, flex: 1, marginBottom: 24 }}>{post.excerpt}</p>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <Link href="/contact" style={{
+                      <Link href={`/blog/${post.slug ?? post.id}`} style={{
                         textDecoration: "none",
-                        background: hoveredPost === index
+                        background: hoveredPost === post.id
                           ? "linear-gradient(135deg, var(--primary), var(--primary-dark))"
                           : "var(--primary-light)",
-                        color: hoveredPost === index ? "#fff" : "var(--primary)",
+                        color: hoveredPost === post.id ? "#fff" : "var(--primary)",
                         padding: "10px 22px", borderRadius: 0,
                         fontWeight: 700, fontSize: 13.5,
                         transition: "all 0.3s ease",
@@ -262,7 +330,7 @@ export default function BlogPage() {
                         {locale === "ar" ? "اقرأ المزيد" : "Read More"} →
                       </Link>
                       <span style={{ fontSize: 12, color: "var(--text-light)", fontWeight: 600 }}>
-                        {locale === "ar" ? `${3 + index} دقائق قراءة` : `${3 + index} min read`}
+                        {post.read_time ?? (locale === "ar" ? `${3 + index} دقائق قراءة` : `${3 + index} min read`)}
                       </span>
                     </div>
                   </div>
@@ -333,7 +401,17 @@ export default function BlogPage() {
           ) : (
             <Reveal direction="up" delay={400}>
               <form
-                onSubmit={(e) => { e.preventDefault(); setSubscribed(true); }}
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  try {
+                    const { subscribeNewsletter } = await import("../lib/api");
+                    await subscribeNewsletter({ email, locale });
+                    setSubscribed(true);
+                  } catch (err) {
+                    console.error("Newsletter subscription failed:", err);
+                    alert(locale === "ar" ? "تعذر الاشتراك. حاول مرة أخرى." : "Could not subscribe. Please try again.");
+                  }
+                }}
                 style={{ display: "flex", gap: 12, maxWidth: 540, margin: "0 auto" }}
                 className="newsletter-form"
               >

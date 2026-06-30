@@ -1,27 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
+import { fetchPortfolio } from "../lib/api";
+import type { PortfolioItem, ApiLocale } from "../lib/api";
 
-const projects = {
+const staticProjects = {
   ar: [
-    { id: 1, title: "حملة النخبة للتسويق الرقمي", category: "digital-ads", results: "زيادة المبيعات +٢٤٠٪، عائد الاستثمار ٥.٢ ضعف", client: "مجموعة النخبة", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop", duration: "3 أشهر", budget: "50,000 ر.س" },
-    { id: 2, title: "الهوية البصرية لشركة ركاز العقارية", category: "branding", results: "تصميم شعار فريد ودليل هوية بصرية كاملة", client: "ركاز للتطوير", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop", duration: "شهر واحد", budget: "25,000 ر.س" },
-    { id: 3, title: "فيديو إطلاق تطبيق مسار التعليمي", category: "video", results: "٣.٥ مليون مشاهدة، زيادة التحميلات +١٨٠٪", client: "شركة مسار", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", duration: "شهران", budget: "35,000 ر.س" },
-    { id: 4, title: "إدارة السوشيال ميديا لمطاعم جورميه", category: "social", results: "+٤٥ ألف متابع جديد، تفاعل شهري +١٣٠٪", client: "جورميه العالمية", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop", duration: "6 أشهر", budget: "18,000 ر.س / شهر" },
-    { id: 5, title: "حملة إعلانات جوجل لبراند فاشن", category: "digital-ads", results: "+٣٢٠٪ عائد على الإنفاق الإعلاني، ٨ آلاف تحويل", client: "براند فاشن", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop", duration: "4 أشهر", budget: "80,000 ر.س" },
-    { id: 6, title: "حملة المؤثرين لمنتج صحتي الرياضي", category: "social", results: "تغطية من ١٥ مؤثر، مبيعات نفدت بالكامل", client: "صحتي المحدودة", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop", duration: "شهران", budget: "40,000 ر.س" },
+    { id: 1, slug: "al-nokhba-digital-marketing", title: "حملة النخبة للتسويق الرقمي", category: "digital-ads", results: "زيادة المبيعات +٢٤٠٪، عائد الاستثمار ٥.٢ ضعف", client: "مجموعة النخبة", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop", duration: "3 أشهر", budget: "50,000 ر.س" },
+    { id: 2, slug: "rikaz-real-estate-identity", title: "الهوية البصرية لشركة ركاز العقارية", category: "branding", results: "تصميم شعار فريد ودليل هوية بصرية كاملة", client: "ركاز للتطوير", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop", duration: "شهر واحد", budget: "25,000 ر.س" },
+    { id: 3, slug: "masar-app-launch-video", title: "فيديو إطلاق تطبيق مسار التعليمي", category: "video", results: "٣.٥ مليون مشاهدة، زيادة التحميلات +١٨٠٪", client: "شركة مسار", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", duration: "شهران", budget: "35,000 ر.س" },
+    { id: 4, slug: "gourmet-social-growth", title: "إدارة السوشيال ميديا لمطاعم جورميه", category: "social", results: "+٤٥ ألف متابع جديد، تفاعل شهري +١٣٠٪", client: "جورميه العالمية", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop", duration: "6 أشهر", budget: "18,000 ر.س / شهر" },
+    { id: 5, slug: "fashion-brand-google-campaign", title: "حملة إعلانات جوجل لبراند فاشن", category: "digital-ads", results: "+٣٢٠٪ عائد على الإنفاق الإعلاني، ٨ آلاف تحويل", client: "براند فاشن", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop", duration: "4 أشهر", budget: "80,000 ر.س" },
+    { id: 6, slug: "myhealth-influencer-campaign", title: "حملة المؤثرين لمنتج صحتي الرياضي", category: "social", results: "تغطية من ١٥ مؤثر، مبيعات نفدت بالكامل", client: "صحتي المحدودة", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop", duration: "شهران", budget: "40,000 ر.س" },
   ],
   en: [
-    { id: 1, title: "Al-Nokhba Digital Marketing Blitz", category: "digital-ads", results: "+240% Sales Increase, 5.2x ROI", client: "Al-Nokhba Group", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop", duration: "3 Months", budget: "$14,000" },
-    { id: 2, title: "Rikaz Real Estate Visual Identity", category: "branding", results: "Unique modern logo & comprehensive brand guidelines", client: "Rikaz Development", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop", duration: "1 Month", budget: "$7,000" },
-    { id: 3, title: "Masar Learning App Launch Video", category: "video", results: "3.5M Views, +180% App Downloads boost", client: "Masar EdTech", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", duration: "2 Months", budget: "$9,500" },
-    { id: 4, title: "Gourmet Burgers Social Growth & Content", category: "social", results: "+45k New followers, +130% Monthly engagement", client: "Gourmet International", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop", duration: "6 Months", budget: "$5,000/mo" },
-    { id: 5, title: "Fashion Brand Google Search Campaign", category: "digital-ads", results: "+320% Return on Ad Spend, 8,000+ Conversions", client: "Fashion Brand Ltd", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop", duration: "4 Months", budget: "$22,000" },
-    { id: 6, title: "MyHealth Influencer Launch Campaign", category: "social", results: "Featured by 15 major fitness influencers, sold out stock", client: "MyHealth Ltd", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop", duration: "2 Months", budget: "$11,000" },
+    { id: 1, slug: "al-nokhba-digital-marketing", title: "Al-Nokhba Digital Marketing Blitz", category: "digital-ads", results: "+240% Sales Increase, 5.2x ROI", client: "Al-Nokhba Group", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop", duration: "3 Months", budget: "$14,000" },
+    { id: 2, slug: "rikaz-real-estate-identity", title: "Rikaz Real Estate Visual Identity", category: "branding", results: "Unique modern logo & comprehensive brand guidelines", client: "Rikaz Development", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop", duration: "1 Month", budget: "$7,000" },
+    { id: 3, slug: "masar-app-launch-video", title: "Masar Learning App Launch Video", category: "video", results: "3.5M Views, +180% App Downloads boost", client: "Masar EdTech", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", duration: "2 Months", budget: "$9,500" },
+    { id: 4, slug: "gourmet-social-growth", title: "Gourmet Burgers Social Growth & Content", category: "social", results: "+45k New followers, +130% Monthly engagement", client: "Gourmet International", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop", duration: "6 Months", budget: "$5,000/mo" },
+    { id: 5, slug: "fashion-brand-google-campaign", title: "Fashion Brand Google Search Campaign", category: "digital-ads", results: "+320% Return on Ad Spend, 8,000+ Conversions", client: "Fashion Brand Ltd", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop", duration: "4 Months", budget: "$22,000" },
+    { id: 6, slug: "myhealth-influencer-campaign", title: "MyHealth Influencer Launch Campaign", category: "social", results: "Featured by 15 major fitness influencers, sold out stock", client: "MyHealth Ltd", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop", duration: "2 Months", budget: "$11,000" },
   ],
 };
 
@@ -44,13 +46,53 @@ const categories = {
 
 const clientLogosRow = ["Google Partner", "Meta Business", "TikTok For Business", "HubSpot", "Adobe", "Semrush", "Shopify"];
 
+type ProjectShape = {
+  id: number | string;
+  slug: string;
+  title: string;
+  category: string;
+  results: string;
+  client: string;
+  img: string;
+  duration: string;
+  budget: string;
+};
+
+function normaliseProjects(raw: PortfolioItem[]): ProjectShape[] {
+  return raw.map((p) => ({
+    id: p.id,
+    slug: p.slug ?? String(p.id),
+    title: p.title ?? "",
+    category: p.category ?? "",
+    results: p.results ?? "",
+    client: p.client ?? "",
+    img: p.featured_image ?? p.img ?? "",
+    duration: p.duration ?? "",
+    budget: p.budget ?? "",
+  }));
+}
+
 export default function PortfolioPage() {
   const { locale } = useLanguage();
   const [selectedCat, setSelectedCat] = useState("all");
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
-  const [expandedProject, setExpandedProject] = useState<number | null>(null);
+  const [hoveredProject, setHoveredProject] = useState<number | string | null>(null);
+  const [cmsProjects, setCmsProjects] = useState<ProjectShape[] | null>(null);
 
-  const activeProjects = locale === "ar" ? projects.ar : projects.en;
+  useEffect(() => {
+    fetchPortfolio(locale as ApiLocale)
+      .then((data) => {
+        const list = Array.isArray(data)
+          ? data
+          : ((data as { data?: PortfolioItem[]; items?: PortfolioItem[] }).data ??
+             (data as { items?: PortfolioItem[] }).items ??
+             []);
+        if (list.length > 0) setCmsProjects(normaliseProjects(list));
+      })
+      .catch(() => setCmsProjects(null));
+  }, [locale]);
+
+  const staticActive = locale === "ar" ? staticProjects.ar : staticProjects.en;
+  const activeProjects: ProjectShape[] = cmsProjects ?? staticActive;
   const activeCats = locale === "ar" ? categories.ar : categories.en;
   const filtered = selectedCat === "all" ? activeProjects : activeProjects.filter(p => p.category === selectedCat);
 
@@ -187,15 +229,15 @@ export default function PortfolioPage() {
           >
             {filtered.map((proj, i) => (
               <Reveal key={proj.id} delay={i * 80} direction="up">
-                <div
-                  onMouseEnter={() => setHoveredProject(proj.id)}
+                  <div
+                  onMouseEnter={() => setHoveredProject(proj.id ?? proj.slug)}
                   onMouseLeave={() => setHoveredProject(null)}
                   style={{
                     background: "var(--bg-card)",
                     borderRadius: 2, overflow: "hidden",
-                    border: `1.5px solid ${hoveredProject === proj.id ? "var(--primary)" : "var(--border)"}`,
-                    boxShadow: hoveredProject === proj.id ? "0 24px 60px rgba(99,102,241,0.15)" : "var(--shadow-sm)",
-                    transform: hoveredProject === proj.id ? "translateY(-8px)" : "none",
+                    border: `1.5px solid ${hoveredProject === (proj.id ?? proj.slug) ? "var(--primary)" : "var(--border)"}`,
+                    boxShadow: hoveredProject === (proj.id ?? proj.slug) ? "0 24px 60px rgba(99,102,241,0.15)" : "var(--shadow-sm)",
+                    transform: hoveredProject === (proj.id ?? proj.slug) ? "translateY(-8px)" : "none",
                     transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
                 >
@@ -206,7 +248,7 @@ export default function PortfolioPage() {
                       fill unoptimized
                       style={{
                         objectFit: "cover",
-                        transform: hoveredProject === proj.id ? "scale(1.08)" : "scale(1)",
+                        transform: hoveredProject === (proj.id ?? proj.slug) ? "scale(1.08)" : "scale(1)",
                         transition: "transform 0.5s ease",
                       }}
                     />
@@ -220,15 +262,15 @@ export default function PortfolioPage() {
                       {activeCats.find(c => c.id === proj.category)?.label}
                     </div>
                     {/* Hover overlay */}
-                    <div style={{
-                      position: "absolute", inset: 0,
-                      background: "linear-gradient(to top, #dc2528, transparent)",
-                      opacity: hoveredProject === proj.id ? 1 : 0,
+                        <div style={{
+                          position: "absolute", inset: 0,
+                          background: "linear-gradient(to top, #dc2528, transparent)",
+                          opacity: hoveredProject === (proj.id ?? proj.slug) ? 1 : 0,
                       transition: "opacity 0.4s ease",
                       display: "flex", alignItems: "flex-end", padding: "20px 20px",
                     }}>
                       <div style={{
-                        transform: hoveredProject === proj.id ? "translateY(0)" : "translateY(16px)",
+                        transform: hoveredProject === (proj.id ?? proj.slug) ? "translateY(0)" : "translateY(16px)",
                         transition: "transform 0.4s ease",
                         display: "flex", gap: 10,
                       }}>
@@ -256,7 +298,7 @@ export default function PortfolioPage() {
                       <span>📈</span>
                       <span>{proj.results}</span>
                     </div>
-                    <Link href="/contact" style={{
+                    <Link href={`/portfolio/${proj.slug ?? proj.id}`} style={{
                       textDecoration: "none",
                       color: "var(--primary)", fontWeight: 700, fontSize: 13.5,
                       display: "inline-flex", alignItems: "center", gap: 6,
@@ -264,7 +306,7 @@ export default function PortfolioPage() {
                     }}
                     className="portfolio-link"
                     >
-                      {locale === "ar" ? "احصل على نفس النتائج" : "Get Similar Results"} →
+                      {locale === "ar" ? "تفاصيل المشروع" : "View Project"} →
                     </Link>
                   </div>
                 </div>
