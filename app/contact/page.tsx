@@ -49,6 +49,7 @@ export default function ContactPage() {
         locale,
       });
       setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       console.error("Contact submission failed:", err);
       alert(locale === "ar" ? "تعذر إرسال الرسالة. حاول مرة أخرى." : "Could not send your message. Please try again.");

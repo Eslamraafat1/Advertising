@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "../../components/LanguageContext";
 import Reveal from "../../components/Reveal";
-import { fetchBlogPost } from "../../lib/api";
+import { fetchBlogPost, resolveMediaUrl } from "../../lib/api";
 import type { BlogPost, ApiLocale } from "../../lib/api";
 
 export default function BlogPostPage() {
@@ -81,6 +81,12 @@ export default function BlogPostPage() {
     );
   }
 
+  const authorName = post.author ?? post.authorName;
+  const authorImage = resolveMediaUrl(post.author_image ?? post.authorImage) || undefined;
+  const featuredImage = resolveMediaUrl(post.featured_image ?? post.featuredImage) || undefined;
+  const readTime =
+    post.read_time ?? (post.readTimeMinutes ? `${post.readTimeMinutes} min` : undefined);
+
   return (
     <div>
       {/* ── Hero ──────────────────────────────────────────── */}
@@ -147,9 +153,9 @@ export default function BlogPostPage() {
 
           <Reveal direction="up" delay={250}>
             <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-              {post.author_image && (
+              {authorImage && (
                 <Image
-                  src={post.author_image} alt={post.author ?? ""}
+                  src={authorImage} alt={authorName ?? ""}
                   width={44} height={44} unoptimized
                   style={{
                     borderRadius: "0%", objectFit: "cover",
@@ -158,11 +164,11 @@ export default function BlogPostPage() {
                 />
               )}
               <div>
-                {post.author && (
-                  <div style={{ fontWeight: 700, fontSize: 14, color: "#fff" }}>{post.author}</div>
+                {authorName && (
+                  <div style={{ fontWeight: 700, fontSize: 14, color: "#fff" }}>{authorName}</div>
                 )}
                 <div style={{ fontSize: 12, color: "#64748b" }}>
-                  {post.date}{post.read_time ? ` · ${post.read_time}` : ""}
+                  {post.date}{readTime ? ` · ${readTime}` : ""}
                 </div>
               </div>
             </div>
@@ -171,11 +177,11 @@ export default function BlogPostPage() {
       </section>
 
       {/* ── Featured Image ───────────────────────────────── */}
-      {post.featured_image && (
+      {featuredImage && (
         <div style={{ background: "var(--bg-muted)", overflow: "hidden" }}>
           <div style={{ maxWidth: 860, margin: "0 auto", position: "relative", height: 440 }}>
             <Image
-              src={post.featured_image} alt={post.title}
+              src={featuredImage} alt={post.title}
               fill unoptimized
               style={{ objectFit: "cover" }}
             />

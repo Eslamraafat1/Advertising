@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
-import { fetchPortfolio } from "../lib/api";
+import { fetchPortfolio, resolveMediaUrl } from "../lib/api";
 import type { PortfolioItem, ApiLocale } from "../lib/api";
 
 const staticProjects = {
@@ -66,7 +66,7 @@ function normaliseProjects(raw: PortfolioItem[]): ProjectShape[] {
     category: p.category ?? "",
     results: p.results ?? "",
     client: p.client ?? "",
-    img: p.featured_image ?? p.img ?? "",
+    img: resolveMediaUrl(p.featured_image ?? p.featuredImage ?? p.image ?? p.img ?? ""),
     duration: p.duration ?? "",
     budget: p.budget ?? "",
   }));

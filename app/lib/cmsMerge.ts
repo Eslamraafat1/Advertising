@@ -1,4 +1,5 @@
 import type { HomePayload, LayoutPayload } from "./api";
+import { resolveMediaUrl } from "./api";
 import type { Translation } from "./data";
 
 type LocaleKey = "en" | "ar";
@@ -144,7 +145,7 @@ export type CmsWorkShowcase = {
 
 export function mapHeroSlides(slides: Array<Record<string, unknown>>): CmsHeroSlide[] {
   return slides.map((slide) => ({
-    img: String(slide.img ?? ""),
+    img: resolveMediaUrl(String(slide.img ?? "")),
     badge: String(slide.badge ?? ""),
     title: String(slide.title ?? ""),
     titleHighlight: String(slide.titleHighlight ?? ""),
@@ -169,7 +170,7 @@ export function mapWorkShowcase(data: Record<string, unknown>): CmsWorkShowcase 
     subtitle: String(data.subtitle ?? ""),
     viewAll: String(data.viewAll ?? ""),
     projects: (data.projects as Array<Record<string, unknown>>).map((project, i) => ({
-      img: String(project.img ?? ""),
+      img: resolveMediaUrl(String(project.img ?? "")),
       category: String(project.category ?? ""),
       title: String(project.title ?? ""),
       metric: String(project.metric ?? ""),

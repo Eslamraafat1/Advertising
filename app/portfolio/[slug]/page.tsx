@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "../../components/LanguageContext";
 import Reveal from "../../components/Reveal";
-import { fetchPortfolioItem } from "../../lib/api";
+import { fetchPortfolioItem, resolveMediaUrl } from "../../lib/api";
 import type { PortfolioItem, ApiLocale } from "../../lib/api";
 
 export default function PortfolioDetailPage() {
@@ -81,7 +81,9 @@ export default function PortfolioDetailPage() {
     );
   }
 
-  const featuredImg = item.featured_image ?? item.img;
+  const featuredImg = resolveMediaUrl(
+    item.featured_image ?? item.featuredImage ?? item.image ?? item.img
+  );
 
   return (
     <div>
@@ -307,7 +309,7 @@ export default function PortfolioDetailPage() {
                       border: "1px solid var(--border)",
                     }}>
                       <Image
-                        src={img} alt={`${item.title} ${i + 1}`}
+                        src={resolveMediaUrl(img)} alt={`${item.title} ${i + 1}`}
                         fill unoptimized
                         style={{ objectFit: "cover", transition: "transform 0.4s ease" }}
                         className="gallery-img"

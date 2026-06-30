@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
-import { fetchBlog } from "../lib/api";
+import { fetchBlog, resolveMediaUrl } from "../lib/api";
 import type { BlogPost, BlogListPayload, ApiLocale } from "../lib/api";
 
 const staticFeaturedPost = {
@@ -62,10 +62,10 @@ function normalisePosts(raw: BlogPost[]): PostShape[] {
     excerpt: p.excerpt ?? "",
     date: p.date ?? "",
     category: p.category ?? "",
-    author: p.author,
-    author_image: p.author_image,
-    read_time: p.read_time,
-    featured_image: p.featured_image,
+    author: p.author ?? p.authorName,
+    author_image: resolveMediaUrl(p.author_image ?? p.authorImage) || undefined,
+    read_time: p.read_time ?? (p.readTimeMinutes ? `${p.readTimeMinutes} min` : undefined),
+    featured_image: resolveMediaUrl(p.featured_image ?? p.featuredImage) || undefined,
     tags: p.tags,
   }));
 }
@@ -84,7 +84,7 @@ export default function BlogPage() {
   useEffect(() => {
     fetchBlog(locale as ApiLocale)
       .then((data: BlogListPayload) => {
-        const list = data.data ?? data.posts ?? [];
+        const list = data.data ?? data.posts ?? data.items ?? [];
         if (list.length > 0) {
           const normalised = normalisePosts(list);
           setCmsFeatured(

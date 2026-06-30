@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
 import type { StatDataItem, ValueItem, TeamMember } from "../lib/data";
-import { fetchAbout } from "../lib/api";
+import { fetchAbout, resolveMediaUrl } from "../lib/api";
 import type { AboutPayload, ApiLocale } from "../lib/api";
 
 /* ── Timeline Section ───────────────────────── */
@@ -248,7 +248,7 @@ export default function AboutPage() {
               <Reveal direction="left" delay={200}>
                 <div style={{ position: "relative", width: "100%", minHeight: 280 }}>
                   <Image
-                    src={ad.storyImage}
+                    src={resolveMediaUrl(ad.storyImage)}
                     alt="Our Creative Journey"
                     width={800} height={450}
                     unoptimized
@@ -571,7 +571,7 @@ export default function AboutPage() {
                 >
                   <div style={{ position: "relative", width: 90, height: 90, margin: "0 auto 20px" }}>
                     <Image
-                      src={m.image} alt={m.name}
+                      src={resolveMediaUrl(m.image)} alt={m.name}
                       width={90} height={90}
                       unoptimized
                       style={{
