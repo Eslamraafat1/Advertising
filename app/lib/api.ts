@@ -2,12 +2,9 @@ const EXTERNAL_API =
   process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
   "https://globaluntoldstory.com/api/public/api/v1";
 
-// In the browser we call a same-origin proxy (see `rewrites` in next.config.ts)
-// to avoid CORS. On the server we can hit the external API directly.
-const API_BASE =
-  typeof window !== "undefined"
-    ? `${window.location.origin}/api/proxy`
-    : EXTERNAL_API;
+// Static export: no server proxy available — call the external API directly.
+// Ensure your Laravel backend has CORS configured to allow your frontend domain.
+const API_BASE = EXTERNAL_API;
 
 export type ApiLocale = "en" | "ar";
 
@@ -34,18 +31,8 @@ export function getApiBaseUrl(): string {
   return API_BASE;
 }
 
-// Backend media (e.g. https://host/api/public/storage/media/foo.jpg) is served
-// from a CDN that can trigger cross-origin ORB blocking (ERR_BLOCKED_BY_ORB) on
-// no-cors <img> requests. Rewrite such URLs to the same-origin `/api/media`
-// proxy (see `rewrites` in next.config.ts) so the browser stays same-origin.
-const STORAGE_MARKER = "/api/public/storage/";
-
 export function resolveMediaUrl(url?: string | null): string {
   if (!url) return "";
-  const idx = url.indexOf(STORAGE_MARKER);
-  if (idx !== -1) {
-    return `/api/media/${url.slice(idx + STORAGE_MARKER.length)}`;
-  }
   return url;
 }
 
