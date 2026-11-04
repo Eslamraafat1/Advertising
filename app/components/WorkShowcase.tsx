@@ -5,45 +5,26 @@ import Image from "next/image";
 import Reveal from "./Reveal";
 import Link from "next/link";
 
+// Production types the studio delivers (descriptions mirror the services copy).
+// Real client case studies can replace these cards once they are cleared for publishing.
+const IMG = {
+  commercial: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=800&auto=format&fit=crop",
+  documentary: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=800&auto=format&fit=crop",
+  post: "https://images.unsplash.com/photo-1574717026530-2e874b7698a8?q=80&w=800&auto=format&fit=crop",
+  onGround: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop",
+};
+
 const workShowcase = {
   ar: {
-    badge: "✨ أحدث أعمالنا",
-    title: "إبداع يتجاوز التوقعات",
-    subtitle: "نماذج من مشاريعنا الناجحة في مختلف المجالات",
-    viewAll: "عرض جميع الأعمال",
+    badge: "✨ أعمالنا",
+    title: "مشاريع من إنجاز The Untold Story",
+    subtitle: "أفلام، فيديو، إعلانات، أفلام وثائقية، ومحتوى مؤسسي",
+    viewAll: "أعمالنا",
     projects: [
-      {
-        img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-        category: "الإعلان الرقمي",
-        title: "حملة النخبة 2024",
-        metric: "+240% مبيعات",
-        color: "#d02225",
-        size: "large",
-      },
-      {
-        img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop",
-        category: "الهوية البصرية",
-        title: "ركاز العقارية",
-        metric: "هوية متكاملة",
-        color: "#f59e0b",
-        size: "small",
-      },
-      {
-        img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=800&auto=format&fit=crop",
-        category: "السوشيال ميديا",
-        title: "مطاعم جورميه",
-        metric: "+45k متابع",
-        color: "#10b981",
-        size: "small",
-      },
-      {
-        img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop",
-        category: "إنتاج الفيديو",
-        title: "تطبيق مسار",
-        metric: "3.5M مشاهدة",
-        color: "#d02225",
-        size: "large",
-      },
+      { img: IMG.commercial, category: "إعلانات تجارية", title: "إنتاج الإعلانات التجارية", metric: "من الفكرة إلى التسليم النهائي", color: "#d02225", size: "large" },
+      { img: IMG.documentary, category: "أفلام وثائقية", title: "إنتاج الأفلام الوثائقية", metric: "مبنية على البحث", color: "#f59e0b", size: "small" },
+      { img: IMG.post, category: "ما بعد الإنتاج", title: "ما بعد الإنتاج والتسليم النهائي", metric: "مونتاج، ألوان، صوت", color: "#10b981", size: "small" },
+      { img: IMG.onGround, category: "إنتاج على أرض الواقع", title: "خدمات الإنتاج في مصر", metric: "تصاريح، طاقم، مواقع", color: "#d02225", size: "large" },
     ],
   },
   en: {
@@ -52,38 +33,10 @@ const workShowcase = {
     subtitle: "Film, video, advertising, documentaries, and corporate content",
     viewAll: "Our Work",
     projects: [
-      {
-        img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-        category: "Digital Ads",
-        title: "Al-Nokhba Campaign 2024",
-        metric: "+240% Sales",
-        color: "#d02225",
-        size: "large",
-      },
-      {
-        img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop",
-        category: "Brand Identity",
-        title: "Rikaz Real Estate",
-        metric: "Full Identity",
-        color: "#f59e0b",
-        size: "small",
-      },
-      {
-        img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=800&auto=format&fit=crop",
-        category: "Social Media",
-        title: "Gourmet Restaurants",
-        metric: "+45k Followers",
-        color: "#10b981",
-        size: "small",
-      },
-      {
-        img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop",
-        category: "Video Production",
-        title: "Masar App",
-        metric: "3.5M Views",
-        color: "#d02225",
-        size: "large",
-      },
+      { img: IMG.commercial, category: "Commercials", title: "Commercial Advertising Production", metric: "Concept to final delivery", color: "#d02225", size: "large" },
+      { img: IMG.documentary, category: "Documentary", title: "Documentary Production", metric: "Research led", color: "#f59e0b", size: "small" },
+      { img: IMG.post, category: "Post Production", title: "Post Production and Final Delivery", metric: "Edit, color, sound", color: "#10b981", size: "small" },
+      { img: IMG.onGround, category: "On-Ground", title: "On Ground Production in Egypt", metric: "Permits, crew, locations", color: "#d02225", size: "large" },
     ],
   },
 };
@@ -245,7 +198,7 @@ export default function WorkShowcase({ locale = "en", title }: { locale?: string
               fontWeight: 600,
               color: "#666",
             }}>
-              📈 <span style={{ color: "#000" }}>{proj.metric}</span>
+              <span style={{ color: "#000" }}>{proj.metric}</span>
             </div>
           </div>
         </div>

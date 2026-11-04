@@ -68,7 +68,7 @@ export default function Navbar() {
         {/* استبدلنا الـ div بهذا الوسم */}
         <img 
           src="/black.png" 
-          alt="Logo" 
+          alt="The Untold Story" 
           style={{ width: 70, height: 50, objectFit: "unset" }} 
         />
 
@@ -117,8 +117,10 @@ export default function Navbar() {
             }}
             className="lang-toggle-btn"
             title={locale === "ar" ? "Switch to English" : "التبديل إلى العربية"}
+            aria-label={locale === "ar" ? "Switch to English" : "التبديل إلى العربية"}
           >
             <span
+              aria-hidden="true"
               className={locale === "ar" ? "fi fi-us" : "fi fi-sa"}
               style={{ fontSize: 22, lineHeight: 1, borderRadius: 3, boxShadow: "0 1px 4px rgba(0,0,0,0.3)" }}
             />
@@ -159,8 +161,10 @@ export default function Navbar() {
               alignItems: "center",
             }}
             title={locale === "ar" ? "Switch to English" : "التبديل إلى العربية"}
+            aria-label={locale === "ar" ? "Switch to English" : "التبديل إلى العربية"}
           >
             <span
+              aria-hidden="true"
               className={locale === "ar" ? "fi fi-us" : "fi fi-sa"}
               style={{ fontSize: 20, lineHeight: 1, borderRadius: 3, boxShadow: "0 1px 4px rgba(0,0,0,0.3)" }}
             />
@@ -173,7 +177,8 @@ export default function Navbar() {
               fontSize: 24, cursor: "pointer", color: "var(--text)",
               padding: 4,
             }}
-            aria-label="Menu"
+            aria-label={menuOpen ? (locale === "ar" ? "إغلاق القائمة" : "Close menu") : (locale === "ar" ? "فتح القائمة" : "Open menu")}
+            aria-expanded={menuOpen}
           >
             {menuOpen ? "✕" : "☰"}
           </button>

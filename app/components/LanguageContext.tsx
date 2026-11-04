@@ -45,6 +45,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const saved = typeof window !== "undefined" ? localStorage.getItem("locale") : null;
     if (saved === "ar" || saved === "en") {
+      // Restoring the saved locale must happen after hydration (the server
+      // always renders English), so this runs in an effect on purpose.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocale(saved);
     }
 

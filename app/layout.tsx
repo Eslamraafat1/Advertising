@@ -3,11 +3,44 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { LanguageProvider } from "./components/LanguageContext";
-import Head from "next/head";
+import { SHARED_OPEN_GRAPH, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./lib/site";
 
 export const metadata: Metadata = {
-  title: "Untold Agency | Premium Advertising & Marketing Agency",
-  description: "وكالة دعاية وإعلان متخصصة في تقديم حلول تسويقية مبتكرة. Professional marketing and advertising agency delivering measurable results.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} | Film & Video Production in Egypt and MENA`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  alternates: { canonical: "/" },
+  openGraph: {
+    ...SHARED_OPEN_GRAPH,
+    title: `${SITE_NAME} | Film & Video Production in Egypt and MENA`,
+    description: SITE_DESCRIPTION,
+    url: "/",
+  },
+  twitter: {
+    card: "summary",
+    title: `${SITE_NAME} | Film & Video Production in Egypt and MENA`,
+    description: SITE_DESCRIPTION,
+    images: ["/black.png"],
+  },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/black.png`,
+  email: "bendary@globaluntoldstory.com",
+  description: SITE_DESCRIPTION,
+  address: { "@type": "PostalAddress", addressLocality: "Egyptian Media Production City", addressCountry: "EG" },
+  contactPoint: [
+    { "@type": "ContactPoint", telephone: "+201001299639", contactType: "customer service", areaServed: "EG" },
+    { "@type": "ContactPoint", telephone: "+971547711772", contactType: "customer service", areaServed: "AE" },
+  ],
 };
 
 export default function RootLayout({
@@ -42,6 +75,10 @@ export default function RootLayout({
               } catch (e) { /* ignore */ }
             })();`,
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
         />
         <LanguageProvider>
           <Navbar />

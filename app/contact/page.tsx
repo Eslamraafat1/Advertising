@@ -1,24 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
 import type { InfoItem as OfficeItem } from "../lib/data";
+import { EMPTY_FORM, buildMailto, validateContact as validate, type ContactForm as FormState, type FieldErrors } from "../lib/contact";
 
 const whyContactUs = {
   ar: [
-    { icon: "⚡", title: "رد خلال ساعة", desc: "فريقنا جاهز للرد على استفساراتك خلال ساعة واحدة في أيام العمل" },
-    { icon: "🎯", title: "استشارة مجانية", desc: "احصل على استشارة تسويقية مجانية مدتها 30 دقيقة مع أحد خبرائنا" },
-    { icon: "🔒", title: "سرية تامة", desc: "معلوماتك ومشروعك محمي بالكامل وفق أعلى معايير الخصوصية" },
-    { icon: "🌟", title: "خبرة تزيد عن 9 سنوات", desc: "فريق من الخبراء المتخصصين في كل مجالات التسويق الرقمي" },
+    { icon: "⚡", title: "عرض سعر خلال 24 ساعة", desc: "أرسل لنا تفاصيل مشروعك وسنرد عليك بالخطة المناسبة والخطوات التالية." },
+    { icon: "🎬", title: "دورة إنتاج كاملة", desc: "من التخطيط والتصوير إلى ما بعد الإنتاج والتعريب والتسليم النهائي." },
+    { icon: "🌍", title: "مكاتب في مصر والإمارات", desc: "فريقنا قريب منك لخدمة منطقة الشرق الأوسط وشمال أفريقيا والعملاء حول العالم." },
+    { icon: "🇪🇬", title: "إنتاج على أرض الواقع في مصر", desc: "تصاريح وطاقم ومعدات ولوجستيات ومواقع تصوير للإنتاج الدولي." },
   ],
   en: [
-    { icon: "⚡", title: "1-Hour Response", desc: "Our team is ready to answer your inquiries within one hour on business days" },
-    { icon: "🎯", title: "Free Consultation", desc: "Get a free 30-minute marketing consultation with one of our experts" },
-    { icon: "🔒", title: "Full Confidentiality", desc: "Your information and project are fully protected under the highest privacy standards" },
-    { icon: "🌟", title: "9+ Years Experience", desc: "A team of specialists in all areas of digital marketing" },
+    { icon: "⚡", title: "Quote within 24h", desc: "Send us your brief and we will respond with the right plan and next steps." },
+    { icon: "🎬", title: "Full Production Cycle", desc: "From planning and filming to post production, localization, and final delivery." },
+    { icon: "🌍", title: "Offices in Egypt & UAE", desc: "Close to you, serving MENA and clients worldwide." },
+    { icon: "🇪🇬", title: "On-Ground in Egypt", desc: "Permits, crews, gear, logistics, and locations for international shoots." },
   ],
 };
 
@@ -28,21 +28,38 @@ export default function ContactPage() {
   const offices = cp.offices;
   const whyUs = locale === "ar" ? whyContactUs.ar : whyContactUs.en;
 
-  const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "", budget: "" });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState<FormState>(EMPTY_FORM);
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [mailtoHref, setMailtoHref] = useState<string | null>(null);
   const [step, setStep] = useState(1);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const ar = locale === "ar";
+  const serviceOptions = t.servicesData.map(sv => ({ id: sv.id, label: sv.title }));
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    await new Promise(r => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+  function updateField<K extends keyof FormState>(key: K, value: FormState[K]) {
+    setForm(prev => ({ ...prev, [key]: value }));
+    if (key in errors) setErrors(prev => ({ ...prev, [key]: undefined }));
   }
 
-  if (submitted) {
+  // The site has no mail backend: a valid form opens the visitor's email app
+  // with the message pre-filled (mailto). Nothing is sent from the browser.
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const found = validate(form, locale);
+    setErrors(found);
+    const firstInvalid = (Object.keys(found) as (keyof FieldErrors)[]).find(k => found[k]);
+    if (firstInvalid) {
+      document.getElementById(`contact-${firstInvalid}`)?.focus();
+      return;
+    }
+    const serviceLabel = serviceOptions.find(o => o.id === form.service)?.label ?? "";
+    const href = buildMailto(cp.email, form, serviceLabel, locale);
+    setMailtoHref(href);
+    window.scrollTo({ top: 0 });
+    window.location.assign(href);
+  }
+
+  if (mailtoHref) {
     return (
       <div style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "var(--bg)" }}>
         <Reveal direction="down">
@@ -55,13 +72,29 @@ export default function ContactPage() {
             maxWidth: 520,
             boxShadow: "0 24px 60px rgba(99,102,241,0.15)",
           }}>
-            <div style={{ fontSize: 80, marginBottom: 24, animation: "pop-in 0.5s cubic-bezier(0.16,1,0.3,1)" }}>🎉</div>
-            <h2 style={{ fontWeight: 900, fontSize: 28, color: "var(--text)", marginBottom: 14 }}>{t.common.successTitle}</h2>
-            <p style={{ color: "var(--text-muted)", fontSize: 16, lineHeight: 1.85, marginBottom: 36 }}>
-              {locale === "ar" ? `شكراً ${form.name}، ${t.common.successDesc}` : `Thank you ${form.name}, ${t.common.successDesc}`}
+            <div aria-hidden="true" style={{ fontSize: 64, marginBottom: 24 }}>✉️</div>
+            <h2 role="status" style={{ fontWeight: 900, fontSize: 28, color: "var(--text)", marginBottom: 14 }}>
+              {ar ? "رسالتك جاهزة للإرسال" : "Your message is ready to send"}
+            </h2>
+            <p style={{ color: "var(--text-muted)", fontSize: 16, lineHeight: 1.85, marginBottom: 16 }}>
+              {ar
+                ? `شكراً ${form.name.trim()}. فتحنا تطبيق البريد لديك ومعه رسالتك جاهزة — اضغط "إرسال" هناك لتصلنا.`
+                : `Thanks ${form.name.trim()}. We opened your email app with your message filled in — press "Send" there to reach us.`}
+            </p>
+            <p style={{ color: "var(--text-muted)", fontSize: 14.5, lineHeight: 1.8, marginBottom: 32 }}>
+              {ar ? "لم يُفتح تطبيق البريد؟ راسلنا مباشرة على " : "Email app didn't open? Write to us directly at "}
+              <a href={`mailto:${cp.email}`} style={{ color: "var(--primary)", fontWeight: 700, direction: "ltr", display: "inline-block" }}>{cp.email}</a>
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-              <button onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", service: "", message: "", budget: "" }); setStep(1); }}
+              <a href={mailtoHref} style={{
+                textDecoration: "none",
+                background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                color: "#fff", padding: "14px 28px", borderRadius: 0,
+                fontWeight: 700, fontSize: 15.5, display: "inline-block",
+              }}>
+                {ar ? "فتح البريد مرة أخرى" : "Open email again"}
+              </a>
+              <button onClick={() => { setMailtoHref(null); setForm(EMPTY_FORM); setErrors({}); setStep(1); }}
                 style={{
                   border: "2px solid #0a0a0a", cursor: "pointer",
                   background: "#0a0a0a",
@@ -287,33 +320,11 @@ export default function ContactPage() {
               </Reveal>
             ))}
 
-            {/* Social Links */}
-            <Reveal direction="right" delay={400}>
-              <div style={{ marginTop: 8 }}>
-                <p style={{ fontWeight: 700, fontSize: 13.5, color: "var(--text-muted)", marginBottom: 16 }}>
-                  {locale === "ar" ? "تابعنا على:" : "Follow us on:"}
-                </p>
-                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                  {["LinkedIn", "Twitter", "Instagram", "Facebook"].map((sn, i) => (
-                    <a key={i} href="#" style={{
-                      textDecoration: "none",
-                      background: "var(--bg-card)", border: "1px solid var(--border)",
-                      color: "var(--text-muted)",
-                      padding: "8px 16px", borderRadius: 0,
-                      fontSize: 13, fontWeight: 600,
-                      transition: "all 0.25s ease",
-                    }}
-                    className="social-link"
-                    >{sn}</a>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
           </div>
 
           {/* Form */}
           <Reveal direction="left" delay={150}>
-            <form onSubmit={handleSubmit} style={{
+            <form onSubmit={handleSubmit} noValidate aria-label={cp.formTitle} style={{
               background: "var(--bg-card)",
               borderRadius: 2, padding: "44px 40px",
               border: "1px solid var(--border)",
@@ -338,42 +349,43 @@ export default function ContactPage() {
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }} className="form-row-2">
                 <div style={{ textAlign: "start" }}>
-                  <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.name} *</label>
-                  <input required style={inputStyle("name")} placeholder={cp.placeholders.name}
-                    value={form.name} onChange={e => { setForm({ ...form, name: e.target.value }); if (form.name.length > 2) setStep(2); }}
+                  <label htmlFor="contact-name" style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.name}</label>
+                  <input id="contact-name" name="name" autoComplete="name" required style={inputStyle("name")} placeholder={cp.placeholders.name}
+                    aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "contact-name-error" : undefined}
+                    value={form.name} onChange={e => { updateField("name", e.target.value); if (e.target.value.trim().length >= 2) setStep(s => Math.max(s, 2)); }}
                     onFocus={() => setFocusedField("name")} onBlur={() => setFocusedField(null)}
                     className="form-input" />
+                  {errors.name && <p id="contact-name-error" className="field-error">{errors.name}</p>}
                 </div>
                 <div style={{ textAlign: "start" }}>
-                  <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.email} *</label>
-                  <input required type="email" style={inputStyle("email")} placeholder={cp.placeholders.email}
-                    value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                  <label htmlFor="contact-email" style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.email}</label>
+                  <input id="contact-email" name="email" autoComplete="email" required type="email" style={inputStyle("email")} placeholder={cp.placeholders.email}
+                    aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "contact-email-error" : undefined}
+                    value={form.email} onChange={e => updateField("email", e.target.value)}
                     onFocus={() => setFocusedField("email")} onBlur={() => setFocusedField(null)}
                     className="form-input" />
+                  {errors.email && <p id="contact-email-error" className="field-error">{errors.email}</p>}
                 </div>
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }} className="form-row-2">
                 <div style={{ textAlign: "start" }}>
-                  <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.phone}</label>
-                  <input style={inputStyle("phone")} placeholder={cp.placeholders.phone}
-                    value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
+                  <label htmlFor="contact-phone" style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.phone}</label>
+                  <input id="contact-phone" name="phone" type="tel" autoComplete="tel" style={inputStyle("phone")} placeholder={cp.placeholders.phone}
+                    value={form.phone} onChange={e => updateField("phone", e.target.value)}
                     onFocus={() => setFocusedField("phone")} onBlur={() => setFocusedField(null)}
                     className="form-input" />
                 </div>
                 <div style={{ textAlign: "start" }}>
-                  <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.service}</label>
-                  <select style={{ ...inputStyle("service") }}
-                    value={form.service} onChange={e => { setForm({ ...form, service: e.target.value }); if (e.target.value) setStep(3); }}
+                  <label htmlFor="contact-service" style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.service}</label>
+                  <select id="contact-service" name="service" style={{ ...inputStyle("service") }}
+                    value={form.service} onChange={e => { updateField("service", e.target.value); if (e.target.value) setStep(3); }}
                     onFocus={() => setFocusedField("service")} onBlur={() => setFocusedField(null)}
                     className="form-input">
                     <option value="">{cp.labels.chooseService}</option>
-                    <option value="digital-ads">{locale === "ar" ? "الإعلان الرقمي" : "Digital Advertising"}</option>
-                    <option value="identity">{locale === "ar" ? "تصميم الهوية البصرية" : "Brand Identity Design"}</option>
-                    <option value="social">{locale === "ar" ? "إدارة السوشيال ميديا" : "Social Media Management"}</option>
-                    <option value="video">{locale === "ar" ? "إنتاج المحتوى المرئي" : "Visual Content Production"}</option>
-                    <option value="seo">{locale === "ar" ? "تحسين محركات البحث" : "Search Engine Optimization"}</option>
-                    <option value="strategy">{locale === "ar" ? "التحليل والاستراتيجية" : "Analysis & Strategy"}</option>
+                    {serviceOptions.map(o => (
+                      <option key={o.id} value={o.id}>{o.label}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -384,13 +396,11 @@ export default function ContactPage() {
                   {locale === "ar" ? "الميزانية التقريبية:" : "Approximate Budget:"}
                 </label>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                  {(locale === "ar"
-                    ? ["أقل من 5K ر.س", "5K - 20K ر.س", "20K - 50K ر.س", "أكثر من 50K ر.س"]
-                    : ["< $1,500", "$1,500 - $5,000", "$5,000 - $15,000", "$15,000+"]
-                  ).map((b, i) => (
+                  {["< $5,000", "$5,000 - $20,000", "$20,000 - $50,000", "$50,000+"].map((b, i) => (
                     <button
                       key={i} type="button"
-                      onClick={() => setForm({ ...form, budget: b })}
+                      aria-pressed={form.budget === b}
+                      onClick={() => updateField("budget", form.budget === b ? "" : b)}
                       style={{
                         background: form.budget === b
                           ? "linear-gradient(135deg, var(--primary), var(--primary-dark))"
@@ -408,37 +418,37 @@ export default function ContactPage() {
               </div>
 
               <div style={{ textAlign: "start" }}>
-                <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.message} *</label>
-                <textarea required rows={5} style={{ ...inputStyle("message"), resize: "vertical" }}
+                <label htmlFor="contact-message" style={{ display: "block", fontWeight: 700, fontSize: 13.5, color: "var(--text)", marginBottom: 8 }}>{cp.labels.message}</label>
+                <textarea id="contact-message" name="message" required rows={5} style={{ ...inputStyle("message"), resize: "vertical" }}
+                  aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "contact-message-error" : undefined}
                   placeholder={cp.placeholders.message}
-                  value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
+                  value={form.message} onChange={e => updateField("message", e.target.value)}
                   onFocus={() => setFocusedField("message")} onBlur={() => setFocusedField(null)}
                   className="form-input" />
+                {errors.message && <p id="contact-message-error" className="field-error">{errors.message}</p>}
               </div>
 
-              <button type="submit" disabled={loading} style={{
-                border: "none", cursor: loading ? "not-allowed" : "pointer",
-                background: loading ? "var(--border)" : "linear-gradient(135deg, var(--primary), var(--primary-dark))",
-                color: loading ? "var(--text-muted)" : "#fff",
+              <button type="submit" style={{
+                border: "none", cursor: "pointer",
+                background: "linear-gradient(135deg, var(--primary), var(--primary-dark))",
+                color: "#fff",
                 padding: "17px 32px",
                 borderRadius: 1,
                 fontWeight: 800, fontSize: 16.5,
                 fontFamily: "inherit",
-                boxShadow: loading ? "none" : "0 6px 24px rgba(99,102,241,0.32)",
+                boxShadow: "0 6px 24px rgba(99,102,241,0.32)",
                 transition: "all 0.25s ease",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
               }}
               className="submit-btn"
               >
-                {loading ? (
-                  <>
-                    <div style={{ width: 18, height: 18, border: "2px solid rgba(255,255,255,0.4)", borderTopColor: "#fff", borderRadius: "0%", animation: "spin 0.8s linear infinite" }} />
-                    {t.common.loading}
-                  </>
-                ) : (
-                  `${t.common.submitBtn} ${locale === "ar" ? "←" : "→"}`
-                )}
+                {`${t.common.submitBtn} ${ar ? "←" : "→"}`}
               </button>
+              <p style={{ fontSize: 12.5, color: "var(--text-muted)", lineHeight: 1.7, margin: 0, textAlign: "start" }}>
+                {ar
+                  ? `يفتح هذا النموذج تطبيق البريد لديك برسالة جاهزة إلى ${cp.email}.`
+                  : `This form opens your email app with a ready-to-send message to ${cp.email}.`}
+              </p>
             </form>
           </Reveal>
         </div>
@@ -503,7 +513,7 @@ export default function ContactPage() {
         @keyframes pop-in { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         @keyframes spin { to { transform: rotate(360deg); } }
         .info-card:hover { border-color: var(--primary) !important; transform: translateX(4px); box-shadow: var(--shadow-sm); }
-        .social-link:hover { border-color: var(--primary) !important; color: var(--primary) !important; background: var(--primary-light) !important; }
+        .field-error { color: #b91c1c; font-size: 13px; font-weight: 600; margin: 6px 0 0; }
         .office-chip:hover { background: rgba(255,255,255,0.12) !important; }
         .form-input:focus { border-color: var(--primary) !important; }
         .submit-btn:hover { transform: translateY(-2px) !important; box-shadow: 0 10px 28px rgba(99,102,241,0.45) !important; }

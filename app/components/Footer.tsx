@@ -24,7 +24,7 @@ export default function Footer() {
         }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
-              <img src="/white.png" alt="Logo" style={{ width: 70, height: 50, objectFit: "unset" }} />
+              <img src="/white.png" alt="The Untold Story" style={{ width: 70, height: 50, objectFit: "unset" }} />
             </Link>
             <p style={{ color: "#94a3b8", fontSize: 14.5, lineHeight: 1.8, maxWidth: 320 }}>
               {f.brandDesc}

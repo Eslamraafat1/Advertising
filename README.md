@@ -53,7 +53,7 @@ Marketing website for **The Untold Story**, a full-service film and video produc
 
 The site presents the studio's services (film, commercials, documentaries, corporate content, TV, podcasts, photography and original IP), its work, team, offices and contact options. Every page is available in English and Arabic, and the layout mirrors to right-to-left when Arabic is selected.
 
-Some sections (sample case studies, blog posts and contact details) still use placeholder content that is meant to be replaced with the studio's real material.
+All copy describes the studio's real services, offices and contact details. Where the studio has not published material yet, the site says so instead of inventing it: the **Our Work** page shows the production types the studio delivers (no client names, budgets or results), and the **News & Insights** cards are topic previews marked "Coming soon".
 
 ## Features
 
@@ -72,14 +72,22 @@ Some sections (sample case studies, blog posts and contact details) still use pl
 
 ### Other pages
 
-- **Portfolio:** project grid with category filters.
-- **Blog:** post cards with tag filters and a newsletter sign-up box.
-- **Contact:** a form with a three-step progress indicator, office cards with `mailto:` links. The form is front-end only: it shows a success state and does not send data anywhere yet.
+- **Our Work (`/portfolio`):** production types (commercials, documentaries, corporate, live, post production, localization) with category filters.
+- **News & Insights (`/blog`):** topic previews with working tag filters and a mailing-list sign-up.
+- **Contact:** a form with a three-step progress indicator and office cards. The form validates on the client (name, email format, message length) with accessible inline errors, then opens the visitor's email app with a pre-filled message to the studio (`mailto:`). There is no mail backend, so the success screen says "ready to send" and offers a direct email link, rather than claiming the message was sent. The quote form on `/services` and the mailing-list box work the same way.
 
-### Editable content (demo)
+### SEO
 
-- `GET /api/ads` serves editable site content (hero text, stats, announcement bar) from [`app/lib/db.json`](app/lib/db.json). The language provider merges it over the built-in translations.
-- An unlisted `/dashboard` page shows overview cards, campaigns and leads from the same file, and lets you edit the hero content through `POST /api/ads`. It has no authentication and writes to a local JSON file, so it only works as a local demo (Vercel's file system is read-only).
+- Root metadata with a title template, description, canonical URLs, Open Graph / Twitter tags and Organization JSON-LD; each route has its own title, description and canonical.
+- `app/sitemap.ts` and `app/robots.ts` generate `/sitemap.xml` and `/robots.txt` (the dashboard and API are disallowed).
+- The site URL comes from [`app/lib/site.ts`](app/lib/site.ts): `NEXT_PUBLIC_SITE_URL`, then Vercel's production domain, then the known production URL. It never falls back to `localhost`.
+
+### Editable content (demo dashboard)
+
+- `GET /api/ads` serves the editable hero / announcement content from [`app/lib/db.json`](app/lib/db.json), and the language provider merges it over the built-in translations. Public requests only receive that content.
+- The unlisted `/dashboard` (marked `noindex`) shows sample overview data and lets an admin edit the hero content through `POST /api/ads`.
+- Access control ([`app/lib/admin.ts`](app/lib/admin.ts)): in development everything is open so the demo works locally. In production the dashboard data and `POST /api/ads` require the `ADMIN_TOKEN` environment variable, sent as the `x-admin-token` header (the dashboard asks for it) or an `admin_token` cookie. Without `ADMIN_TOKEN` the dashboard shows a "Dashboard disabled" notice and editing returns `401`.
+- Saving writes to the JSON file, which only works where the file system is writable (locally). On Vercel the API answers `503` with a clear message.
 
 ## Tech stack
 
@@ -91,7 +99,7 @@ Some sections (sample case studies, blog posts and contact details) still use pl
 | Icons | lucide-react, flag-icons (CDN) |
 | Images | `next/image` |
 | Fonts | Inter, Cairo (Google Fonts) |
-| Data | Route handler (`app/api/ads/route.ts`) reading a JSON file |
+| Data | Route handler (`app/api/ads/route.ts`) reading a JSON file, token-protected writes |
 | Quality | ESLint 9 (`eslint-config-next`) |
 | Hosting | Vercel |
 
@@ -102,10 +110,11 @@ Some sections (sample case studies, blog posts and contact details) still use pl
 | `/` | Home: hero carousel, stats, work showcase, awards, services, FAQ |
 | `/about` | Studio story, values and leadership team |
 | `/services` | Production services |
-| `/portfolio` | Projects with category filters |
-| `/blog` | Articles with tag filters and newsletter box |
-| `/contact` | Contact form and office details |
-| `/dashboard` | Unlisted content dashboard (local demo only) |
+| `/portfolio` | Our Work: production types with category filters |
+| `/blog` | News & Insights: topic previews and mailing-list sign-up |
+| `/contact` | Contact form (mailto) and office details |
+| `/dashboard` | Unlisted demo dashboard (`noindex`, needs `ADMIN_TOKEN` in production) |
+| `/sitemap.xml`, `/robots.txt` | Generated by `app/sitemap.ts` and `app/robots.ts` |
 
 ## Project structure
 
@@ -115,12 +124,16 @@ Some sections (sample case studies, blog posts and contact details) still use pl
 │   ├── layout.tsx            # root layout: Navbar, Footer, LanguageProvider
 │   ├── page.tsx              # home page
 │   ├── about/ services/ portfolio/ blog/ contact/ dashboard/
-│   ├── api/ads/route.ts      # GET / POST editable content
+│   ├── api/ads/route.ts      # GET content, POST edits (admin only)
+│   ├── sitemap.ts robots.ts  # generated sitemap.xml and robots.txt
 │   ├── components/           # Navbar, Footer, HeroCarousel, AnimatedStats, AwardsSection,
 │   │                         # WorkShowcase, Reveal, LanguageContext
 │   ├── lib/
 │   │   ├── data.ts           # EN / AR translations and page content
-│   │   └── db.json           # editable content used by /api/ads
+│   │   ├── db.json           # editable content used by /api/ads
+│   │   ├── site.ts           # site URL, name and shared metadata
+│   │   ├── admin.ts          # ADMIN_TOKEN check for the dashboard / API
+│   │   └── contact.ts        # form validation and mailto builder
 │   └── globals.css           # Tailwind 4 + theme variables
 └── public/                   # logos (black.png, white.png)
 ```
@@ -136,6 +149,13 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
+Optional environment variables (see [`.env.example`](.env.example)):
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Public URL for canonical links, sitemap and robots. Defaults to the Vercel production domain. |
+| `ADMIN_TOKEN` | Enables the dashboard and content editing in production. Leave unset to keep them disabled. |
+
 | Command | What it does |
 | --- | --- |
 | `npm run dev` | Start the dev server |
@@ -145,7 +165,7 @@ npm run dev        # http://localhost:3000
 
 ## Deployment
 
-The site is deployed on **Vercel**: [advertising-blond.vercel.app](https://advertising-blond.vercel.app).
+The site is deployed on **Vercel**: [advertising-blond.vercel.app](https://advertising-blond.vercel.app). Pushes to `main` redeploy it. No environment variables are required; set `ADMIN_TOKEN` in the Vercel project only if you want the dashboard unlocked there.
 
 ## Author
 

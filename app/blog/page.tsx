@@ -6,34 +6,32 @@ import Link from "next/link";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
 
+// Article previews. Full articles are not published yet, so cards are
+// marked "Coming soon" and link to the contact page instead of fake posts.
 const featuredPost = {
   ar: {
-    category: "استراتيجية تسويقية",
-    date: "يونيو ٢٠٢٤",
-    readTime: "٨ دقائق",
-    title: "مستقبل التسويق الرقمي في 2024: 10 اتجاهات ستغيّر قواعد اللعبة",
-    excerpt: "استعراض شامل لأهم التحولات في عالم التسويق الرقمي خلال العام الجاري، من الذكاء الاصطناعي إلى التسويق عبر المؤثرين والمحتوى التفاعلي.",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-    author: "أحمد الزهراني",
-    authorImg: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
-    tags: ["AI تسويق", "2024", "اتجاهات"],
+    category: "الإنتاج",
+    date: "قريباً",
+    title: "من الشرارة الأولى إلى الإطار الأخير: كيف تعمل دورة الإنتاج الكاملة",
+    excerpt: "جولة في المراحل التي نعمل بها في كل مشروع — التخطيط، التصوير، البث المباشر، ما بعد الإنتاج والتسليم، والتعريب.",
+    img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop",
+    author: "فريق The Untold Story",
+    tags: ["الإنتاج", "التخطيط", "التعريب"],
   },
   en: {
-    category: "Marketing Strategy",
-    date: "June 2024",
-    readTime: "8 min read",
-    title: "The Future of Digital Marketing in 2024: 10 Trends That Will Change the Game",
-    excerpt: "A comprehensive overview of the most important shifts in digital marketing this year, from AI to influencer marketing and interactive content.",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-    author: "Ahmed Al-Zahrani",
-    authorImg: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop",
-    tags: ["AI Marketing", "2024", "Trends"],
+    category: "Production",
+    date: "Coming soon",
+    title: "From First Spark to Final Frame: How the Full Production Cycle Works",
+    excerpt: "A walkthrough of the stages we run on every project — planning, filming, live, post production and final delivery, and localization.",
+    img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1200&auto=format&fit=crop",
+    author: "The Untold Story team",
+    tags: ["Production", "Planning", "Localization"],
   },
 };
 
 const newsletterTopics = {
-  ar: ["استراتيجيات التسويق", "نصائح السوشيال ميديا", "تحليلات الصناعة", "أدوات جديدة"],
-  en: ["Marketing Strategies", "Social Media Tips", "Industry Analytics", "New Tools"],
+  ar: ["أخبار الشركة", "كواليس الإنتاج", "الإنتاج في مصر", "التعريب"],
+  en: ["Company news", "Behind the scenes", "Producing in Egypt", "Localization"],
 };
 
 export default function BlogPage() {
@@ -46,9 +44,9 @@ export default function BlogPage() {
   const [subscribed, setSubscribed] = useState(false);
   const [activeTag, setActiveTag] = useState("all");
 
-  const allTags = locale === "ar"
-    ? ["الكل", "التسويق الرقمي", "السوشيال ميديا", "الهوية البصرية", "SEO", "الإعلانات"]
-    : ["All", "Digital Marketing", "Social Media", "Brand Identity", "SEO", "Advertising"];
+  const allTags = [locale === "ar" ? "الكل" : "All", ...Array.from(new Set(blog.posts.map(p => p.category)))];
+  const visiblePosts = activeTag === "all" ? blog.posts : blog.posts.filter(p => p.category === activeTag);
+  const mailingListHref = `mailto:${t.siteConfig.email}?subject=${encodeURIComponent(locale === "ar" ? "الاشتراك في قائمة الأخبار" : "Mailing list sign-up")}&body=${encodeURIComponent(email)}`;
 
   return (
     <div>
@@ -105,6 +103,8 @@ export default function BlogPage() {
               {allTags.map((tag, i) => (
                 <button
                   key={i}
+                  type="button"
+                  aria-pressed={i === 0 ? activeTag === "all" : activeTag === tag}
                   onClick={() => setActiveTag(i === 0 ? "all" : tag)}
                   style={{
                     background: (i === 0 ? activeTag === "all" : activeTag === tag)
@@ -184,11 +184,9 @@ export default function BlogPage() {
                   {featured.excerpt}
                 </p>
                 <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
-                  <Image src={featured.authorImg} alt={featured.author} width={40} height={40} unoptimized
-                    style={{ borderRadius: "0%", objectFit: "cover", border: "2px solid var(--primary-light)" }} />
                   <div>
                     <div style={{ fontWeight: 700, fontSize: 14, color: "var(--text)" }}>{featured.author}</div>
-                    <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{featured.date} · {featured.readTime}</div>
+                    <div style={{ fontSize: 12, color: "var(--text-muted)" }}>{featured.date}</div>
                   </div>
                 </div>
                 <Link href="/contact" style={{
@@ -201,7 +199,7 @@ export default function BlogPage() {
                 }}
                 className="featured-cta"
                 >
-                  {locale === "ar" ? "اقرأ المقالة الكاملة" : "Read Full Article"} →
+                  {locale === "ar" ? "تحدث معنا عن مشروعك" : "Talk to us about your project"} →
                 </Link>
               </div>
             </div>
@@ -213,7 +211,7 @@ export default function BlogPage() {
       <section style={{ padding: "60px 24px 80px", background: "var(--bg)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 32 }}>
-            {blog.posts.map((post, index) => (
+            {visiblePosts.map((post, index) => (
               <Reveal key={post.id} direction="up" delay={index * 100}>
                 <article
                   onMouseEnter={() => setHoveredPost(index)}
@@ -259,11 +257,9 @@ export default function BlogPage() {
                         fontWeight: 700, fontSize: 13.5,
                         transition: "all 0.3s ease",
                       }}>
-                        {locale === "ar" ? "اقرأ المزيد" : "Read More"} →
+                        {locale === "ar" ? "تواصل معنا" : "Get in touch"} →
                       </Link>
-                      <span style={{ fontSize: 12, color: "var(--text-light)", fontWeight: 600 }}>
-                        {locale === "ar" ? `${3 + index} دقائق قراءة` : `${3 + index} min read`}
-                      </span>
+
                     </div>
                   </div>
                 </article>
@@ -287,14 +283,14 @@ export default function BlogPage() {
           </Reveal>
           <Reveal direction="up" delay={100}>
             <h2 style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 900, color: "#fff", marginBottom: 16 }}>
-              {locale === "ar" ? "اشترك في نشرتنا الأسبوعية" : "Subscribe to Our Weekly Newsletter"}
+              {locale === "ar" ? "ابقَ على اطلاع" : "Stay in the Loop"}
             </h2>
           </Reveal>
           <Reveal direction="up" delay={200}>
             <p style={{ color: "#94a3b8", fontSize: 16.5, marginBottom: 32, lineHeight: 1.8 }}>
               {locale === "ar"
-                ? "احصل على أفضل المقالات والنصائح التسويقية مباشرة في بريدك الإلكتروني كل أسبوع"
-                : "Get the best articles and marketing tips delivered to your inbox every week"}
+                ? "اترك بريدك الإلكتروني لنخبرك عند نشر مقالات وأخبار جديدة."
+                : "Leave your email and we will let you know when new articles and news are published."}
             </p>
           </Reveal>
 
@@ -323,23 +319,25 @@ export default function BlogPage() {
               }}>
                 <div style={{ fontSize: 52, marginBottom: 16 }}>🎉</div>
                 <h3 style={{ color: "#34d399", fontWeight: 800, fontSize: 22, marginBottom: 8 }}>
-                  {locale === "ar" ? "تم الاشتراك بنجاح!" : "Successfully Subscribed!"}
+                  {locale === "ar" ? "أكمل الاشتراك من بريدك" : "Finish signing up in your email app"}
                 </h3>
                 <p style={{ color: "#94a3b8", fontSize: 15 }}>
-                  {locale === "ar" ? "سيصلك أول عدد من النشرة قريباً 🚀" : "Your first newsletter edition is coming soon 🚀"}
+                  {locale === "ar" ? "فتحنا تطبيق البريد برسالة اشتراك جاهزة — اضغط \"إرسال\" للتأكيد." : "We opened your email app with a sign-up request — press \"Send\" to confirm."}
                 </p>
               </div>
             </Reveal>
           ) : (
             <Reveal direction="up" delay={400}>
               <form
-                onSubmit={(e) => { e.preventDefault(); setSubscribed(true); }}
+                onSubmit={(e) => { e.preventDefault(); setSubscribed(true); window.location.assign(mailingListHref); }}
                 style={{ display: "flex", gap: 12, maxWidth: 540, margin: "0 auto" }}
                 className="newsletter-form"
               >
                 <input
                   type="email"
                   required
+                  aria-label={locale === "ar" ? "البريد الإلكتروني" : "Email address"}
+                  autoComplete="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder={locale === "ar" ? "أدخل بريدك الإلكتروني..." : "Enter your email..."}
@@ -364,11 +362,11 @@ export default function BlogPage() {
                 }}
                 className="newsletter-btn"
                 >
-                  {locale === "ar" ? "اشترك الآن" : "Subscribe"}
+                  {locale === "ar" ? "اشترك" : "Sign up"}
                 </button>
               </form>
               <p style={{ color: "#475569", fontSize: 12.5, marginTop: 14 }}>
-                {locale === "ar" ? "لا تحتوي نشرتنا على أي سبام. يمكنك إلغاء الاشتراك في أي وقت." : "No spam in our newsletter. Unsubscribe at any time."}
+                {locale === "ar" ? "يفتح هذا النموذج تطبيق البريد لديك؛ لا يُرسل شيء تلقائياً." : "This opens your email app; nothing is sent automatically."}
               </p>
             </Reveal>
           )}

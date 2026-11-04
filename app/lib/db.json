@@ -1,56 +1,44 @@
 {
   "ar": {
     "siteConfig": {
-      "name": "Untold",
-      "tagline": "وكالة الإبداع والتأثير",
-      "description": "نبتكر حلولاً إعلانية مدروسة تربط علامتك التجارية بجمهورك المستهدف وتحقق نتائج قابلة للقياس.",
-      "email": "hello@Untold.agency",
-      "phone": "+966 50 000 0000",
-      "address": "الرياض، المملكة العربية السعودية",
+      "name": "The Untold Story",
+      "tagline": "استوديو إنتاج أفلام وفيديو",
+      "description": "خدمات إنتاج أفلام وفيديو في مصر ومنطقة الشرق الأوسط وشمال أفريقيا — دورة إنتاج كاملة من التخطيط إلى التسليم النهائي.",
+      "email": "bendary@globaluntoldstory.com",
+      "phone": "+201001299639",
+      "address": "Egyptian Media Production City, Egypt",
       "workingHours": "الأحد – الخميس، ٩ص – ٦م"
     },
     "heroData": {
-      "badge": "✦ وكالة الإبداع والتأثير",
-      "headline1": "نصنع الإعلانات التي",
-      "headline2": "تُحرّك العالم",
-      "subtext": "نبتكر حلولاً إعلانية مدروسة تربط علامتك التجارية بجمهورك المستهدف وتحقق نتائج قابلة للقياس.",
-      "cta1": "ابدأ معنا الآن ←",
-      "cta2": "استكشف خدماتنا"
+      "badge": "🎬 إنتاج أفلام وفيديو في مصر ومنطقة الشرق الأوسط وشمال أفريقيا",
+      "headline1": "The Untold Story",
+      "headline2": "تقدّم دورة الإنتاج الكاملة",
+      "subtext": "أفلام، فيديو، إعلانات، أفلام وثائقية، محتوى مؤسسي، برامج تلفزيونية، والمزيد. مكاتبنا في مدينة الإنتاج الإعلامي بمصر ودبي وجدة لخدمة المنطقة والعملاء حول العالم.",
+      "cta1": "تواصل معنا للمشروع القادم ←",
+      "cta2": "أعمالنا"
     },
-    "statsData": [
-      { "value": "٢٥٠+", "label": "عميل راضٍ" },
-      { "value": "١٢٠٠+", "label": "حملة ناجحة" },
-      { "value": "٩٨٪", "label": "رضا العملاء" },
-      { "value": "١٠+", "label": "سنوات خبرة" }
-    ],
-    "announcementBar": "🎉 عرض خاص: استشارة تسويقية مجانية لأول ١٠ عملاء هذا الشهر!",
+    "announcementBar": "احصل على عرض سعر خلال 24 ساعة — تواصل معنا لمشروعك القادم",
     "showAnnouncementBar": true
   },
   "en": {
     "siteConfig": {
-      "name": "Untold",
-      "tagline": "The Agency of Creativity & Impact",
-      "description": "We craft strategic advertising solutions that connect your brand with your target audience and deliver measurable results.",
-      "email": "hello@Untold.agency",
-      "phone": "+966 50 000 0000",
-      "address": "Riyadh, Saudi Arabia",
+      "name": "The Untold Story",
+      "tagline": "Film & Video Production Studio",
+      "description": "Film & video production services in Egypt and MENA. The Untold Story delivers the full production cycle.",
+      "email": "bendary@globaluntoldstory.com",
+      "phone": "+201001299639",
+      "address": "Egyptian Media Production City, Egypt",
       "workingHours": "Sunday – Thursday, 9AM – 6PM"
     },
     "heroData": {
-      "badge": "✦ Creativity & Impact Agency",
-      "headline1": "We Make Ads That",
-      "headline2": "Move the World",
-      "subtext": "We craft strategic advertising solutions that connect your brand with your target audience and deliver measurable results.",
-      "cta1": "Start With Us Now →",
-      "cta2": "Explore Our Services"
+      "badge": "🎬 Film & Video Production services in Egypt and MENA",
+      "headline1": "The Untold Story delivers",
+      "headline2": "the full production cycle",
+      "subtext": "Film, video, advertising, documentaries, corporate content, TV shows, and more. With offices in Egypt Media Production City, Dubai, and Jeddah serving MENA and clients worldwide.",
+      "cta1": "Contact us for Next project →",
+      "cta2": "Our Work"
     },
-    "statsData": [
-      { "value": "250+", "label": "Happy Clients" },
-      { "value": "1200+", "label": "Successful Campaigns" },
-      { "value": "98%", "label": "Client Satisfaction" },
-      { "value": "10+", "label": "Years of Experience" }
-    ],
-    "announcementBar": "🎉 Special Offer: Free marketing consultation for the first 10 clients this month!",
+    "announcementBar": "Get a quote in 24h — Contact us for your next project",
     "showAnnouncementBar": true
   },
   "stats": {
@@ -129,25 +117,83 @@
     }
   ],
   "recentLeads": [
-    { "id": 1, "name": "محمد العتيبي", "email": "m.otaibi@example.com", "service": "الإعلان الرقمي", "date": "2025-06-17", "status": "new" },
-    { "id": 2, "name": "سارة الزهراني", "email": "s.zahrani@example.com", "service": "تصميم الهوية", "date": "2025-06-16", "status": "contacted" },
-    { "id": 3, "name": "خالد الشمري", "email": "k.shamri@example.com", "service": "السوشيال ميديا", "date": "2025-06-15", "status": "proposal" },
-    { "id": 4, "name": "نورة القحطاني", "email": "n.qahtani@example.com", "service": "إنتاج مرئي", "date": "2025-06-14", "status": "new" },
-    { "id": 5, "name": "فيصل المالكي", "email": "f.malki@example.com", "service": "SEO", "date": "2025-06-13", "status": "won" }
+    {
+      "id": 1,
+      "name": "محمد العتيبي",
+      "email": "m.otaibi@example.com",
+      "service": "الإعلان الرقمي",
+      "date": "2025-06-17",
+      "status": "new"
+    },
+    {
+      "id": 2,
+      "name": "سارة الزهراني",
+      "email": "s.zahrani@example.com",
+      "service": "تصميم الهوية",
+      "date": "2025-06-16",
+      "status": "contacted"
+    },
+    {
+      "id": 3,
+      "name": "خالد الشمري",
+      "email": "k.shamri@example.com",
+      "service": "السوشيال ميديا",
+      "date": "2025-06-15",
+      "status": "proposal"
+    },
+    {
+      "id": 4,
+      "name": "نورة القحطاني",
+      "email": "n.qahtani@example.com",
+      "service": "إنتاج مرئي",
+      "date": "2025-06-14",
+      "status": "new"
+    },
+    {
+      "id": 5,
+      "name": "فيصل المالكي",
+      "email": "f.malki@example.com",
+      "service": "SEO",
+      "date": "2025-06-13",
+      "status": "won"
+    }
   ],
   "monthlyData": [
-    { "month": "يناير", "revenue": 120000, "leads": 40, "campaigns": 18 },
-    { "month": "فبراير", "revenue": 135000, "leads": 45, "campaigns": 20 },
-    { "month": "مارس", "revenue": 180000, "leads": 62, "campaigns": 26 },
-    { "month": "أبريل", "revenue": 155000, "leads": 54, "campaigns": 22 },
-    { "month": "مايو", "revenue": 170000, "leads": 58, "campaigns": 25 },
-    { "month": "يونيو", "revenue": 185000, "leads": 63, "campaigns": 34 }
-  ],
-  "websiteContent": {
-    "heroHeadline": "نرسم مسار نجاحك الإعلاني",
-    "heroSubtext": "نعمل على تحويل أفكارك الرقمية إلى حملات جذابة تحقق نتائج قياسية.",
-    "ctaText": "ابدأ الآن ←",
-    "announcementBar": "🎉 خصم خاص للعملاء الجدد هذا الشهر!",
-    "showAnnouncementBar": true
-  }
+    {
+      "month": "يناير",
+      "revenue": 120000,
+      "leads": 40,
+      "campaigns": 18
+    },
+    {
+      "month": "فبراير",
+      "revenue": 135000,
+      "leads": 45,
+      "campaigns": 20
+    },
+    {
+      "month": "مارس",
+      "revenue": 180000,
+      "leads": 62,
+      "campaigns": 26
+    },
+    {
+      "month": "أبريل",
+      "revenue": 155000,
+      "leads": 54,
+      "campaigns": 22
+    },
+    {
+      "month": "مايو",
+      "revenue": 170000,
+      "leads": 58,
+      "campaigns": 25
+    },
+    {
+      "month": "يونيو",
+      "revenue": 185000,
+      "leads": 63,
+      "campaigns": 34
+    }
+  ]
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 
 // ─── Types ───────────────────────────────────────────────
@@ -256,18 +256,95 @@ function EditContentModal({
 }
 
 // ─── Main Dashboard ───────────────────────────────────────
+const TOKEN_KEY = "untold-admin-token";
+
+function readToken(): string {
+  try {
+    return sessionStorage.getItem(TOKEN_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+
+function authHeaders(token: string): Record<string, string> {
+  return token ? { "x-admin-token": token } : {};
+}
+
+// ─── Locked state (production without a valid ADMIN_TOKEN) ──
+function LockedNotice({ onSubmit, failed }: { onSubmit: (token: string) => void; failed: boolean }) {
+  const [value, setValue] = useState("");
+  return (
+    <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+      <div style={{ maxWidth: 520, width: "100%", background: "var(--bg-card)", border: "1px solid var(--border)", padding: 32, boxShadow: "var(--shadow-sm)", textAlign: "start" }}>
+        <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 12, padding: "4px 12px", marginBottom: 14 }}>
+          Demo
+        </span>
+        <h1 style={{ fontSize: 22, fontWeight: 800, color: "var(--text)", marginBottom: 10 }}>Dashboard disabled</h1>
+        <p style={{ color: "var(--text-muted)", fontSize: 15, lineHeight: 1.7, marginBottom: 20 }}>
+          This content dashboard is a demo. On the public deployment it is locked and editing is disabled.
+          Enter the admin token to continue.
+        </p>
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            if (value.trim()) onSubmit(value.trim());
+          }}
+          style={{ display: "flex", gap: 10, flexWrap: "wrap" }}
+        >
+          <label htmlFor="admin-token" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>
+            Admin token
+          </label>
+          <input
+            id="admin-token"
+            type="password"
+            autoComplete="off"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            placeholder="Admin token"
+            style={{ flex: 1, minWidth: 200, padding: "11px 14px", border: "1.5px solid var(--border)", fontSize: 14, fontFamily: "inherit", background: "var(--bg)", color: "var(--text)" }}
+          />
+          <button type="submit" style={{ border: "none", cursor: "pointer", background: "linear-gradient(135deg, var(--primary), var(--primary-dark))", color: "#fff", padding: "11px 22px", fontWeight: 700, fontSize: 14, fontFamily: "inherit" }}>
+            Unlock
+          </button>
+        </form>
+        {failed && (
+          <p role="alert" style={{ color: "#b91c1c", fontSize: 14, marginTop: 12 }}>That token was not accepted.</p>
+        )}
+        <Link href="/" style={{ display: "inline-block", marginTop: 20, color: "var(--primary)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
+          ← Back to the site
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Dashboard ───────────────────────────────────────
 export default function DashboardPage() {
   const [data, setData] = useState<ApiData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [locked, setLocked] = useState(false);
+  const [tokenFailed, setTokenFailed] = useState(false);
   const [tab, setTab] = useState<"overview" | "campaigns" | "leads" | "content">("overview");
   const [editOpen, setEditOpen] = useState(false);
   const [savedMsg, setSavedMsg] = useState("");
 
-  useEffect(() => {
-    fetch("/api/ads")
+  const load = useCallback((token: string) => {
+    fetch("/api/ads", { headers: authHeaders(token) })
       .then(r => r.json())
-      .then((d: ApiData) => { setData(d); setLoading(false); })
+      .then((d: Partial<ApiData>) => {
+        if (d && d.stats && d.campaigns) {
+          setData(d as ApiData);
+          setLocked(false);
+          setTokenFailed(false);
+        } else {
+          // Public response: the server did not accept the token (or none was given).
+          setLocked(true);
+          setTokenFailed(Boolean(token));
+          try { sessionStorage.removeItem(TOKEN_KEY); } catch { /* ignore */ }
+        }
+        setLoading(false);
+      })
       .catch((err) => {
         console.error("Dashboard fetch error:", err);
         setError("حدث خطأ أثناء تحميل بيانات الداشبورد. يرجى إعادة المحاولة لاحقاً.");
@@ -275,31 +352,37 @@ export default function DashboardPage() {
       });
   }, []);
 
+  useEffect(() => {
+    load(readToken());
+  }, [load]);
+
+  function unlock(token: string) {
+    try { sessionStorage.setItem(TOKEN_KEY, token); } catch { /* ignore */ }
+    setLoading(true);
+    load(token);
+  }
+
   async function handleSaveContent(ar: LangConfig, en: LangConfig) {
     if (!data) return;
     try {
       const response = await fetch("/api/ads", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...authHeaders(readToken()) },
         body: JSON.stringify({ ar, en }),
       });
-      if (response.ok) {
-        const resJson = await response.json();
-        if (resJson.success) {
-          setData({ ...data, ar, en });
-          setSavedMsg("✅ تم حفظ التغييرات في قاعدة البيانات بنجاح!");
-        } else {
-          setSavedMsg("❌ خطأ أثناء حفظ التغييرات.");
-        }
+      const resJson = await response.json().catch(() => null);
+      if (response.ok && resJson?.success) {
+        setData({ ...data, ar, en });
+        setSavedMsg("✅ تم حفظ التغييرات بنجاح / Saved");
       } else {
-        setSavedMsg("❌ فشل الاتصال بالخادم لحفظ التغييرات.");
+        setSavedMsg(`❌ ${resJson?.error ?? "فشل حفظ التغييرات / Save failed"}`);
       }
     } catch (e) {
       console.error("Error saving content:", e);
-      setSavedMsg("❌ حدث خطأ غير متوقع.");
+      setSavedMsg("❌ حدث خطأ غير متوقع / Unexpected error");
     }
     setEditOpen(false);
-    setTimeout(() => setSavedMsg(""), 4000);
+    setTimeout(() => setSavedMsg(""), 5000);
   }
 
   if (loading) return (
@@ -321,6 +404,8 @@ export default function DashboardPage() {
       </div>
     </div>
   );
+
+  if (locked) return <LockedNotice onSubmit={unlock} failed={tokenFailed} />;
 
   if (!data) return null;
   const { stats, campaigns, recentLeads, monthlyData } = data;
@@ -351,10 +436,10 @@ export default function DashboardPage() {
         <div style={{ maxWidth: 1240, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
           <div>
             <h1 style={{ fontWeight: 900, fontSize: 26, color: "var(--text)", marginBottom: 4 }}>🎛️ لوحة تحكم الإدارة</h1>
-            <p style={{ color: "var(--text-muted)", fontSize: 14 }}>إدارة كاملة لأداء الوكالة وتعديل محتوى الموقع</p>
+            <p style={{ color: "var(--text-muted)", fontSize: 14 }}>لوحة تجريبية ببيانات توضيحية وتعديل محتوى الصفحة الرئيسية · Demo dashboard with sample data</p>
           </div>
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            {savedMsg && <span style={{ color: "#16a34a", fontWeight: 600, fontSize: 14 }}>{savedMsg}</span>}
+            {savedMsg && <span role="status" style={{ color: savedMsg.startsWith("❌") ? "#b91c1c" : "#16a34a", fontWeight: 600, fontSize: 14 }}>{savedMsg}</span>}
             <button onClick={() => setEditOpen(true)} style={{ border: "none", cursor: "pointer", background: "linear-gradient(135deg, var(--primary), var(--primary-dark))", color: "#fff", padding: "10px 22px", borderRadius: 10, fontWeight: 700, fontSize: 14, fontFamily: "inherit" }}>
               ✏️ تعديل الموقع
             </button>

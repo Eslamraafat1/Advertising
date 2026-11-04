@@ -8,20 +8,22 @@ import Reveal from "../components/Reveal";
 import type { StatDataItem, ValueItem, TeamMember } from "../lib/data";
 
 /* ── Timeline Section ───────────────────────── */
+// What the studio does, in order of the production story. No dates are shown
+// because the founding/expansion years are not published by the studio.
 const timelineData = {
   ar: [
-    { year: "2015", title: "تأسيس الاستوديو", desc: "انطلقنا كاستوديو إنتاج أفلام وفيديو متخصص برؤية للسرد السينمائي", icon: "🎬" },
-    { year: "2018", title: "التوسع في المنطقة", desc: "افتتحنا مكاتب في منطقة الشرق الأوسط وشمال أفريقيا لخدمة العلامات والمنصات والقنوات", icon: "🌍" },
-    { year: "2020", title: "50+ عميل", desc: "وصلنا إلى أكثر من 50 عميل راضٍ مع معدل متزايد من العمل المتكرر", icon: "🤝" },
-    { year: "2022", title: "مركز الإنتاج في مصر", desc: "أنشأنا دعماً إنتاجياً كاملاً على أرض الواقع للتصوير الدولي في مصر", icon: "🇪🇬" },
-    { year: "2024", title: "صيغ أصلية", desc: "توسّعنا في تطوير قصص وصيغ أصلية مصمّمة للسفر والإلهام", icon: "✨" },
+    { year: "01", title: "استوديو إنتاج متكامل", desc: "استوديو إنتاج أفلام وفيديو برؤية للسرد السينمائي، من الشرارة الأولى إلى الإطار الأخير", icon: "🎬" },
+    { year: "02", title: "حضور في المنطقة", desc: "مكاتب في مصر ودبي وجدة لخدمة العلامات والمنصات والقنوات والمؤسسات", icon: "🌍" },
+    { year: "03", title: "50+ عميل راضٍ", desc: "أكثر من 50 عميل راضٍ ومعدل عمل متكرر يبلغ 90%", icon: "🤝" },
+    { year: "04", title: "مركز الإنتاج في مصر", desc: "دعم إنتاجي كامل على أرض الواقع للتصوير الدولي في مصر", icon: "🇪🇬" },
+    { year: "05", title: "صيغ أصلية", desc: "تطوير قصص وصيغ أصلية مصمّمة للسفر والإلهام", icon: "✨" },
   ],
   en: [
-    { year: "2015", title: "Studio Founded", desc: "Launched as a boutique film and video production studio with a vision for cinematic storytelling", icon: "🎬" },
-    { year: "2018", title: "MENA Expansion", desc: "Opened offices across the MENA region to serve brands, platforms, and broadcasters", icon: "🌍" },
-    { year: "2020", title: "50+ Clients", desc: "Reached 50+ satisfied clients with a growing repeat business rate", icon: "🤝" },
-    { year: "2022", title: "Egypt Production Hub", desc: "Established full on-the-ground production support for international shoots in Egypt", icon: "🇪🇬" },
-    { year: "2024", title: "Original Formats", desc: "Expanded into original stories and formats designed to travel and inspire global audiences", icon: "✨" },
+    { year: "01", title: "Full-Service Studio", desc: "A film and video production studio with a vision for cinematic storytelling, from the first spark to the final frame", icon: "🎬" },
+    { year: "02", title: "Across MENA", desc: "Offices in Egypt, Dubai, and Jeddah serving brands, platforms, broadcasters, and institutions", icon: "🌍" },
+    { year: "03", title: "50+ Clients", desc: "50+ satisfied clients and a 90% repeat business rate", icon: "🤝" },
+    { year: "04", title: "Egypt Production Hub", desc: "Full on-the-ground production support for international shoots in Egypt", icon: "🇪🇬" },
+    { year: "05", title: "Original Formats", desc: "Original stories and formats designed to travel and inspire global audiences", icon: "✨" },
   ],
 };
 
@@ -284,7 +286,7 @@ export default function AboutPage() {
           <div style={{ textAlign: "center", marginBottom: 72 }}>
             <Reveal direction="down">
               <span style={{ display: "inline-block", background: "var(--primary-light)", color: "var(--primary)", fontWeight: 700, fontSize: 13, padding: "6px 20px", borderRadius: 0, marginBottom: 16 }}>
-                {locale === "ar" ? "📅 مسيرتنا عبر السنين" : "📅 Our Journey"}
+                {locale === "ar" ? "🎬 قصتنا" : "🎬 Our Story"}
               </span>
             </Reveal>
             <Reveal direction="up" delay={100}>

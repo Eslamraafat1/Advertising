@@ -6,49 +6,50 @@ import Link from "next/link";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
 
+// Production types the studio delivers. Descriptions mirror the services copy;
+// no client names, budgets or results are shown because none are published yet.
 const projects = {
   ar: [
-    { id: 1, title: "حملة النخبة للتسويق الرقمي", category: "digital-ads", results: "زيادة المبيعات +٢٤٠٪، عائد الاستثمار ٥.٢ ضعف", client: "مجموعة النخبة", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop", duration: "3 أشهر", budget: "50,000 ر.س" },
-    { id: 2, title: "الهوية البصرية لشركة ركاز العقارية", category: "branding", results: "تصميم شعار فريد ودليل هوية بصرية كاملة", client: "ركاز للتطوير", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop", duration: "شهر واحد", budget: "25,000 ر.س" },
-    { id: 3, title: "فيديو إطلاق تطبيق مسار التعليمي", category: "video", results: "٣.٥ مليون مشاهدة، زيادة التحميلات +١٨٠٪", client: "شركة مسار", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", duration: "شهران", budget: "35,000 ر.س" },
-    { id: 4, title: "إدارة السوشيال ميديا لمطاعم جورميه", category: "social", results: "+٤٥ ألف متابع جديد، تفاعل شهري +١٣٠٪", client: "جورميه العالمية", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop", duration: "6 أشهر", budget: "18,000 ر.س / شهر" },
-    { id: 5, title: "حملة إعلانات جوجل لبراند فاشن", category: "digital-ads", results: "+٣٢٠٪ عائد على الإنفاق الإعلاني، ٨ آلاف تحويل", client: "براند فاشن", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop", duration: "4 أشهر", budget: "80,000 ر.س" },
-    { id: 6, title: "حملة المؤثرين لمنتج صحتي الرياضي", category: "social", results: "تغطية من ١٥ مؤثر، مبيعات نفدت بالكامل", client: "صحتي المحدودة", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop", duration: "شهران", budget: "40,000 ر.س" },
+    { id: 1, title: "إنتاج الإعلانات التجارية", category: "commercial", summary: "إعلانات وأفلام حملات عالية التأثير من الفكرة إلى التصوير والتسليم النهائي.", label: "إعلانات وأفلام حملات", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=600&auto=format&fit=crop" },
+    { id: 2, title: "إنتاج الأفلام الوثائقية", category: "documentary", summary: "أفلام وثائقية وسلاسل مبنية على البحث للمنصات والقنوات والمؤسسات.", label: "أفلام وسلاسل وثائقية", img: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=600&auto=format&fit=crop" },
+    { id: 3, title: "المحتوى المؤسسي والصناعي", category: "corporate", summary: "أفلام مؤسسية واضحة وموثوقة للنفط والغاز والتعليم والعقارات والصناعات المعقدة.", label: "أفلام مؤسسية", img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600&auto=format&fit=crop" },
+    { id: 4, title: "تغطية الفعاليات والإنتاج المباشر", category: "live", summary: "تغطية متعددة الكاميرات، بث مباشر، طائرات بدون طيار، ومونتاج في نفس اليوم للمؤتمرات والإطلاقات والحفلات.", label: "فعاليات وبث مباشر", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=600&auto=format&fit=crop" },
+    { id: 5, title: "ما بعد الإنتاج والتسليم النهائي", category: "post", summary: "مونتاج، ألوان، صوت، mastering، ونسخ متعددة الصيغ تلبي مواصفات المنصات والبث.", label: "مونتاج وتشطيب", img: "https://images.unsplash.com/photo-1574717026530-2e874b7698a8?q=80&w=600&auto=format&fit=crop" },
+    { id: 6, title: "الدبلجة والتعليق الصوتي والتعريب", category: "post", summary: "ترجمة، تعليق صوتي، دبلجة، ADR، وتعبئة متعددة اللغات وفق معايير التسليم.", label: "تعريب", img: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=600&auto=format&fit=crop" },
   ],
   en: [
-    { id: 1, title: "Al-Nokhba Digital Marketing Blitz", category: "digital-ads", results: "+240% Sales Increase, 5.2x ROI", client: "Al-Nokhba Group", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop", duration: "3 Months", budget: "$14,000" },
-    { id: 2, title: "Rikaz Real Estate Visual Identity", category: "branding", results: "Unique modern logo & comprehensive brand guidelines", client: "Rikaz Development", img: "https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600&auto=format&fit=crop", duration: "1 Month", budget: "$7,000" },
-    { id: 3, title: "Masar Learning App Launch Video", category: "video", results: "3.5M Views, +180% App Downloads boost", client: "Masar EdTech", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", duration: "2 Months", budget: "$9,500" },
-    { id: 4, title: "Gourmet Burgers Social Growth & Content", category: "social", results: "+45k New followers, +130% Monthly engagement", client: "Gourmet International", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop", duration: "6 Months", budget: "$5,000/mo" },
-    { id: 5, title: "Fashion Brand Google Search Campaign", category: "digital-ads", results: "+320% Return on Ad Spend, 8,000+ Conversions", client: "Fashion Brand Ltd", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=600&auto=format&fit=crop", duration: "4 Months", budget: "$22,000" },
-    { id: 6, title: "MyHealth Influencer Launch Campaign", category: "social", results: "Featured by 15 major fitness influencers, sold out stock", client: "MyHealth Ltd", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop", duration: "2 Months", budget: "$11,000" },
+    { id: 1, title: "Commercial Advertising Production", category: "commercial", summary: "High impact commercials and campaign films from concept to filming and final delivery.", label: "Commercials & campaign films", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=600&auto=format&fit=crop" },
+    { id: 2, title: "Documentary Production", category: "documentary", summary: "Research led documentaries and doc series built for platforms, broadcasters, and institutions.", label: "Documentaries & doc series", img: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=600&auto=format&fit=crop" },
+    { id: 3, title: "Corporate and Industrial Content", category: "corporate", summary: "Clear, credible corporate films for oil and gas, education, real estate, and complex industries.", label: "Corporate films", img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600&auto=format&fit=crop" },
+    { id: 4, title: "Event Coverage and Live Production", category: "live", summary: "Multi camera coverage, live streaming, drone, and same day edits for conferences, launches, and concerts.", label: "Events & live", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=600&auto=format&fit=crop" },
+    { id: 5, title: "Post Production and Final Delivery", category: "post", summary: "Editing, color, sound, mastering, and multi format versions that meet platform and broadcast specs.", label: "Editing & finishing", img: "https://images.unsplash.com/photo-1574717026530-2e874b7698a8?q=80&w=600&auto=format&fit=crop" },
+    { id: 6, title: "Dubbing, Voice Over and Localization", category: "post", summary: "Subtitles, voice over, dubbing, ADR, and multi language packaging aligned with delivery standards.", label: "Localization", img: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=600&auto=format&fit=crop" },
   ],
 };
 
 const categories = {
   ar: [
     { id: "all", label: "🌟 الكل" },
-    { id: "digital-ads", label: "📊 الإعلانات الرقمية" },
-    { id: "branding", label: "🎨 الهوية البصرية" },
-    { id: "video", label: "🎬 إنتاج الفيديو" },
-    { id: "social", label: "📱 السوشيال ميديا" },
+    { id: "commercial", label: "📺 إعلانات تجارية" },
+    { id: "documentary", label: "🎬 أفلام وثائقية" },
+    { id: "corporate", label: "🏢 محتوى مؤسسي" },
+    { id: "live", label: "🎤 فعاليات وبث مباشر" },
+    { id: "post", label: "✂️ ما بعد الإنتاج" },
   ],
   en: [
     { id: "all", label: "🌟 All" },
-    { id: "digital-ads", label: "📊 Digital Ads" },
-    { id: "branding", label: "🎨 Branding" },
-    { id: "video", label: "🎬 Video Production" },
-    { id: "social", label: "📱 Social Media" },
+    { id: "commercial", label: "📺 Commercials" },
+    { id: "documentary", label: "🎬 Documentary" },
+    { id: "corporate", label: "🏢 Corporate" },
+    { id: "live", label: "🎤 Events & Live" },
+    { id: "post", label: "✂️ Post Production" },
   ],
 };
-
-const clientLogosRow = ["Google Partner", "Meta Business", "TikTok For Business", "HubSpot", "Adobe", "Semrush", "Shopify"];
 
 export default function PortfolioPage() {
   const { locale } = useLanguage();
   const [selectedCat, setSelectedCat] = useState("all");
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
-  const [expandedProject, setExpandedProject] = useState<number | null>(null);
 
   const activeProjects = locale === "ar" ? projects.ar : projects.en;
   const activeCats = locale === "ar" ? categories.ar : categories.en;
@@ -90,19 +91,19 @@ export default function PortfolioPage() {
               fontWeight: 700, fontSize: 13,
               padding: "6px 20px", borderRadius: 0, marginBottom: 20,
             }}>
-              {locale === "ar" ? "🎨 معرض الأعمال" : "🎨 Our Portfolio"}
+              {locale === "ar" ? "🎬 أعمالنا" : "🎬 Our Work"}
             </span>
           </Reveal>
           <Reveal direction="up" delay={100}>
             <h1 style={{ fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 900, color: "#fff", marginBottom: 20, lineHeight: 1.1 }}>
-              {locale === "ar" ? "قصص نجاح صنعناها لعملائنا" : "Success Stories We Crafted"}
+              {locale === "ar" ? "ما الذي ننتجه" : "What We Produce"}
             </h1>
           </Reveal>
           <Reveal direction="up" delay={200}>
             <p style={{ color: "#94a3b8", fontSize: 17.5, maxWidth: 580, margin: "0 auto", lineHeight: 1.7 }}>
               {locale === "ar"
-                ? "نستعرض هنا بعضاً من أفضل أعمالنا وحملاتنا الإعلانية الناجحة التي ساهمت في نمو العلامات التجارية لشركائنا."
-                : "Explore some of our premium projects and campaigns that successfully scaled our clients' business presence."}
+                ? "أفلام، فيديو، إعلانات، أفلام وثائقية، محتوى مؤسسي، وفعاليات حية — دورة إنتاج كاملة للعلامات والمنصات والقنوات والمؤسسات."
+                : "Film, video, advertising, documentaries, corporate content, and live events — the full production cycle for brands, platforms, broadcasters, and institutions."}
             </p>
           </Reveal>
 
@@ -110,9 +111,9 @@ export default function PortfolioPage() {
           <Reveal direction="up" delay={350}>
             <div style={{ display: "flex", justifyContent: "center", gap: 48, marginTop: 52, flexWrap: "wrap" }}>
               {[
-                { num: "500+", label: locale === "ar" ? "مشروع منجز" : "Projects Done" },
-                { num: "120+", label: locale === "ar" ? "عميل راضٍ" : "Happy Clients" },
-                { num: "15", label: locale === "ar" ? "دولة" : "Countries" },
+                { num: "3+", label: locale === "ar" ? "مكاتب في المنطقة" : "Offices across MENA" },
+                { num: "50+", label: locale === "ar" ? "عميل راضٍ" : "Satisfied clients" },
+                { num: "90%", label: locale === "ar" ? "معدل العملاء المتكررين" : "Repeat business rate" },
               ].map((m, i) => (
                 <div key={i} style={{ textAlign: "center" }}>
                   <div style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{m.num}</div>
@@ -121,27 +122,6 @@ export default function PortfolioPage() {
               ))}
             </div>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ── Client Logos ──────────────────────── */}
-      <section style={{ padding: "40px 24px", background: "var(--bg-card)", borderBottom: "1px solid var(--border)" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-          <span style={{ color: "var(--text-muted)", fontSize: 13, fontWeight: 700, marginLeft: 16 }}>
-            {locale === "ar" ? "عملنا مع:" : "Worked with:"}
-          </span>
-          {clientLogosRow.map((c, i) => (
-            <span key={i} style={{
-              background: "var(--bg-muted)",
-              border: "1px solid var(--border)",
-              borderRadius: 8, padding: "6px 16px",
-              fontSize: 13, fontWeight: 700,
-              color: "var(--text-muted)",
-              transition: "all 0.2s ease",
-            }}
-            className="client-logo-chip"
-            >{c}</span>
-          ))}
         </div>
       </section>
 
@@ -158,6 +138,8 @@ export default function PortfolioPage() {
             {activeCats.map(cat => (
               <button
                 key={cat.id}
+                type="button"
+                aria-pressed={selectedCat === cat.id}
                 onClick={() => setSelectedCat(cat.id)}
                 style={{
                   background: selectedCat === cat.id ? "linear-gradient(135deg, var(--primary), var(--primary-dark))" : "transparent",
@@ -223,28 +205,14 @@ export default function PortfolioPage() {
                     <div style={{
                       position: "absolute", inset: 0,
                       background: "linear-gradient(to top, #dc2528, transparent)",
-                      opacity: hoveredProject === proj.id ? 1 : 0,
+                      opacity: hoveredProject === proj.id ? 0.6 : 0,
                       transition: "opacity 0.4s ease",
-                      display: "flex", alignItems: "flex-end", padding: "20px 20px",
-                    }}>
-                      <div style={{
-                        transform: hoveredProject === proj.id ? "translateY(0)" : "translateY(16px)",
-                        transition: "transform 0.4s ease",
-                        display: "flex", gap: 10,
-                      }}>
-                        <div style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600 }}>
-                          ⏱ {proj.duration}
-                        </div>
-                        <div style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600 }}>
-                          💰 {proj.budget}
-                        </div>
-                      </div>
-                    </div>
+                    }} />
                   </div>
 
                   {/* Info */}
                   <div style={{ padding: "28px 28px 32px", textAlign: "start" }}>
-                    <div style={{ fontSize: 13, color: "var(--primary)", fontWeight: 700, marginBottom: 6 }}>{proj.client}</div>
+                    <div style={{ fontSize: 13, color: "var(--primary)", fontWeight: 700, marginBottom: 6 }}>{proj.label}</div>
                     <h3 style={{ fontSize: 18.5, fontWeight: 800, color: "var(--text)", marginBottom: 14, lineHeight: 1.4 }}>{proj.title}</h3>
                     <div style={{
                       background: "var(--primary-light)", color: "var(--primary)",
@@ -253,8 +221,7 @@ export default function PortfolioPage() {
                       display: "flex", alignItems: "center", gap: 8,
                       marginBottom: 16,
                     }}>
-                      <span>📈</span>
-                      <span>{proj.results}</span>
+                      <span>{proj.summary}</span>
                     </div>
                     <Link href="/contact" style={{
                       textDecoration: "none",
@@ -264,7 +231,7 @@ export default function PortfolioPage() {
                     }}
                     className="portfolio-link"
                     >
-                      {locale === "ar" ? "احصل على نفس النتائج" : "Get Similar Results"} →
+                      {locale === "ar" ? "ناقش مشروعاً مشابهاً" : "Discuss a similar project"} →
                     </Link>
                   </div>
                 </div>
@@ -285,12 +252,12 @@ export default function PortfolioPage() {
         <div style={{ position: "relative" }}>
           <Reveal direction="down">
             <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "#fff", marginBottom: 16 }}>
-              {locale === "ar" ? "هل أنت جاهز لقصة نجاح جديدة؟" : "Ready for the Next Success Story?"}
+              {locale === "ar" ? "لنحقق ذلك معاً" : "Let’s Make It Happen"}
             </h2>
           </Reveal>
           <Reveal direction="up" delay={100}>
             <p style={{ color: "#94a3b8", fontSize: 17.5, marginBottom: 44, maxWidth: 480, margin: "0 auto 44px" }}>
-              {locale === "ar" ? "تواصل معنا وسنضع مشروعك في قائمة أعمالنا الناجحة القادمة" : "Contact us and we'll add your project to our next success stories"}
+              {locale === "ar" ? "تواصل معنا لمشروعك القادم — احصل على عرض سعر خلال 24 ساعة" : "Contact us for your next project — get a quote in 24h"}
             </p>
           </Reveal>
           <Reveal direction="up" delay={200}>
@@ -316,7 +283,6 @@ export default function PortfolioPage() {
           from { transform: translateY(0) rotate(0deg); }
           to { transform: translateY(-20px) rotate(15deg); }
         }
-        .client-logo-chip:hover { border-color: var(--primary) !important; color: var(--primary) !important; background: var(--primary-light) !important; }
         .portfolio-link:hover { gap: 10px !important; }
         .portfolio-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(99,102,241,0.5) !important; }
         @media (max-width: 500px) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Trophy, Users, TrendingUp, Star } from "lucide-react";
+import { Trophy, Users, TrendingUp, Star, type LucideIcon } from "lucide-react";
 import { useLanguage } from "./LanguageContext";
 
 interface CounterProps {
@@ -62,7 +62,7 @@ const statsData = {
   ],
 };
 
-const iconMap: { [key: string]: React.ComponentType<any> } = {
+const iconMap: Record<string, LucideIcon> = {
   Trophy,
   Users,
   TrendingUp,

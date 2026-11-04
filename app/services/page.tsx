@@ -5,23 +5,44 @@ import { useState } from "react";
 import { useLanguage } from "../components/LanguageContext";
 import Reveal from "../components/Reveal";
 import type { ServiceDataItem, WhyListItem } from "../lib/data";
+import { EMPTY_FORM, buildMailto, validateContact, type ContactForm, type FieldErrors } from "../lib/contact";
 
 export default function ServicesPage() {
   const [hovered, setHovered] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [mailtoHref, setMailtoHref] = useState<string | null>(null);
+  const [errors, setErrors] = useState<FieldErrors>({});
   const { locale, t } = useLanguage();
   const sp = t.servicesPage;
   const qf = sp.quoteForm;
-  const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "" });
+  const [form, setForm] = useState<ContactForm>(EMPTY_FORM);
+  const ar = locale === "ar";
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    await new Promise(r => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+  function updateField<K extends keyof ContactForm>(key: K, value: ContactForm[K]) {
+    setForm(prev => ({ ...prev, [key]: value }));
+    if (key in errors) setErrors(prev => ({ ...prev, [key]: undefined }));
   }
+
+  // No mail backend: a valid form opens the visitor's email app (mailto).
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const found = validateContact(form, locale);
+    setErrors(found);
+    const firstInvalid = (Object.keys(found) as (keyof FieldErrors)[]).find(k => found[k]);
+    if (firstInvalid) {
+      document.getElementById(`quote-${firstInvalid}`)?.focus();
+      return;
+    }
+    const serviceLabel = t.servicesData.find(sv => sv.id === form.service)?.title ?? "";
+    const href = buildMailto(sp.quoteEmail, form, serviceLabel, locale);
+    setMailtoHref(href);
+    window.location.assign(href);
+  }
+
+  const fieldStyle = (invalid?: boolean): React.CSSProperties => ({
+    width: "100%", padding: "14px 16px", border: `1.5px solid ${invalid ? "#b91c1c" : "var(--border)"}`,
+    borderRadius: 0, fontFamily: "inherit", background: "var(--bg)",
+  });
+  const errorStyle: React.CSSProperties = { color: "#b91c1c", fontSize: 13, fontWeight: 600, margin: "6px 0 0" };
 
   return (
     <div>
@@ -144,17 +165,31 @@ export default function ServicesPage() {
             </div>
           </Reveal>
 
-          {submitted ? (
+          {mailtoHref ? (
             <Reveal direction="up">
               <div style={{ textAlign: "center", background: "var(--bg-card)", padding: "48px 32px", border: "1px solid var(--border)" }}>
-                <div style={{ fontSize: 56, marginBottom: 16 }}>✓</div>
-                <h3 style={{ fontWeight: 800, fontSize: 22, marginBottom: 12 }}>{t.common.successTitle}</h3>
-                <p style={{ color: "var(--text-muted)", lineHeight: 1.8 }}>{t.common.successDesc}</p>
+                <div aria-hidden="true" style={{ fontSize: 56, marginBottom: 16 }}>✉️</div>
+                <h3 role="status" style={{ fontWeight: 800, fontSize: 22, marginBottom: 12 }}>
+                  {ar ? "طلبك جاهز للإرسال" : "Your request is ready to send"}
+                </h3>
+                <p style={{ color: "var(--text-muted)", lineHeight: 1.8, marginBottom: 20 }}>
+                  {ar
+                    ? <>فتحنا تطبيق البريد لديك ومعه طلبك — اضغط &quot;إرسال&quot; هناك. لم يُفتح؟ راسلنا على <a href={`mailto:${sp.quoteEmail}`} style={{ color: "var(--primary)" }}>{sp.quoteEmail}</a>.</>
+                    : <>We opened your email app with your request filled in — press &quot;Send&quot; there. Didn&apos;t open? Email us at <a href={`mailto:${sp.quoteEmail}`} style={{ color: "var(--primary)" }}>{sp.quoteEmail}</a>.</>}
+                </p>
+                <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+                  <a href={mailtoHref} style={{ textDecoration: "none", background: "#0a0a0a", color: "#fff", padding: "12px 24px", fontWeight: 700 }}>
+                    {ar ? "فتح البريد مرة أخرى" : "Open email again"}
+                  </a>
+                  <button type="button" onClick={() => { setMailtoHref(null); setForm(EMPTY_FORM); }} style={{ border: "1.5px solid var(--border)", background: "var(--bg)", color: "var(--text)", padding: "12px 24px", fontWeight: 700, fontFamily: "inherit", cursor: "pointer" }}>
+                    {t.common.sendAnother}
+                  </button>
+                </div>
               </div>
             </Reveal>
           ) : (
             <Reveal direction="up" delay={150}>
-              <form onSubmit={handleSubmit} style={{
+              <form onSubmit={handleSubmit} noValidate aria-label={qf.submit} style={{
                 background: "var(--bg-card)",
                 padding: "40px 36px",
                 border: "1px solid var(--border)",
@@ -163,26 +198,30 @@ export default function ServicesPage() {
               }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }} className="form-row-2">
                   <div style={{ textAlign: "start" }}>
-                    <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.fullName} *</label>
-                    <input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-                      style={{ width: "100%", padding: "14px 16px", border: "1.5px solid var(--border)", borderRadius: 0, fontFamily: "inherit", background: "var(--bg)" }} />
+                    <label htmlFor="quote-name" style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.fullName} *</label>
+                    <input id="quote-name" autoComplete="name" required value={form.name} onChange={e => updateField("name", e.target.value)}
+                      aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "quote-name-error" : undefined}
+                      style={fieldStyle(Boolean(errors.name))} />
+                    {errors.name && <p id="quote-name-error" style={errorStyle}>{errors.name}</p>}
                   </div>
                   <div style={{ textAlign: "start" }}>
-                    <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.email} *</label>
-                    <input required type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
-                      style={{ width: "100%", padding: "14px 16px", border: "1.5px solid var(--border)", borderRadius: 0, fontFamily: "inherit", background: "var(--bg)" }} />
+                    <label htmlFor="quote-email" style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.email} *</label>
+                    <input id="quote-email" autoComplete="email" required type="email" value={form.email} onChange={e => updateField("email", e.target.value)}
+                      aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "quote-email-error" : undefined}
+                      style={fieldStyle(Boolean(errors.email))} />
+                    {errors.email && <p id="quote-email-error" style={errorStyle}>{errors.email}</p>}
                   </div>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }} className="form-row-2">
                   <div style={{ textAlign: "start" }}>
-                    <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.phone}</label>
-                    <input value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
-                      style={{ width: "100%", padding: "14px 16px", border: "1.5px solid var(--border)", borderRadius: 0, fontFamily: "inherit", background: "var(--bg)" }} />
+                    <label htmlFor="quote-phone" style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.phone}</label>
+                    <input id="quote-phone" type="tel" autoComplete="tel" value={form.phone} onChange={e => updateField("phone", e.target.value)}
+                      style={fieldStyle()} />
                   </div>
                   <div style={{ textAlign: "start" }}>
-                    <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.interestedIn}</label>
-                    <select value={form.service} onChange={e => setForm({ ...form, service: e.target.value })}
-                      style={{ width: "100%", padding: "14px 16px", border: "1.5px solid var(--border)", borderRadius: 0, fontFamily: "inherit", background: "var(--bg)" }}>
+                    <label htmlFor="quote-service" style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.interestedIn}</label>
+                    <select id="quote-service" value={form.service} onChange={e => updateField("service", e.target.value)}
+                      style={fieldStyle()}>
                       <option value="">{qf.chooseService}</option>
                       {t.servicesData.map(s => (
                         <option key={s.id} value={s.id}>{s.title}</option>
@@ -191,18 +230,23 @@ export default function ServicesPage() {
                   </div>
                 </div>
                 <div style={{ textAlign: "start" }}>
-                  <label style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.message} *</label>
-                  <textarea required rows={5} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-                    style={{ width: "100%", padding: "14px 16px", border: "1.5px solid var(--border)", borderRadius: 0, fontFamily: "inherit", background: "var(--bg)", resize: "vertical" }} />
+                  <label htmlFor="quote-message" style={{ display: "block", fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{qf.message} *</label>
+                  <textarea id="quote-message" required rows={5} value={form.message} onChange={e => updateField("message", e.target.value)}
+                    aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "quote-message-error" : undefined}
+                    style={{ ...fieldStyle(Boolean(errors.message)), resize: "vertical" }} />
+                  {errors.message && <p id="quote-message-error" style={errorStyle}>{errors.message}</p>}
                 </div>
-                <button type="submit" disabled={loading} style={{
-                  border: "none", cursor: loading ? "not-allowed" : "pointer",
-                  background: loading ? "var(--border)" : "#0a0a0a",
+                <button type="submit" style={{
+                  border: "none", cursor: "pointer",
+                  background: "#0a0a0a",
                   color: "#fff", padding: "16px 32px", borderRadius: 0,
                   fontWeight: 800, fontSize: 16, fontFamily: "inherit",
                 }}>
-                  {loading ? t.common.loading : qf.submit}
+                  {qf.submit}
                 </button>
+                <p style={{ fontSize: 12.5, color: "var(--text-muted)", margin: 0, textAlign: "start" }}>
+                  {ar ? `يفتح هذا النموذج تطبيق البريد لديك برسالة جاهزة إلى ${sp.quoteEmail}.` : `This form opens your email app with a ready-to-send message to ${sp.quoteEmail}.`}
+                </p>
               </form>
             </Reveal>
           )}

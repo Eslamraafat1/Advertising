@@ -224,6 +224,9 @@ export default function HeroCarousel() {
           {slides.map((_, i) => (
             <button
               key={i}
+              type="button"
+              aria-label={`Slide ${i + 1}`}
+              aria-current={i === current}
               onClick={() => goTo(i, i > current ? "next" : "prev")}
               style={{
                 width: i === current ? 32 : 10,
@@ -239,7 +242,7 @@ export default function HeroCarousel() {
           ))}
         </div>
 
-        <button onClick={prev} className="carousel-nav-btn" style={{
+        <button type="button" aria-label="Previous slide" onClick={prev} className="carousel-nav-btn" style={{
           position: "absolute", top: "50%", right: 24,
           transform: "translateY(-50%)",
           width: 52, height: 52,
@@ -255,7 +258,7 @@ export default function HeroCarousel() {
         }}>
           ‹
         </button>
-        <button onClick={next} className="carousel-nav-btn" style={{
+        <button type="button" aria-label="Next slide" onClick={next} className="carousel-nav-btn" style={{
           position: "absolute", top: "50%", left: 24,
           transform: "translateY(-50%)",
           width: 52, height: 52,
