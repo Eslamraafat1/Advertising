@@ -9,11 +9,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
     "lucide-react": "^1.21.0",
-    "next": "16.2.9",
+    "next": "16.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -23,8 +24,15 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.9",
+    "eslint-config-next": "16.4.6",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "license": "MIT",
+  "author": "Eslam Raafat <eslamraafat736@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eslamraafat1/advertising.git"
+  },
+  "homepage": "https://github.com/Eslamraafat1/advertising#readme"
 }
